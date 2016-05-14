@@ -1,3 +1,3 @@
 # PanzerW
 
-Jueguito de tanques hecho por los moe, larry y curly
+Jueguito de tanques hecho por Moe, Larry y Curly
