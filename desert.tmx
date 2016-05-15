@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="28" tileheight="28" nextobjectid="6">
+ <tileset firstgid="1" source="desert.tsx"/>
+ <tileset firstgid="49" name="rpg1" tilewidth="32" tileheight="32" tilecount="2016" columns="32">
+  <image source="rpg1.png" width="1024" height="2016"/>
+  <tile id="263">
+   <properties>
+    <property name="Collision" value="True"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Tile Layer 1" width="40" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztmH1PwjAQh09JRCQB1MT5EnE6BUQdfP9P5y22WXOe7XW7lpnwxxO2pOueXW/bjy0BYJmQGTJHFonP04Wa8XsagNd/qV9TqxukQG4H4MNxgpwiI+Kd4lx3yL2HscHuPyAT5AKZZqjFM/ISQZXQb+Pxe0W2yNsB/Xz1q4T1zOG3crZnA/HbEy/q9wk//f+V2Y/2HN0P1Yv2pYYfdx9sSP3sdsiP1lWrfmuyb31i65d6fakn5d2sn5QPBT/7zD+H9l3kYyQcZ3ns6TeHNl/Ya/UxFY7jjuviV0CbLy6RqwDXwnHccSl7Lzcl8DlnSJ5lRh8um43hdyZzs1kOr9r8Sp6d7vunijjHymFt2Bmkc0j8Gqe9GRvyC2XlmDVorsNmCy0/6fX+dTzta20/6XzS9ZXM5+aLXH62R7tkCw0/Lsd27Rdurfv2X+NXe+bp49d3vkVE/bhsVjhw2UzD7wzafCa9VzSQ+ml//ymV/Q71/afv87lLrWK+G8X6xbyLNdZY8l8odI/lYgfxeeXIEQnfew64jA==
+  </data>
+ </layer>
+ <objectgroup name="Objects">
+  <object id="1" name="Player" x="131" y="31" width="94" height="127"/>
+ </objectgroup>
+ <layer name="Blockage01" width="40" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztllEOgDAIQ/VW3v9k/k4ytBW6YRzJssQAfW4IHvu2HcVXVVt8Vx1WS80XrSU2Bq1jj2cEH5s/Gv+GD72vmXyI3mg+q1OZr/L9PuXzznfx8fmj8Zn9+WleRPnU/zoZfEr7A596sWzqM0NNVfMRbevjxY1g63H2/Hr+Xs6smkJ97dy540Mt8/wZPsU3mcWH5lLwIfWXzce+ywy+do/yIdpMDSr6S7tHDekRTH9W8CHzA+0P2XyMtZoV+SzHWz5F//M0es8tg1cXM/nQHCqrNn9Rvir2Fb7K6wSPlFu9
+  </data>
+ </layer>
+</map>
