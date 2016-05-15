@@ -34,7 +34,8 @@ public:
     //Para movimiento continuo
     void gameUpdate(float interval);
     void onKeyHold(float interval);
-    
+    void KOTHCounter1(Point position);
+    void KOTHCounter2(Point position);
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
     void VolverCallBack(cocos2d::Ref* pSender);
@@ -44,6 +45,7 @@ public:
     CREATE_FUNC(KOTH);
 private:
         Player p1, p2;
+    double duration1=0, duration2=0;
     bool pause = false;
     bool game_Over = false;
     Sprite *_player1, *_player2, *sprite, *minaP1[3], *minaP2[3], *misil;

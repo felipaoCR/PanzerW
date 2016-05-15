@@ -1,9 +1,14 @@
+#include <chrono>
+#include <ctime>
 #include "KOTHScene.h"
 #include "PanzerWarsScene.h"
 #include "SimpleAudioEngine.h"
 
+
 USING_NS_CC;
 using namespace cocos2d;
+
+std::clock_t start;
 
 ////////////////////////////////
 //Manejo de fondos y movimientos
@@ -52,6 +57,7 @@ void KOTH::gameUpdate(float interval)
 	    }
 	    dirAnt1 = 0;
 	    setPlayer1Position(ccp(loc1.x,++loc1.y+p1.getSpeed())); // player 1 going up
+	    KOTHCounter1(_player1->getPosition());
 	}
 	else if(down1) {
 	    switch(dirAnt1) {
@@ -69,6 +75,7 @@ void KOTH::gameUpdate(float interval)
 	    }
 	    dirAnt1 = 1;
 	    setPlayer1Position(ccp(loc1.x,--loc1.y-p1.getSpeed())); // player 1 going down
+	    KOTHCounter1(_player1->getPosition());
 	}
 	else if(right1) {
 	    switch(dirAnt1) {
@@ -86,6 +93,7 @@ void KOTH::gameUpdate(float interval)
 	    }
 	    dirAnt1 = 3;
 	    setPlayer1Position(ccp(++loc1.x+p1.getSpeed(),loc1.y)); // player 1 going right
+	    KOTHCounter1(_player1->getPosition());
 	}
 	else if(left1) {
 	    switch(dirAnt1) {
@@ -103,6 +111,7 @@ void KOTH::gameUpdate(float interval)
 	    }
 	    dirAnt1 = 2;
 	    setPlayer1Position(ccp(--loc1.x-p1.getSpeed(),loc1.y)); // player 1 going left
+	    KOTHCounter1(_player1->getPosition());
 	}
 	if(up2) {
 	    switch(dirAnt2) {
@@ -120,6 +129,7 @@ void KOTH::gameUpdate(float interval)
 	    }
 	    dirAnt2 = 0;
 	    setPlayer2Position(ccp(loc2.x,++loc2.y+p2.getSpeed())); // player 2 going up
+	    KOTHCounter2(_player2->getPosition());
 	}
 	else if(down2) {
 	    switch(dirAnt2) {
@@ -137,6 +147,7 @@ void KOTH::gameUpdate(float interval)
 	    }
 	    dirAnt2 = 1;
 	    setPlayer2Position(ccp(loc2.x,--loc2.y-p2.getSpeed())); // player 2 going down
+	    KOTHCounter2(_player2->getPosition());
 	}
 	else if(right2) {
 	    switch(dirAnt2) {
@@ -154,6 +165,7 @@ void KOTH::gameUpdate(float interval)
 	    }
 	    dirAnt2 = 3;
 	    setPlayer2Position(ccp(++loc2.x+p2.getSpeed(),loc2.y)); // player 2 going right
+	    KOTHCounter2(_player2->getPosition());
 	}
 	else if(left2) {
 	   switch(dirAnt2) {
@@ -171,6 +183,7 @@ void KOTH::gameUpdate(float interval)
 	    }
 	    dirAnt2 = 2;
 	    setPlayer2Position(ccp(--loc2.x-p2.getSpeed(),loc2.y)); // player 2 going left
+	    KOTHCounter2(_player2->getPosition());
 	}
     }
 
@@ -331,9 +344,7 @@ void KOTH::setPlayer2Position(Point position)
 {
     Point tileCoord = this->tileCoordForPosition(position);
     int tileGid = _blockage->getTileGIDAt(tileCoord);
-    log("tileGid = %d", tileGid);
     if (tileGid) {
-	log("DEBUG");
         auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
         if (!properties.empty()) {
             auto collision = properties["Collision"].asString();
@@ -346,6 +357,54 @@ void KOTH::setPlayer2Position(Point position)
     _player2->setPosition(position);
 }
 
+void KOTH::KOTHCounter1(Point position)
+{
+    double temp;
+    Point tileCoord = this->tileCoordForPosition(position);
+    int tileGid = _blockage->getTileGIDAt(tileCoord);
+    log("tileGid = %d", tileGid);
+    if (tileGid) {
+        auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
+        if (!properties.empty()) {
+            auto koth = properties["KOTH"].asString();
+            if("True" == koth) {
+		log("KOTH");
+		start = std::clock();
+                
+            }
+		//end = std::chrono::system_clock::now();
+		temp = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
+		duration1 = duration1 + temp;
+		log("DURATION 1 = %f", duration1);
+		return;
+        }else return;
+    }
+
+}
+void KOTH::KOTHCounter2(Point position)
+{
+    double temp;
+    Point tileCoord = this->tileCoordForPosition(position);
+    int tileGid = _blockage->getTileGIDAt(tileCoord);
+    log("tileGid = %d", tileGid);
+    if (tileGid) {
+        auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
+        if (!properties.empty()) {
+            auto koth = properties["KOTH"].asString();
+            if("True" == koth) {
+		log("KOTH");
+		start = std::clock();
+                //return;
+            }
+		//end = std::chrono::system_clock::now();
+		temp = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
+		duration2 = duration2 + temp;
+		log("DURATION 2 = %f", duration2);
+		return;
+        }else return;
+    }
+
+}
 
 Scene* KOTH::createScene()
 {
@@ -419,9 +478,12 @@ bool KOTH::init()
     addChild(_player1);
 
     //Se crea el sprite de player 2
+    auto Player2 = objects->getObject("Player2");
+    int x2 = Player2["x"].asInt();
+    int y2 = Player2["y"].asInt();
     _player2 = p2.getPlayer();
     _player2 = Sprite::create("tank3.png");
-    _player2->setPosition(ccp(x+300,y-50));
+    _player2->setPosition(ccp(x2,y2));
     _player2->setScale(0.3);
     addChild(_player2);
     _player2->runAction(RotateBy::create(0.01, 180));
