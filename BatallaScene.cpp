@@ -32,7 +32,7 @@ void Batalla::gameUpdate(float interval)
 		    this->_player1->runAction(RotateBy::create(0.2, 90));
 		    break;
 		case 3:
-		    this->_player1->runAction(RotateBy::create(0.6, 270));
+		    this->_player1->runAction(RotateBy::create(0.2, -90));
 		    break;
 	    }
 	    dirAnt1 = 0;
@@ -46,7 +46,7 @@ void Batalla::gameUpdate(float interval)
 		case 1:
 		    break;
 		case 2:
-		    this->_player1->runAction(RotateBy::create(0.6, 270));
+		    this->_player1->runAction(RotateBy::create(0.2, -90));
 		    break;
 		case 3:
 		    this->_player1->runAction(RotateBy::create(0.2, 90));
@@ -61,7 +61,7 @@ void Batalla::gameUpdate(float interval)
 		    this->_player1->runAction(RotateBy::create(0.2, 90));
 		    break;
 		case 1:
-		    this->_player1->runAction(RotateBy::create(0.6, 270));
+		    this->_player1->runAction(RotateBy::create(0.2, -90));
 		    break;
 		case 2:
 		    this->_player1->runAction(RotateBy::create(0.4, 180));
@@ -75,7 +75,7 @@ void Batalla::gameUpdate(float interval)
 	else if(left1) {
 	    switch(dirAnt1) {
 		case 0:
-		    this->_player1->runAction(RotateBy::create(0.6, 270));
+		    this->_player1->runAction(RotateBy::create(0.2, -90));
 		    break;
 		case 1:
 		    this->_player1->runAction(RotateBy::create(0.2, 90));
@@ -100,7 +100,7 @@ void Batalla::gameUpdate(float interval)
 		    this->_player2->runAction(RotateBy::create(0.2, 90));
 		    break;
 		case 3:
-		    this->_player2->runAction(RotateBy::create(0.6, 270));
+		    this->_player2->runAction(RotateBy::create(0.2, -90));
 		    break;
 	    }
 	    dirAnt2 = 0;
@@ -114,7 +114,7 @@ void Batalla::gameUpdate(float interval)
 		case 1:
 		    break;
 		case 2:
-		    this->_player2->runAction(RotateBy::create(0.6, 270));
+		    this->_player2->runAction(RotateBy::create(0.2, -90));
 		    break;
 		case 3:
 		    this->_player2->runAction(RotateBy::create(0.2, 90));
@@ -129,7 +129,7 @@ void Batalla::gameUpdate(float interval)
 		    this->_player2->runAction(RotateBy::create(0.2, 90));
 		    break;
 		case 1:
-		    this->_player2->runAction(RotateBy::create(0.6, 270));
+		    this->_player2->runAction(RotateBy::create(0.2, -90));
 		    break;
 		case 2:
 		    this->_player2->runAction(RotateBy::create(0.4, 180));
@@ -322,7 +322,7 @@ Scene* Batalla::createScene()
 {
     // 'scene' is an autorelease object
     auto scene = Scene::create();
-    
+
     // 'layer' is an autorelease object
     auto layer = Batalla::create();
 
@@ -348,13 +348,13 @@ bool Batalla::init()
 	actM2[i] = false;
     }
 
-    
+
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     Batalla::createButtons(visibleSize);
 
-    //Se agrega una etiqueta con el titulo    
+    //Se agrega una etiqueta con el titulo
     auto label = Label::createWithTTF("Batalla", "fonts/Marker Felt.ttf", 26);
     label->setPosition(Vec2(origin.x + visibleSize.width/2,
                             origin.y + visibleSize.height - label->getContentSize().height));
@@ -368,7 +368,7 @@ bool Batalla::init()
     /////////////////////////////////
     ///// Manejo de fondos
     //Se carga el mapa y se hacen los collisions tiles con los que el tanque tiene que chocar
-    tileMap = new CCTMXTiledMap();    
+    tileMap = new CCTMXTiledMap();
     tileMap->initWithTMXFile("test2.tmx");
     _blockage = tileMap->layerNamed("Blockage01");
     _blockage->setVisible(false);
@@ -376,7 +376,7 @@ bool Batalla::init()
     tileMap->setPosition(origin.x,origin.y);
     this->addChild(tileMap);
     //Se obtiene la layer de objetos 'palpables' por el juego
-    TMXObjectGroup *objects = tileMap->getObjectGroup("Object Layer 1");	
+    TMXObjectGroup *objects = tileMap->getObjectGroup("Object Layer 1");
     CCASSERT(NULL!=objects, "'Object Layer 1' object group not found");
 
     //Se crea el sprite de player 1
@@ -396,7 +396,7 @@ bool Batalla::init()
     addChild(_player2);
     _player2->runAction(RotateBy::create(0.01, 180));
 
-    	
+
    //seccion de movimiento
    auto eventListener = EventListenerKeyboard::create();
    eventListener->onKeyPressed = CC_CALLBACK_2(Batalla::onKeyPressed, this);
@@ -431,7 +431,7 @@ bool Batalla::init()
 	}
     };
 
-    this->_eventDispatcher->addEventListenerWithSceneGraphPriority(pausa,this); 
+    this->_eventDispatcher->addEventListenerWithSceneGraphPriority(pausa,this);
     return true;
 }
 
@@ -477,3 +477,4 @@ void Batalla::VolverCallBack(Ref* pSender)
     CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic(true);
     Director::sharedDirector()->replaceScene(PanzerWars::createScene());
 }
+
