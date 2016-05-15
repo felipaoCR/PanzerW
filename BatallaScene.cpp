@@ -143,7 +143,7 @@ void Batalla::gameUpdate(float interval)
 	else if(left2) {
 	   switch(dirAnt2) {
 		case 0:
-		    this->_player2->runAction(RotateBy::create(0.6, 270));
+		    this->_player2->runAction(RotateBy::create(0.2, -90));
 		    break;
 		case 1:
 		    this->_player2->runAction(RotateBy::create(0.2, 90));
