@@ -9,6 +9,8 @@ USING_NS_CC;
 using namespace cocos2d;
 
 std::clock_t start;
+bool dentro;
+double temp;
 
 ////////////////////////////////
 //Manejo de fondos y movimientos
@@ -24,13 +26,13 @@ void KOTH::initPlayerStatus()
 	//Inicio estado de player1
 	p1.setHealth(100);
 	p1.setDefence(5);
-	p1.setAttack();
+	p1.setAttack(p1.getDefence());
 	p1.setSpeed(2);
 	//Inicio estado de player2
 	p2.setHealth(100);
 	p2.setDefence(5);
-	p2.setAttack();
-	p2.setSpeed(1);
+	p2.setAttack(p2.getDefence());
+	p2.setSpeed(2);
 	
 }
 
@@ -41,6 +43,8 @@ void KOTH::gameUpdate(float interval)
     Vec2 loc1 = _player1->getPosition();
     Vec2 loc2 = _player2->getPosition();
     if(!pause) {
+	dentro = false;
+	KOTHCounter1(loc1);
 	if(up1) {
 	    switch(dirAnt1) {
 		case 0:
@@ -57,7 +61,7 @@ void KOTH::gameUpdate(float interval)
 	    }
 	    dirAnt1 = 0;
 	    setPlayer1Position(ccp(loc1.x,++loc1.y+p1.getSpeed())); // player 1 going up
-	    KOTHCounter1(_player1->getPosition());
+	    //KOTHCounter1(_player1->getPosition());
 	}
 	else if(down1) {
 	    switch(dirAnt1) {
@@ -75,7 +79,7 @@ void KOTH::gameUpdate(float interval)
 	    }
 	    dirAnt1 = 1;
 	    setPlayer1Position(ccp(loc1.x,--loc1.y-p1.getSpeed())); // player 1 going down
-	    KOTHCounter1(_player1->getPosition());
+	    //KOTHCounter1(_player1->getPosition());
 	}
 	else if(right1) {
 	    switch(dirAnt1) {
@@ -93,7 +97,7 @@ void KOTH::gameUpdate(float interval)
 	    }
 	    dirAnt1 = 3;
 	    setPlayer1Position(ccp(++loc1.x+p1.getSpeed(),loc1.y)); // player 1 going right
-	    KOTHCounter1(_player1->getPosition());
+	    //KOTHCounter1(_player1->getPosition());
 	}
 	else if(left1) {
 	    switch(dirAnt1) {
@@ -111,7 +115,7 @@ void KOTH::gameUpdate(float interval)
 	    }
 	    dirAnt1 = 2;
 	    setPlayer1Position(ccp(--loc1.x-p1.getSpeed(),loc1.y)); // player 1 going left
-	    KOTHCounter1(_player1->getPosition());
+	    //KOTHCounter1(_player1->getPosition());
 	}
 	if(up2) {
 	    switch(dirAnt2) {
@@ -184,6 +188,16 @@ void KOTH::gameUpdate(float interval)
 	    dirAnt2 = 2;
 	    setPlayer2Position(ccp(--loc2.x-p2.getSpeed(),loc2.y)); // player 2 going left
 	    KOTHCounter2(_player2->getPosition());
+	}
+
+
+	////////////////////////////////////////////////////////
+	// pARA TIempo
+	temp = ( std::clock() - start ) / (double) CLOCKS_PER_SEC * 1000;
+	if(dentro) {
+		//temp = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
+		duration1 = duration1 + temp;
+		log("DURATION 1 = %f", duration1);
 	}
     }
 
@@ -359,7 +373,7 @@ void KOTH::setPlayer2Position(Point position)
 
 void KOTH::KOTHCounter1(Point position)
 {
-    double temp;
+    //double temp;
     Point tileCoord = this->tileCoordForPosition(position);
     int tileGid = _blockage->getTileGIDAt(tileCoord);
     log("tileGid = %d", tileGid);
@@ -370,14 +384,21 @@ void KOTH::KOTHCounter1(Point position)
             if("True" == koth) {
 		log("KOTH");
 		start = std::clock();
+		dentro = true;
                 
-            }
+            } else {
+		dentro = false;
+		log("FELipao");
+	    }
+	}
 		//end = std::chrono::system_clock::now();
-		temp = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-		duration1 = duration1 + temp;
-		log("DURATION 1 = %f", duration1);
-		return;
-        }else return;
+		//temp = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
+		//duration1 = duration1 + temp;
+		//log("DURATION 1 = %f", duration1);
+		//return;
+        //}else
+	//	dentro = false;
+	 //return;
     }
 
 }

@@ -22,52 +22,18 @@ private:
 
 public:
 
-Player()
-{
-	;
-}
-~Player()
-{
-	;
-}
-Sprite *getPlayer()
-{
-	return _player;
-}
+	Player();
+	~Player();
+	Sprite *getPlayer();
+	void setHealth(int health);
+	void setDefence(int defence);
+	void setAttack(int defence);
+	void setSpeed(float speed);
+	int getHealth();
+	int getDefence();
+	int getAttack();
+	float getSpeed();
 
-void setHealth(int health)
-{
-	Health = health;	
-}
-void setDefence(int defence)
-{
-	Defence = defence;
-}
-void setAttack()
-{
-	Attack = -3*Defence+45; //Formula para el ataque
-}
-void setSpeed(float speed)
-{
-	Speed = speed;
-}
-
-int getHealth()
-{
-	return Health;
-}
-int getDefence()
-{
-	return Defence;
-}
-int getAttack()
-{
-	return Attack;
-}
-float getSpeed()
-{	
-	return Speed;
-}	
 };
 
 #endif

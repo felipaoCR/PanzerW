@@ -2,6 +2,7 @@
 #include "PanzerWarsScene.h"
 #include "SimpleAudioEngine.h"
 
+
 USING_NS_CC;
 using namespace cocos2d;
 
@@ -12,6 +13,21 @@ Point Batalla::tileCoordForPosition(Point _position)
     int x = _position.x / tileMap->getTileSize().width;
     int y = ((tileMap->getMapSize().height*tileMap->getTileSize().height) - _position.y)/tileMap->getTileSize().height;
     return Point(x, y);
+}
+
+void Batalla::initPlayerStatus()
+{
+	//Inicio estado de player1
+	p1.setHealth(100);
+	p1.setDefence(5);
+	p1.setAttack(p1.getDefence());
+	p1.setSpeed(1);
+	//Inicio estado de player2
+	p2.setHealth(100);
+	p2.setDefence(10);
+	p2.setAttack(p2.getDefence());
+	p2.setSpeed(2);
+	
 }
 
 void Batalla::gameUpdate(float interval)
@@ -32,11 +48,11 @@ void Batalla::gameUpdate(float interval)
 		    this->_player1->runAction(RotateBy::create(0.2, 90));
 		    break;
 		case 3:
-		    this->_player1->runAction(RotateBy::create(0.2, -90));
+		    this->_player1->runAction(RotateBy::create(0.6, 270));
 		    break;
 	    }
 	    dirAnt1 = 0;
-	    setPlayer1Position(ccp(loc1.x,++loc1.y+0.001)); // player 1 going up
+	    setPlayer1Position(ccp(loc1.x,++loc1.y+p1.getSpeed())); // player 1 going up
 	}
 	else if(down1) {
 	    switch(dirAnt1) {
@@ -46,14 +62,14 @@ void Batalla::gameUpdate(float interval)
 		case 1:
 		    break;
 		case 2:
-		    this->_player1->runAction(RotateBy::create(0.2, -90));
+		    this->_player1->runAction(RotateBy::create(0.6, 270));
 		    break;
 		case 3:
 		    this->_player1->runAction(RotateBy::create(0.2, 90));
 		    break;
 	    }
 	    dirAnt1 = 1;
-	    setPlayer1Position(ccp(loc1.x,--loc1.y-0.001)); // player 1 going down
+	    setPlayer1Position(ccp(loc1.x,--loc1.y-p1.getSpeed())); // player 1 going down
 	}
 	else if(right1) {
 	    switch(dirAnt1) {
@@ -61,7 +77,7 @@ void Batalla::gameUpdate(float interval)
 		    this->_player1->runAction(RotateBy::create(0.2, 90));
 		    break;
 		case 1:
-		    this->_player1->runAction(RotateBy::create(0.2, -90));
+		    this->_player1->runAction(RotateBy::create(0.6, 270));
 		    break;
 		case 2:
 		    this->_player1->runAction(RotateBy::create(0.4, 180));
@@ -70,12 +86,12 @@ void Batalla::gameUpdate(float interval)
 		    break;
 	    }
 	    dirAnt1 = 3;
-	    setPlayer1Position(ccp(++loc1.x+0.001,loc1.y)); // player 1 going right
+	    setPlayer1Position(ccp(++loc1.x+p1.getSpeed(),loc1.y)); // player 1 going right
 	}
 	else if(left1) {
 	    switch(dirAnt1) {
 		case 0:
-		    this->_player1->runAction(RotateBy::create(0.2, -90));
+		    this->_player1->runAction(RotateBy::create(0.6, 270));
 		    break;
 		case 1:
 		    this->_player1->runAction(RotateBy::create(0.2, 90));
@@ -87,7 +103,7 @@ void Batalla::gameUpdate(float interval)
 		    break;
 	    }
 	    dirAnt1 = 2;
-	    setPlayer1Position(ccp(--loc1.x-0.001,loc1.y)); // player 1 going left
+	    setPlayer1Position(ccp(--loc1.x-p1.getSpeed(),loc1.y)); // player 1 going left
 	}
 	if(up2) {
 	    switch(dirAnt2) {
@@ -100,11 +116,11 @@ void Batalla::gameUpdate(float interval)
 		    this->_player2->runAction(RotateBy::create(0.2, 90));
 		    break;
 		case 3:
-		    this->_player2->runAction(RotateBy::create(0.2, -90));
+		    this->_player2->runAction(RotateBy::create(0.6, 270));
 		    break;
 	    }
 	    dirAnt2 = 0;
-	    setPlayer2Position(ccp(loc2.x,++loc2.y+0.001)); // player 2 going up
+	    setPlayer2Position(ccp(loc2.x,++loc2.y+p2.getSpeed())); // player 2 going up
 	}
 	else if(down2) {
 	    switch(dirAnt2) {
@@ -114,14 +130,14 @@ void Batalla::gameUpdate(float interval)
 		case 1:
 		    break;
 		case 2:
-		    this->_player2->runAction(RotateBy::create(0.2, -90));
+		    this->_player2->runAction(RotateBy::create(0.6, 270));
 		    break;
 		case 3:
 		    this->_player2->runAction(RotateBy::create(0.2, 90));
 		    break;
 	    }
 	    dirAnt2 = 1;
-	    setPlayer2Position(ccp(loc2.x,--loc2.y-0.001)); // player 2 going down
+	    setPlayer2Position(ccp(loc2.x,--loc2.y-p2.getSpeed())); // player 2 going down
 	}
 	else if(right2) {
 	    switch(dirAnt2) {
@@ -129,7 +145,7 @@ void Batalla::gameUpdate(float interval)
 		    this->_player2->runAction(RotateBy::create(0.2, 90));
 		    break;
 		case 1:
-		    this->_player2->runAction(RotateBy::create(0.2, -90));
+		    this->_player2->runAction(RotateBy::create(0.6, 270));
 		    break;
 		case 2:
 		    this->_player2->runAction(RotateBy::create(0.4, 180));
@@ -138,12 +154,12 @@ void Batalla::gameUpdate(float interval)
 		    break;
 	    }
 	    dirAnt2 = 3;
-	    setPlayer2Position(ccp(++loc2.x+0.001,loc2.y)); // player 2 going right
+	    setPlayer2Position(ccp(++loc2.x+p2.getSpeed(),loc2.y)); // player 2 going right
 	}
 	else if(left2) {
 	   switch(dirAnt2) {
 		case 0:
-		    this->_player2->runAction(RotateBy::create(0.2, -90));
+		    this->_player2->runAction(RotateBy::create(0.6, 270));
 		    break;
 		case 1:
 		    this->_player2->runAction(RotateBy::create(0.2, 90));
@@ -155,7 +171,7 @@ void Batalla::gameUpdate(float interval)
 		    break;
 	    }
 	    dirAnt2 = 2;
-	    setPlayer2Position(ccp(--loc2.x-0.001,loc2.y)); // player 2 going left
+	    setPlayer2Position(ccp(--loc2.x-p2.getSpeed(),loc2.y)); // player 2 going left
 	}
     }
 
@@ -166,17 +182,41 @@ void Batalla::gameUpdate(float interval)
     for(i=0; i<3; i++) {
 	if(bbP1.intersectsRect(bbM2[i]) && (actM2[i]==true)) {
 	    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Bomb.mp3");
-	    log("Player 1 actived mine %d", i);
+	    //-10 a health de p1
+	    if(p1.getHealth()>0)
+	    p1.setHealth(p1.getHealth()-50);
+	    if(p1.getHealth()<0)
+	    p1.setHealth(0);
+            log("Player 1 actived mine %d", i);
+	    log("Player 1 Life = %d", p1.getHealth());
 	    this->removeChild(minaP2[i]);
 	    actM2[i] = false;
 	}
 	if(bbP2.intersectsRect(bbM1[i]) && (actM1[i]==true)) {
 	    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Bomb.mp3");
+	    //-10 a health de p2
+	    if(p2.getHealth()>0)
+	    p2.setHealth(p2.getHealth()-50);
+	    if(p2.getHealth()<0)
+	    p2.setHealth(0);
 	    log("Player 2 actived mine %d", i);
+	    log("Player 2 Life = %d", p2.getHealth());
 	    this->removeChild(minaP1[i]);
 	    actM1[i] = false;
 	}
     }
+    ///////////////////////////////////////
+
+    if(!p2.getHealth()) {
+	Size vS = Director::getInstance()->getVisibleSize();
+	Vec2 ori = Director::getInstance()->getVisibleOrigin();
+	auto gameOver = Label::createWithTTF("Game Over\n Player 1 Won", "fonts/Marker Felt.ttf", 26);
+    	gameOver->setPosition(Vec2(ori.x + vS.width/2,
+                            ori.y + vS.height/2));
+    	this->addChild(gameOver, 1);
+	pause = true;
+    }
+
 }
 
 void Batalla::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
@@ -215,6 +255,7 @@ void Batalla::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 		}
 	    }
 	    break;
+
 	case EventKeyboard::KeyCode::KEY_J:
 	    left2 = true;
 	    break;
@@ -284,7 +325,6 @@ void Batalla::setPlayer1Position(Point position)
 {
     Point tileCoord = this->tileCoordForPosition(position);
     int tileGid = _blockage->getTileGIDAt(tileCoord);
-    log("tileGid = %d", tileGid);
     if (tileGid) {
         auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
         if (!properties.empty()) {
@@ -322,7 +362,7 @@ Scene* Batalla::createScene()
 {
     // 'scene' is an autorelease object
     auto scene = Scene::create();
-
+    
     // 'layer' is an autorelease object
     auto layer = Batalla::create();
 
@@ -348,27 +388,22 @@ bool Batalla::init()
 	actM2[i] = false;
     }
 
-
+    
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     Batalla::createButtons(visibleSize);
 
-    //Se agrega una etiqueta con el titulo
+    //Se agrega una etiqueta con el titulo    
     auto label = Label::createWithTTF("Batalla", "fonts/Marker Felt.ttf", 26);
     label->setPosition(Vec2(origin.x + visibleSize.width/2,
                             origin.y + visibleSize.height - label->getContentSize().height));
     this->addChild(label, 1);
 
-    //Se configura el background
-    /*LayerGradient *bgLayer = LayerGradient::create(ccc4(51, 0, 128, 255), ccc4(0, 0, 0, 255));
-    bgLayer->setZOrder(0);
-    this->addChild(bgLayer);*/
-
     /////////////////////////////////
     ///// Manejo de fondos
     //Se carga el mapa y se hacen los collisions tiles con los que el tanque tiene que chocar
-    tileMap = new CCTMXTiledMap();
+    tileMap = new CCTMXTiledMap();    
     tileMap->initWithTMXFile("test2.tmx");
     _blockage = tileMap->layerNamed("Blockage01");
     _blockage->setVisible(false);
@@ -376,27 +411,32 @@ bool Batalla::init()
     tileMap->setPosition(origin.x,origin.y);
     this->addChild(tileMap);
     //Se obtiene la layer de objetos 'palpables' por el juego
-    TMXObjectGroup *objects = tileMap->getObjectGroup("Object Layer 1");
+    TMXObjectGroup *objects = tileMap->getObjectGroup("Object Layer 1");	
     CCASSERT(NULL!=objects, "'Object Layer 1' object group not found");
+
+    //Se inician los estados de los players
+    initPlayerStatus();
 
     //Se crea el sprite de player 1
     auto Player = objects->getObject("Player");
     CCASSERT(!Player.empty(),"Player object not found");
     int x = Player["x"].asInt();
     int y = Player["y"].asInt();
-    _player1 = Sprite::create("tank3.png");
+    _player1 = p1.getPlayer();
+    _player1 =Sprite::create("tank3.png");
     setPlayer1Position(ccp(x-50,y-50));
     _player1->setScale(0.3);
     addChild(_player1);
 
     //Se crea el sprite de player 2
+    _player2 = p2.getPlayer();
     _player2 = Sprite::create("tank3.png");
-    _player2->setPosition(ccp(x+300,y-250));
+    _player2->setPosition(ccp(x+300,y-50));
     _player2->setScale(0.3);
     addChild(_player2);
     _player2->runAction(RotateBy::create(0.01, 180));
 
-
+    	
    //seccion de movimiento
    auto eventListener = EventListenerKeyboard::create();
    eventListener->onKeyPressed = CC_CALLBACK_2(Batalla::onKeyPressed, this);
@@ -431,7 +471,13 @@ bool Batalla::init()
 	}
     };
 
-    this->_eventDispatcher->addEventListenerWithSceneGraphPriority(pausa,this);
+    // Game over
+    
+
+    this->_eventDispatcher->addEventListenerWithSceneGraphPriority(pausa,this); 
+
+
+
     return true;
 }
 
@@ -477,4 +523,5 @@ void Batalla::VolverCallBack(Ref* pSender)
     CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic(true);
     Director::sharedDirector()->replaceScene(PanzerWars::createScene());
 }
+
 
