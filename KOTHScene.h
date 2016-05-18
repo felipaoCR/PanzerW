@@ -47,7 +47,7 @@ private:
         Player p1, p2;
     double duration1=0, duration2=0;
     bool pause = false;
-    bool game_Over = false;
+    bool stop = false;
     Sprite *_player1, *_player2, *sprite, *minaP1[3], *minaP2[3], *misil;
     CCTMXTiledMap *tileMap;
     CCTMXLayer *background;

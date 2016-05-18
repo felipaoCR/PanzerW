@@ -1,5 +1,6 @@
 #include <chrono>
 #include <ctime>
+#include <unistd.h>
 #include "KOTHScene.h"
 #include "PanzerWarsScene.h"
 #include "SimpleAudioEngine.h"
@@ -7,10 +8,12 @@
 
 USING_NS_CC;
 using namespace cocos2d;
+using namespace std::chrono;
 
-std::clock_t start;
-bool dentro;
-double temp;
+high_resolution_clock::time_point start1, start2, crono;
+bool dentro1, dentro2, stop;
+double temp1, temp2, timeElapsed;
+auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
 
 ////////////////////////////////
 //Manejo de fondos y movimientos
@@ -40,11 +43,17 @@ void KOTH::gameUpdate(float interval)
 {
     ////////////////////////////////////////////////////////////
     // Movimiento Jugadores
+	
+
     Vec2 loc1 = _player1->getPosition();
     Vec2 loc2 = _player2->getPosition();
     if(!pause) {
-	dentro = false;
+        timeElapsed = std::chrono::duration<double, std::milli>(std::chrono::high_resolution_clock::now()-crono).count() /1000;    
+        log("Tiempo = %lf", timeElapsed);
+	dentro1 = false;
+	dentro2 = false;
 	KOTHCounter1(loc1);
+	KOTHCounter2(loc2);	
 	if(up1) {
 	    switch(dirAnt1) {
 		case 0:
@@ -193,12 +202,22 @@ void KOTH::gameUpdate(float interval)
 
 	////////////////////////////////////////////////////////
 	// pARA TIempo
-	temp = ( std::clock() - start ) / (double) CLOCKS_PER_SEC * 1000;
-	if(dentro) {
+	
+	if(dentro1) {
 		//temp = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-		duration1 = duration1 + temp;
+		temp1 = std::chrono::duration<double, std::milli>( high_resolution_clock::now() - start1 ).count();
+		duration1 = duration1 + temp1;
 		log("DURATION 1 = %f", duration1);
 	}
+	if(dentro2) {
+		temp2 = std::chrono::duration<double, std::milli>( high_resolution_clock::now() - start2 ).count();	
+		//temp = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
+		duration2 = duration2 + temp2;
+		log("DURATION 2 = %f", duration2);
+	}
+	
+
+
     }
 
     /////////////////////////////////////////////
@@ -232,6 +251,43 @@ void KOTH::gameUpdate(float interval)
 	}
     }
     ///////////////////////////////////////
+    //Game Over
+    if(timeElapsed>20)
+    {
+	pause = true;
+	audio->stopBackgroundMusic();
+
+	if(duration1>duration2) {
+	Size vS1 = Director::getInstance()->getVisibleSize();
+	Vec2 ori1 = Director::getInstance()->getVisibleOrigin();
+	auto gameOver1 = Label::createWithTTF("Game Over\n Player 1 Won", "fonts/Marker Felt.ttf", 26);
+    	gameOver1->setPosition(Vec2(ori1.x + vS1.width/2,
+                            ori1.y + vS1.height/2));
+	gameOver1->enableOutline(Color4B(255,0,0,255),5);
+	this->addChild(gameOver1,1);
+        }
+	if(duration2>duration1) {
+	Size vS2 = Director::getInstance()->getVisibleSize();
+	Vec2 ori2 = Director::getInstance()->getVisibleOrigin();
+	auto gameOver2 = Label::createWithTTF("Game Over\n Player 2 Won", "fonts/Marker Felt.ttf", 26);
+    	gameOver2->setPosition(Vec2(ori2.x + vS2.width/2,
+                            ori2.y + vS2.height/2));
+	gameOver2->enableOutline(Color4B(0,255,0,255),5);
+    	this->addChild(gameOver2, 1);
+		    
+	}
+	if(duration2==duration1)
+	{
+	Size vS3 = Director::getInstance()->getVisibleSize();
+	Vec2 ori3 = Director::getInstance()->getVisibleOrigin();
+	auto gameOver3 = Label::createWithTTF("Game Over\n It's a tie!", "fonts/Marker Felt.ttf", 26);
+    	gameOver3->setPosition(Vec2(ori3.x + vS3.width/2,
+                            ori3.y + vS3.height/2));
+	gameOver3->enableOutline(Color4B(255,0,255,255),3);
+    	this->addChild(gameOver3, 1);
+	}
+	
+     }
 
 }
 
@@ -383,11 +439,11 @@ void KOTH::KOTHCounter1(Point position)
             auto koth = properties["KOTH"].asString();
             if("True" == koth) {
 		log("KOTH");
-		start = std::clock();
-		dentro = true;
+		start1 = high_resolution_clock::now();
+		dentro1 = true;
                 
             } else {
-		dentro = false;
+		dentro1 = false;
 		log("FELipao");
 	    }
 	}
@@ -404,7 +460,6 @@ void KOTH::KOTHCounter1(Point position)
 }
 void KOTH::KOTHCounter2(Point position)
 {
-    double temp;
     Point tileCoord = this->tileCoordForPosition(position);
     int tileGid = _blockage->getTileGIDAt(tileCoord);
     log("tileGid = %d", tileGid);
@@ -414,15 +469,15 @@ void KOTH::KOTHCounter2(Point position)
             auto koth = properties["KOTH"].asString();
             if("True" == koth) {
 		log("KOTH");
-		start = std::clock();
-                //return;
+		start2 = high_resolution_clock::now();
+		dentro2 = true;
+            }else
+	    {
+		dentro2 = false;
+		//log("FELIPAO2");
             }
-		//end = std::chrono::system_clock::now();
-		temp = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-		duration2 = duration2 + temp;
-		log("DURATION 2 = %f", duration2);
-		return;
-        }else return;
+		
+        }
     }
 
 }
@@ -465,9 +520,10 @@ bool KOTH::init()
     KOTH::createButtons(visibleSize);
 
     //Se agrega una etiqueta con el titulo    
-    auto label = Label::createWithTTF("Rey de la Colina", "fonts/Marker Felt.ttf", 26);
+    auto label = Label::createWithTTF("King of the Hill", "fonts/Marker Felt.ttf", 32);
     label->setPosition(Vec2(origin.x + visibleSize.width/2,
                             origin.y + visibleSize.height - label->getContentSize().height));
+    label->enableOutline(Color4B(255,0,0,0),5);
     this->addChild(label, 1);
 
     /////////////////////////////////
@@ -525,8 +581,10 @@ bool KOTH::init()
 
 
     // set the background music and continuously play it.
-    auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+    audio->preloadBackgroundMusic("Audio/track01.mp3");
+    //audio->preloadBackgroundMusic("Audio/ff7.mp3");
     audio->playBackgroundMusic("Audio/track01.mp3", true);
+    crono = high_resolution_clock::now();
 
     // Pausa o continua el juego
     auto pausa = cocos2d::EventListenerKeyboard::create();
