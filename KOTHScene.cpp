@@ -46,8 +46,8 @@ void KOTH::gameUpdate(float interval)
     // Movimiento Jugadores
 	
 
-    Vec2 loc1 = _player1->getPosition();
-    Vec2 loc2 = _player2->getPosition();
+    loc1 = _player1->getPosition();
+    loc2 = _player2->getPosition();
     if(!pause) {
         timeElapsed = std::chrono::duration<double, std::milli>(std::chrono::high_resolution_clock::now()-crono).count() /1000;    
         log("Tiempo = %lf", timeElapsed);
@@ -60,13 +60,13 @@ void KOTH::gameUpdate(float interval)
 		case 0:
 		    break;
 		case 1:
-		    this->_player1->runAction(RotateBy::create(0.4, 180));
+		    this->_player1->runAction(RotateBy::create(0.2, 180));
 		    break;
 		case 2:
-		    this->_player1->runAction(RotateBy::create(0.2, 90));
+		    this->_player1->runAction(RotateBy::create(0.1, 90));
 		    break;
 		case 3:
-		    this->_player1->runAction(RotateBy::create(0.6, 270));
+		    this->_player1->runAction(RotateBy::create(0.1, -90));
 		    break;
 	    }
 	    dirAnt1 = 0;
@@ -76,15 +76,15 @@ void KOTH::gameUpdate(float interval)
 	else if(down1) {
 	    switch(dirAnt1) {
 		case 0:
-		    this->_player1->runAction(RotateBy::create(0.4, 180));
+		    this->_player1->runAction(RotateBy::create(0.2, 180));
 		    break;
 		case 1:
 		    break;
 		case 2:
-		    this->_player1->runAction(RotateBy::create(0.6, 270));
+		    this->_player1->runAction(RotateBy::create(0.1, -90));
 		    break;
 		case 3:
-		    this->_player1->runAction(RotateBy::create(0.2, 90));
+		    this->_player1->runAction(RotateBy::create(0.1, 90));
 		    break;
 	    }
 	    dirAnt1 = 1;
@@ -94,13 +94,13 @@ void KOTH::gameUpdate(float interval)
 	else if(right1) {
 	    switch(dirAnt1) {
 		case 0:
-		    this->_player1->runAction(RotateBy::create(0.2, 90));
+		    this->_player1->runAction(RotateBy::create(0.1, 90));
 		    break;
 		case 1:
-		    this->_player1->runAction(RotateBy::create(0.6, 270));
+		    this->_player1->runAction(RotateBy::create(0.1, -90));
 		    break;
 		case 2:
-		    this->_player1->runAction(RotateBy::create(0.4, 180));
+		    this->_player1->runAction(RotateBy::create(0.2, 180));
 		    break;
 		case 3:
 		    break;
@@ -112,15 +112,15 @@ void KOTH::gameUpdate(float interval)
 	else if(left1) {
 	    switch(dirAnt1) {
 		case 0:
-		    this->_player1->runAction(RotateBy::create(0.6, 270));
+		    this->_player1->runAction(RotateBy::create(0.1, -90));
 		    break;
 		case 1:
-		    this->_player1->runAction(RotateBy::create(0.2, 90));
+		    this->_player1->runAction(RotateBy::create(0.1, 90));
 		    break;
 		case 2:
 		    break;
 		case 3:
-		    this->_player1->runAction(RotateBy::create(0.4, 180));
+		    this->_player1->runAction(RotateBy::create(0.2, 180));
 		    break;
 	    }
 	    dirAnt1 = 2;
@@ -132,13 +132,13 @@ void KOTH::gameUpdate(float interval)
 		case 0:
 		    break;
 		case 1:
-		    this->_player2->runAction(RotateBy::create(0.4, 180));
+		    this->_player2->runAction(RotateBy::create(0.2, 180));
 		    break;
 		case 2:
-		    this->_player2->runAction(RotateBy::create(0.2, 90));
+		    this->_player2->runAction(RotateBy::create(0.1, 90));
 		    break;
 		case 3:
-		    this->_player2->runAction(RotateBy::create(0.6, 270));
+		    this->_player2->runAction(RotateBy::create(0.1, -90));
 		    break;
 	    }
 	    dirAnt2 = 0;
@@ -148,15 +148,15 @@ void KOTH::gameUpdate(float interval)
 	else if(down2) {
 	    switch(dirAnt2) {
 		case 0:
-		    this->_player2->runAction(RotateBy::create(0.4, 180));
+		    this->_player2->runAction(RotateBy::create(0.2, 180));
 		    break;
 		case 1:
 		    break;
 		case 2:
-		    this->_player2->runAction(RotateBy::create(0.6, 270));
+		    this->_player2->runAction(RotateBy::create(0.1, -90));
 		    break;
 		case 3:
-		    this->_player2->runAction(RotateBy::create(0.2, 90));
+		    this->_player2->runAction(RotateBy::create(0.1, 90));
 		    break;
 	    }
 	    dirAnt2 = 1;
@@ -166,13 +166,13 @@ void KOTH::gameUpdate(float interval)
 	else if(right2) {
 	    switch(dirAnt2) {
 		case 0:
-		    this->_player2->runAction(RotateBy::create(0.2, 90));
+		    this->_player2->runAction(RotateBy::create(0.1, 90));
 		    break;
 		case 1:
-		    this->_player2->runAction(RotateBy::create(0.6, 270));
+		    this->_player2->runAction(RotateBy::create(0.1, -90));
 		    break;
 		case 2:
-		    this->_player2->runAction(RotateBy::create(0.4, 180));
+		    this->_player2->runAction(RotateBy::create(0.2, 180));
 		    break;
 		case 3:
 		    break;
@@ -184,15 +184,15 @@ void KOTH::gameUpdate(float interval)
 	else if(left2) {
 	   switch(dirAnt2) {
 		case 0:
-		    this->_player2->runAction(RotateBy::create(0.6, 270));
+		    this->_player2->runAction(RotateBy::create(0.1, -90));
 		    break;
 		case 1:
-		    this->_player2->runAction(RotateBy::create(0.2, 90));
+		    this->_player2->runAction(RotateBy::create(0.1, 90));
 		    break;
 		case 2:
 		    break;
 		case 3:
-		    this->_player2->runAction(RotateBy::create(0.4, 180));
+		    this->_player2->runAction(RotateBy::create(0.2, 180));
 		    break;
 	    }
 	    dirAnt2 = 2;
@@ -216,10 +216,6 @@ void KOTH::gameUpdate(float interval)
 		duration2 = duration2 + temp2;
 		log("DURATION 2 = %f", duration2);
 	}
-	
-
-
-    }
 
     /////////////////////////////////////////////
     // Para colisiones entre sprites
@@ -249,6 +245,65 @@ void KOTH::gameUpdate(float interval)
 	    log("Player 2 Life = %d", p2.getHealth());
 	    this->removeChild(minaP1[i]);
 	    actM1[i] = false;
+	}
+    }
+    if(actm1)
+    {
+    	locm1 = misil1->getPosition();
+	bbm1 = misil1->getBoundingBox();
+	log("dirAnt1 %d", dirAnt1);
+	switch (dirAnt1)
+	{
+		case 0:
+		    setMisil1Position(ccp(locm1.x,++locm1.y+3));
+		    break;
+		//this->misil1->runAction(RotateTo::create(0.1, 90));
+		case 1:
+		     setMisil1Position(ccp(locm1.x,--locm1.y-3));
+		     break;
+		//this->misil1->runAction(RotateTo::create(0.1, -90));
+		case 2:
+		    setMisil1Position(ccp(--locm1.x-3,locm1.y));
+		    break;			
+		//this->misil1->runAction(RotateTo::create(0.1, 0));
+		case 3:
+		    setMisil1Position(ccp(++locm1.x+3,locm1.y));			
+		//this->misil1->runAction(RotateTo::create(0.1, 180));
+	}
+	if(bbm1.intersectsRect(bbP2))
+	{
+		this->removeChild(misil1);
+		actm1 = false;
+		p2.setHealth(p2.getHealth()-20);
+		if(p2.getHealth()<0)
+		p2.setHealth(0);
+	}	
+    }
+    if(actm2)
+    {
+	locm2 = misil2->getPosition();
+	bbm2 = misil2->getBoundingBox();		
+	switch (dirAnt2)
+	{
+		case 0:
+		    setMisil2Position(ccp(locm2.x,++locm2.y+3));
+		    break;
+		case 1:
+		    setMisil2Position(ccp(locm2.x,--locm2.y-3));
+		    break;
+		case 2:
+		    setMisil2Position(ccp(--locm2.x-3,locm2.y));
+		    break;
+		case 3:
+		    setMisil2Position(ccp(++locm2.x+3,locm2.y));
+	}
+	if(bbm2.intersectsRect(bbP1))
+	{
+		this->removeChild(misil2);
+		actm2 = false;
+		p1.setHealth(p1.getHealth()-20);
+		if(p1.getHealth()<0)
+		p1.setHealth(0);
 	}
     }
     ///////////////////////////////////////
@@ -305,6 +360,7 @@ void KOTH::gameUpdate(float interval)
 	}
 	
      }
+   }
 
 }
 
@@ -328,7 +384,7 @@ void KOTH::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
  	case EventKeyboard::KeyCode::KEY_S:
 	    down1 = true;
 	    break;
-	case EventKeyboard::KeyCode::KEY_C:
+	case EventKeyboard::KeyCode::KEY_Q:
 	    if(cantM1>0){
 		for(i=0; i<3; i++) {
 		    if(actM1[i]==false) {
@@ -344,7 +400,24 @@ void KOTH::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 		}
 	    }
 	    break;
-
+	case EventKeyboard::KeyCode::KEY_E:
+	    if(actm1==false) {
+		misil1 = Sprite::create("c1.png");
+		misil1->setPosition(_player1->getPosition());
+		misil1->setScale(0.4);
+		this->addChild(misil1);
+		actm1 = true;
+	    }
+	    break;
+	case EventKeyboard::KeyCode::KEY_U:
+	    if(actm2==false) {
+		misil2 = Sprite::create("c1.png");
+		misil2->setPosition(_player2->getPosition());
+		misil2->setScale(0.4);
+		this->addChild(misil2);
+		actm2 = true;
+	    }
+	    break;
 	case EventKeyboard::KeyCode::KEY_J:
 	    left2 = true;
 	    break;
@@ -444,9 +517,46 @@ void KOTH::setPlayer2Position(Point position)
     _player2->setPosition(position);
 }
 
+void KOTH::setMisil1Position(Point position)
+{
+    Point tileCoord = this->tileCoordForPosition(position);
+    int tileGid = _blockage->getTileGIDAt(tileCoord);
+    if (tileGid) {
+        auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
+        if (!properties.empty()) {
+            auto collision = properties["Collision"].asString();
+            if ("True" == collision) {
+	    this->removeChild(misil1);
+	    actm1 = false;
+	    log("COLISION");
+            return;
+            }
+        }else return;
+    }
+    misil1->setPosition(position);
+}
+
+void KOTH::setMisil2Position(Point position)
+{
+    Point tileCoord = this->tileCoordForPosition(position);
+    int tileGid = _blockage->getTileGIDAt(tileCoord);
+    if (tileGid) {
+        auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
+        if (!properties.empty()) {
+            auto collision = properties["Collision"].asString();
+            if ("True" == collision) {
+		this->removeChild(misil2);
+		actm2 = false;
+		log("COLISION");
+                return;
+            }
+        }else return;
+    }
+    misil2->setPosition(position);
+}
+
 void KOTH::KOTHCounter1(Point position)
 {
-    //double temp;
     Point tileCoord = this->tileCoordForPosition(position);
     int tileGid = _blockage->getTileGIDAt(tileCoord);
     log("tileGid = %d", tileGid);
@@ -464,14 +574,7 @@ void KOTH::KOTHCounter1(Point position)
 		log("FELipao");
 	    }
 	}
-		//end = std::chrono::system_clock::now();
-		//temp = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-		//duration1 = duration1 + temp;
-		//log("DURATION 1 = %f", duration1);
-		//return;
-        //}else
-	//	dentro = false;
-	 //return;
+		
     }
 
 }
@@ -525,11 +628,10 @@ bool KOTH::init()
         return false;
     }
 
-    for (int i=0; i<3; i++) {
+    for (i=0; i<3; i++) {
 	actM1[i] = false;
 	actM2[i] = false;
     }
-
     
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -582,7 +684,7 @@ bool KOTH::init()
     _player2->setPosition(ccp(x2,y2));
     _player2->setScale(0.4);
     addChild(_player2);
-    _player2->runAction(RotateBy::create(0.01, 180));
+    _player2->runAction(RotateBy::create(0.001, 180));
 
     	
    //seccion de movimiento
@@ -640,14 +742,14 @@ void KOTH::createButtons(Size visibleSize)
     // Boton para volver al menu de inicio
     auto mbVolver = MenuItemFont::create("Menu de Inicio", CC_CALLBACK_1(KOTH::VolverCallBack, this));
     mbVolver->setAnchorPoint(Vec2(0.0,0.0));
-    mbVolver->setPosition(0, 0);
+    mbVolver->setPosition(0, visibleSize.height/15);
     mbVolver->setColor(Color3B(240, 230, 140));
 
     // Se crea un boton de salir
     auto closeItem = MenuItemImage::create("CloseNormal.png", "CloseSelected.png",
                                            CC_CALLBACK_1(KOTH::menuCloseCallback, this));
     closeItem->setPosition(Vec2(origin.x + visibleSize.width - closeItem->getContentSize().width/2 ,
-                                origin.y + closeItem->getContentSize().height/2));
+                                origin.y + closeItem->getContentSize().height/2 + visibleSize.height/15));
     auto menu = Menu::create(mbVolver, closeItem, NULL);
     menu->setPosition(Vec2::ZERO);
     this->addChild(menu, 2);
