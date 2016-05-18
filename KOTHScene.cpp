@@ -10,6 +10,7 @@ USING_NS_CC;
 using namespace cocos2d;
 using namespace std::chrono;
 
+int x,y,x2,y2;
 high_resolution_clock::time_point start1, start2, crono;
 bool dentro1, dentro2, stop;
 double temp1, temp2, timeElapsed;
@@ -251,8 +252,24 @@ void KOTH::gameUpdate(float interval)
 	}
     }
     ///////////////////////////////////////
+    //Spawneo
+	if(!p2.getHealth())
+	{
+		setPlayer2Position(ccp(x2,y2));
+		p2.setHealth(100);
+		
+	}
+	if(!p1.getHealth())
+	{
+		setPlayer1Position(ccp(x,y));
+		p1.setHealth(100);
+		
+	}
+
+
+    ///////////////////////////////////////
     //Game Over
-    if(timeElapsed>20)
+    if(timeElapsed>90)
     {
 	pause = true;
 	audio->stopBackgroundMusic();
@@ -530,9 +547,11 @@ bool KOTH::init()
     ///// Manejo de fondos
     //Se carga el mapa y se hacen los collisions tiles con los que el tanque tiene que chocar
     tileMap = new CCTMXTiledMap();    
-    tileMap->initWithTMXFile("desert.tmx");
-    _blockage = tileMap->layerNamed("Blockage01");
+    tileMap->initWithTMXFile("KOTH.tmx");
+    _blockage = tileMap->layerNamed("Collision");
     _blockage->setVisible(false);
+   // _koth = tileMap->layerNamed("KOTH");
+  //  _koth->setVisible(false);
 
     tileMap->setPosition(origin.x,origin.y);
     this->addChild(tileMap);
@@ -544,24 +563,24 @@ bool KOTH::init()
     initPlayerStatus();
 
     //Se crea el sprite de player 1
-    auto Player = objects->getObject("Player");
+    auto Player = objects->getObject("Player1");
     CCASSERT(!Player.empty(),"Player object not found");
-    int x = Player["x"].asInt();
-    int y = Player["y"].asInt();
+     x = Player["x"].asInt();
+     y = Player["y"].asInt();
     _player1 = p1.getPlayer();
     _player1 =Sprite::create("tank3.png");
-    setPlayer1Position(ccp(x-50,y-50));
-    _player1->setScale(0.3);
+    setPlayer1Position(ccp(x,y));
+    _player1->setScale(0.4);
     addChild(_player1);
 
     //Se crea el sprite de player 2
     auto Player2 = objects->getObject("Player2");
-    int x2 = Player2["x"].asInt();
-    int y2 = Player2["y"].asInt();
+     x2 = Player2["x"].asInt();
+     y2 = Player2["y"].asInt();
     _player2 = p2.getPlayer();
     _player2 = Sprite::create("tank3.png");
     _player2->setPosition(ccp(x2,y2));
-    _player2->setScale(0.3);
+    _player2->setScale(0.4);
     addChild(_player2);
     _player2->runAction(RotateBy::create(0.01, 180));
 
@@ -591,7 +610,7 @@ bool KOTH::init()
     pausa->onKeyPressed = [=](cocos2d::EventKeyboard::KeyCode tecla, cocos2d::Event * event)->void{
 	if (tecla == cocos2d::EventKeyboard::KeyCode::KEY_SPACE){
 	    if (pause){
-		label->setString("Rey de la Colina");
+		label->setString("King of the Hill");
 		Director::sharedDirector()->resume();
 	    }
 	    else {

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="24" tilewidth="32" tileheight="32" nextobjectid="5">
+ <tileset firstgid="1" name="rpg1" tilewidth="32" tileheight="32" tilecount="2016" columns="32">
+  <image source="rpg1.png" width="1024" height="2016"/>
+  <tile id="129">
+   <properties>
+    <property name="KOTH" value="True"/>
+   </properties>
+  </tile>
+  <tile id="263">
+   <properties>
+    <property name="Collision" value="True"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="2017" name="tmw_desert_spacing" tilewidth="32" tileheight="32" tilecount="48" columns="8">
+  <image source="tmw_desert_spacing.png" width="265" height="199"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJw7zcDAcHoUj+JRPCD4NQ48UPYPZBgMdFyM4lE8ikfxKB7FIwGvAWIA2J1igA==
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJzFlrtOwzAUhi03lIegK4IdJJBgRUXdEEgtgoml0BVEi+jUqbBxE9eRgbF0g7kzC3cYkXgB7kwcyzY5OdhOWkr4pU8ntVx/PZaTNJNkxmTI+CVn7Ir7VeeaS244aykFi5+Ov8D6r9yvOm9c8t6i/y8y58H+hVDwfn5vxrIXIsdcUldV54RLTtFYmFtDU7H4e2DtNcW6QmeXS/a4nGfzi95MfnrOvntA42ke7L9u6T/t8Fcs/ijnLw/rnisuVNXB5z/v8EfZf5EOw++pwrpPimdVdfD5r7bB3+04g1GzEsG9avGPtMHfTPqAflTjzjgwgaorY4TaP/hr5Df8NvOIhQh+iilDQMrCMJm7gdhk5vtP58yAKcLTZSEV4nfdf1H9U8ze/zSZ+5CQPCbkZ9f9J3yTyWA1ZRkoq0opk7kDwCCqrgjfUjJY78lzRPSyD/Ugoj8L5FA15RYcd56/54ed/jX1MxbsX8xtxi/eob3AIlr3A64/kb8R4sf9N5Bfj+MUgRKq2r9leT63O9vADqriHT4a43852v8RuGeBLPSfi2EPaP8i4j1eBHcpBv8XxBibAA==
+  </data>
+ </layer>
+ <layer name="Tile Layer 3" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJxjYCAesLLilmNDkmNlI8IsItSgA1U89qshyakSYTYxasgFrkCz+1kgeAILQhzGB2FXGtpPb/BsGPkFH+hgJk4dvrT9iI2wGlxgBZH2j6Z/4oEGnjJlsIGDRMY/ueAljc3HBx4OYHrAV69hU3ecibr2g+o1DVbCaRG9/hvIMCMFsJEYvtQAJ5DiSA2PuezI7QYC9qOX2fjK8FdMmHyQevQ4UyfBz+hlNqllOCH1Dwmka/Qym9QyHJd6asY7OYBQvNMLDERdBACyPRiL
+  </data>
+ </layer>
+ <objectgroup name="Objects">
+  <object id="2" name="Player1" x="562" y="431" width="72" height="119"/>
+  <object id="3" name="Player2" x="205" y="433" width="75" height="118"/>
+ </objectgroup>
+ <layer name="Collision" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJzdlEsOwCAIRO3Oc/fk3RrCb2TEpCQsrDpvsMp8xpiXUwv53doT6Xix7nuXrEbGq5z3+N6ZddSvMaNapaamjfCtMYvvMbPnz+Rr61B+Vpcd6P2v1MD02cne4bP9/pWfvV8n+Z7GLb5VvzVm8+Uc+v4z6zMaKB/tV1U+2jd3/VbrQt+/9a/YfQXx4/FP+4jOvyM/JnwYnQ==
+  </data>
+ </layer>
+</map>

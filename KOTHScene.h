@@ -20,6 +20,7 @@ public:
     virtual bool init();
 
     CCTMXLayer *_blockage;
+   // CCTMXLayer *_koth;
 
     //Cosas para los fondos
     void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
