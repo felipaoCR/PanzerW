@@ -31,7 +31,7 @@ public:
     void setMisil2Position(Point position);
     Point tileCoordForPosition(Point _position);
     bool isKeyPressed(cocos2d::EventKeyboard::KeyCode);
-    double keyPressedDuration(cocos2d::EventKeyboard::KeyCode);	
+    double keyPressedDuration(cocos2d::EventKeyboard::KeyCode);
     void ModoArcadePlayerPosition(Point position);
     void initPlayerStatus();
     //Para movimiento continuo
@@ -43,7 +43,7 @@ public:
     void menuCloseCallback(cocos2d::Ref* pSender);
     void VolverCallBack(cocos2d::Ref* pSender);
     void createButtons(cocos2d::Size size);
-    
+
     // implement the "static create()" method manually
     CREATE_FUNC(KOTH);
 private:
@@ -52,7 +52,7 @@ private:
     double duration1=0, duration2=0;
     bool pause = false;
     bool stop = false;
-    Sprite *_player1, *_player2, *sprite, *minaP1[3], *minaP2[3], *misil1, *misil2;
+    Sprite *_player1, *_player2, *sprite, *minaP1[3], *minaP2[3], *misil1, *misil2, *HB1, *HB2;
     CCTMXTiledMap *tileMap;
     CCTMXLayer *background;
     bool up1 = false, down1 = false, right1 = false, left1 = false; //Para control del player 1
@@ -61,7 +61,7 @@ private:
     int cantM1 = 5, cantM2 = 5; //Cantidad inicial de minas
     bool actM1[3], actM2[3], actm1 = false, actm2 = false; //Maximo de minas y misiles a la vez
     int i; //Para recorrer arreglos
-    int dirAnt1 = 1, dirAnt2 = 0; //Direccion anterior: 0 up, 1 down, 2 left, 3 right
+    int dirAnt1 = 1, dirAnt2 = 1; //Direccion anterior: 0 up, 1 down, 2 left, 3 right
 };
 
 #endif // __KOTH_Scene_H__

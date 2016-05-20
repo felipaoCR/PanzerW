@@ -37,24 +37,24 @@ void KOTH::initPlayerStatus()
 	p2.setDefence(5);
 	p2.setAttack(p2.getDefence());
 	p2.setSpeed(2);
-	
+
 }
 
 void KOTH::gameUpdate(float interval)
 {
     ////////////////////////////////////////////////////////////
     // Movimiento Jugadores
-	
+
 
     loc1 = _player1->getPosition();
     loc2 = _player2->getPosition();
     if(!pause) {
-        timeElapsed = std::chrono::duration<double, std::milli>(std::chrono::high_resolution_clock::now()-crono).count() /1000;    
+        timeElapsed = std::chrono::duration<double, std::milli>(std::chrono::high_resolution_clock::now()-crono).count() /1000;
         log("Tiempo = %lf", timeElapsed);
 	dentro1 = false;
 	dentro2 = false;
 	KOTHCounter1(loc1);
-	KOTHCounter2(loc2);	
+	KOTHCounter2(loc2);
 	if(up1) {
 	    switch(dirAnt1) {
 		case 0:
@@ -203,7 +203,7 @@ void KOTH::gameUpdate(float interval)
 
 	////////////////////////////////////////////////////////
 	// pARA TIempo
-	
+
 	if(dentro1) {
 		//temp = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
 		temp1 = std::chrono::duration<double, std::milli>( high_resolution_clock::now() - start1 ).count();
@@ -211,7 +211,7 @@ void KOTH::gameUpdate(float interval)
 		log("DURATION 1 = %f", duration1);
 	}
 	if(dentro2) {
-		temp2 = std::chrono::duration<double, std::milli>( high_resolution_clock::now() - start2 ).count();	
+		temp2 = std::chrono::duration<double, std::milli>( high_resolution_clock::now() - start2 ).count();
 		//temp = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
 		duration2 = duration2 + temp2;
 		log("DURATION 2 = %f", duration2);
@@ -264,10 +264,10 @@ void KOTH::gameUpdate(float interval)
 		//this->misil1->runAction(RotateTo::create(0.1, -90));
 		case 2:
 		    setMisil1Position(ccp(--locm1.x-3,locm1.y));
-		    break;			
+		    break;
 		//this->misil1->runAction(RotateTo::create(0.1, 0));
 		case 3:
-		    setMisil1Position(ccp(++locm1.x+3,locm1.y));			
+		    setMisil1Position(ccp(++locm1.x+3,locm1.y));
 		//this->misil1->runAction(RotateTo::create(0.1, 180));
 	}
 	if(bbm1.intersectsRect(bbP2))
@@ -277,12 +277,12 @@ void KOTH::gameUpdate(float interval)
 		p2.setHealth(p2.getHealth()-20);
 		if(p2.getHealth()<0)
 		p2.setHealth(0);
-	}	
+	}
     }
     if(actm2)
     {
 	locm2 = misil2->getPosition();
-	bbm2 = misil2->getBoundingBox();		
+	bbm2 = misil2->getBoundingBox();
 	switch (dirAnt2)
 	{
 		case 0:
@@ -312,14 +312,132 @@ void KOTH::gameUpdate(float interval)
 	{
 		setPlayer2Position(ccp(x2,y2));
 		p2.setHealth(100);
-		
+
 	}
 	if(!p1.getHealth())
 	{
 		setPlayer1Position(ccp(x,y));
 		p1.setHealth(100);
-		
+
 	}
+  /////////////////////////////////////////
+  //Health bar player 1
+  switch (p1.getHealth()) {
+    case 100:
+      removeChild(HB1);
+      HB1 = Sprite::create("healthBar.png");
+      HB1->setPosition(ccp(x-400,y+525));
+      HB1->setScaleX(0.9);
+      addChild(HB1);
+      break;
+    case 80:
+      removeChild(HB1);
+      HB1 = Sprite::create("healthBar.png");
+      HB1->setPosition(ccp(x-400,y+525));
+      HB1->setScaleX(0.72);
+      addChild(HB1);
+      break;
+    case 60:
+      removeChild(HB1);
+      HB1 = Sprite::create("healthBar.png");
+      HB1->setPosition(ccp(x-400,y+525));
+      HB1->setScaleX(0.54);
+      addChild(HB1);
+      break;
+    case 50:
+      removeChild(HB1);
+      HB1 = Sprite::create("healthBar.png");
+      HB1->setPosition(ccp(x-400,y+525));
+      HB1->setScaleX(0.45);
+      addChild(HB1);
+      break;
+    case 40:
+      removeChild(HB1);
+      HB1 = Sprite::create("healthBar.png");
+      HB1->setPosition(ccp(x-400,y+525));
+      HB1->setScaleX(0.36);
+      addChild(HB1);
+      break;
+    case 30:
+        removeChild(HB1);
+        HB1 = Sprite::create("healthBar.png");
+        HB1->setPosition(ccp(x-400,y+525));
+        HB1->setScaleX(0.27);
+        addChild(HB1);
+        break;
+    case 20:
+        removeChild(HB1);
+        HB1 = Sprite::create("healthBar.png");
+        HB1->setPosition(ccp(x-400,y+525));
+        HB1->setScaleX(0.18);
+        addChild(HB1);
+        break;
+    case 10:
+        removeChild(HB1);
+        HB1 = Sprite::create("healthBar.png");
+        HB1->setPosition(ccp(x-400,y+525));
+        HB1->setScaleX(0.09);
+        addChild(HB1);
+        break;
+  }
+  switch (p2.getHealth()) {
+    case 100:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(ccp(x+300,y+525));
+      HB2->setScaleX(0.9);
+      addChild(HB2);
+      break;
+    case 80:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(ccp(x+300,y+525));
+      HB2->setScaleX(0.72);
+      addChild(HB2);
+      break;
+    case 60:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(ccp(x+300,y+525));
+      HB2->setScaleX(0.54);
+      addChild(HB2);
+      break;
+    case 50:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(ccp(x+300,y+525));
+      HB2->setScaleX(0.45);
+      addChild(HB2);
+      break;
+    case 40:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(ccp(x+300,y+525));
+      HB2->setScaleX(0.36);
+      addChild(HB2);
+      break;
+    case 30:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(ccp(x+300,y+525));
+      HB2->setScaleX(0.27);
+      addChild(HB2);
+      break;
+    case 20:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(ccp(x+300,y+525));
+      HB2->setScaleX(0.18);
+      addChild(HB2);
+      break;
+    case 10:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(ccp(x+300,y+525));
+      HB2->setScaleX(0.09);
+      addChild(HB2);
+      break;
+  }
 
 
     ///////////////////////////////////////
@@ -346,7 +464,7 @@ void KOTH::gameUpdate(float interval)
                             ori2.y + vS2.height/2));
 	gameOver2->enableOutline(Color4B(0,255,0,255),5);
     	this->addChild(gameOver2, 1);
-		    
+
 	}
 	if(duration2==duration1)
 	{
@@ -358,7 +476,7 @@ void KOTH::gameUpdate(float interval)
 	gameOver3->enableOutline(Color4B(255,0,255,255),3);
     	this->addChild(gameOver3, 1);
 	}
-	
+
      }
    }
 
@@ -568,13 +686,13 @@ void KOTH::KOTHCounter1(Point position)
 		log("KOTH");
 		start1 = high_resolution_clock::now();
 		dentro1 = true;
-                
+
             } else {
 		dentro1 = false;
 		log("FELipao");
 	    }
 	}
-		
+
     }
 
 }
@@ -596,7 +714,7 @@ void KOTH::KOTHCounter2(Point position)
 		dentro2 = false;
 		//log("FELIPAO2");
             }
-		
+
         }
     }
 
@@ -606,7 +724,7 @@ Scene* KOTH::createScene()
 {
     // 'scene' is an autorelease object
     auto scene = Scene::create();
-    
+
     // 'layer' is an autorelease object
     auto layer = KOTH::create();
 
@@ -632,13 +750,13 @@ bool KOTH::init()
 	actM1[i] = false;
 	actM2[i] = false;
     }
-    
+
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     KOTH::createButtons(visibleSize);
 
-    //Se agrega una etiqueta con el titulo    
+    //Se agrega una etiqueta con el titulo
     auto label = Label::createWithTTF("King of the Hill", "fonts/Marker Felt.ttf", 32);
     label->setPosition(Vec2(origin.x + visibleSize.width/2,
                             origin.y + visibleSize.height - label->getContentSize().height));
@@ -648,7 +766,7 @@ bool KOTH::init()
     /////////////////////////////////
     ///// Manejo de fondos
     //Se carga el mapa y se hacen los collisions tiles con los que el tanque tiene que chocar
-    tileMap = new CCTMXTiledMap();    
+    tileMap = new CCTMXTiledMap();
     tileMap->initWithTMXFile("KOTH.tmx");
     _blockage = tileMap->layerNamed("Collision");
     _blockage->setVisible(false);
@@ -658,7 +776,7 @@ bool KOTH::init()
     tileMap->setPosition(origin.x,origin.y);
     this->addChild(tileMap);
     //Se obtiene la layer de objetos 'palpables' por el juego
-    TMXObjectGroup *objects = tileMap->getObjectGroup("Objects");	
+    TMXObjectGroup *objects = tileMap->getObjectGroup("Objects");
     CCASSERT(NULL!=objects, "'Object Layer 1' object group not found");
 
     //Se inician los estados de los players
@@ -684,9 +802,19 @@ bool KOTH::init()
     _player2->setPosition(ccp(x2,y2));
     _player2->setScale(0.4);
     addChild(_player2);
-    _player2->runAction(RotateBy::create(0.001, 180));
+    //_player2->runAction(RotateBy::create(0.001, 180));
 
-    	
+    //Se crea sprite health bar de player 1
+    HB1 = Sprite::create("healthBar.png");
+    HB1->setPosition(ccp(x-400,y+525));
+    HB1->setScale(0.9);
+	addChild(HB1);
+   //Se crea sprite health bar de player 2
+   	HB2 = Sprite::create("healthBar.png");
+    HB2->setPosition(ccp(x+300,y+525));
+    HB2->setScale(0.9);
+	addChild(HB2);
+
    //seccion de movimiento
    auto eventListener = EventListenerKeyboard::create();
    eventListener->onKeyPressed = CC_CALLBACK_2(KOTH::onKeyPressed, this);
@@ -702,9 +830,9 @@ bool KOTH::init()
 
 
     // set the background music and continuously play it.
-    audio->preloadBackgroundMusic("Audio/track01.mp3");
+    audio->preloadBackgroundMusic("Audio/mgs3.mp3");
     //audio->preloadBackgroundMusic("Audio/ff7.mp3");
-    audio->playBackgroundMusic("Audio/track01.mp3", true);
+    audio->playBackgroundMusic("Audio/mgs3.mp3", true);
     crono = high_resolution_clock::now();
 
     // Pausa o continua el juego
@@ -724,9 +852,9 @@ bool KOTH::init()
     };
 
     // Game over
-    
 
-    this->_eventDispatcher->addEventListenerWithSceneGraphPriority(pausa,this); 
+
+    this->_eventDispatcher->addEventListenerWithSceneGraphPriority(pausa,this);
 
 
 
