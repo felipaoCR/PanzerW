@@ -23,11 +23,13 @@ public:
     //Inicio atributos de jugadores: salud, defensa...
     void initPlayerStatus();
 
-    //Cosas para los fondos
+    //Cosas para los fondos y sprites
     void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
     void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
     void setPlayer1Position(Point position);
     void setPlayer2Position(Point position);
+    void setMisil1Position(Point position);
+    void setMisil2Position(Point position);
     Point tileCoordForPosition(Point _position);
     bool isKeyPressed(cocos2d::EventKeyboard::KeyCode);
     double keyPressedDuration(cocos2d::EventKeyboard::KeyCode);	
@@ -35,27 +37,34 @@ public:
 
     //Para actualizar el juego
     void gameUpdate(float interval);
+
+    //Explosiones
+    void explosion(Sprite *player);
     
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
     void VolverCallBack(cocos2d::Ref* pSender);
     void createButtons(cocos2d::Size size);
-    //void gameOver(Ref* pSender);
     
     // implement the "static create()" method manually
     CREATE_FUNC(Batalla);
 private:
     Player p1, p2;
-    bool pause = false;
+    Vec2 loc1, loc2, locm1, locm2;
+    Size visibleSize; //Para puntos de referencia de la pantalla
+    Vec2 origin;
+    bool pause = false, exp = false;
     bool game_Over = false;
-    Sprite *_player1, *_player2, *sprite, *minaP1[3], *minaP2[3], *misil;
+    Sprite *_player1, *_player2, *sprite, *minaP1[3], *minaP2[3], *misil1, *misil2, *HB1, *HB2, *explode;
     CCTMXTiledMap *tileMap;
     CCTMXLayer *background;
     bool up1 = false, down1 = false, right1 = false, left1 = false; //Para control del player 1
     bool up2 = false, down2 = false, right2 = false, left2 = false; //Para control del player 2
     Rect bbP1, bbP2, bbM1[3], bbM2[3], bbm1, bbm2; //Para las colisiones con las minas
     int cantM1 = 5, cantM2 = 5; //Cantidad inicial de minas
-    bool actM1[3], actM2[3], actm1[3], actm2[3]; //Maximo de minas y misiles a la vez
+    bool actM1[3], actM2[3], actm1 = false, actm2 = false; //Maximo de minas y misiles a la vez
+    bool explodeP1 = false, explodeP2 = false; //Animacion de explocion
+    Animate *_explosionAnimation;
     int i; //Para recorrer arreglos
     int dirAnt1 = 1, dirAnt2 = 0; //Direccion anterior: 0 up, 1 down, 2 left, 3 right
 };

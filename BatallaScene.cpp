@@ -1,10 +1,17 @@
 #include "BatallaScene.h"
 #include "PanzerWarsScene.h"
 #include "SimpleAudioEngine.h"
+#include <chrono>
+#include <ctime>
+#include <thread>
+#include <unistd.h>
 
 
 USING_NS_CC;
 using namespace cocos2d;
+using namespace std;
+
+//high_resolution_clock::time_point start1, start2, crono;
 
 ////////////////////////////////
 //Manejo de fondos y movimientos
@@ -34,21 +41,21 @@ void Batalla::gameUpdate(float interval)
 {
     ////////////////////////////////////////////////////////////
     // Movimiento Jugadores
-    Vec2 loc1 = _player1->getPosition();
-    Vec2 loc2 = _player2->getPosition();
+    loc1 = _player1->getPosition();
+    loc2 = _player2->getPosition();
     if(!pause) {
 	if(up1) {
 	    switch(dirAnt1) {
 		case 0:
 		    break;
 		case 1:
-		    this->_player1->runAction(RotateBy::create(0.4, 180));
+		    this->_player1->runAction(RotateBy::create(0.1, 180));
 		    break;
 		case 2:
-		    this->_player1->runAction(RotateBy::create(0.2, 90));
+		    this->_player1->runAction(RotateBy::create(0.1, 90));
 		    break;
 		case 3:
-		    this->_player1->runAction(RotateBy::create(0.6, 270));
+		    this->_player1->runAction(RotateBy::create(0.1, -90));
 		    break;
 	    }
 	    dirAnt1 = 0;
@@ -57,15 +64,15 @@ void Batalla::gameUpdate(float interval)
 	else if(down1) {
 	    switch(dirAnt1) {
 		case 0:
-		    this->_player1->runAction(RotateBy::create(0.4, 180));
+		    this->_player1->runAction(RotateBy::create(0.2, 180));
 		    break;
 		case 1:
 		    break;
 		case 2:
-		    this->_player1->runAction(RotateBy::create(0.6, 270));
+		    this->_player1->runAction(RotateBy::create(0.1, -90));
 		    break;
 		case 3:
-		    this->_player1->runAction(RotateBy::create(0.2, 90));
+		    this->_player1->runAction(RotateBy::create(0.1, 90));
 		    break;
 	    }
 	    dirAnt1 = 1;
@@ -74,13 +81,13 @@ void Batalla::gameUpdate(float interval)
 	else if(right1) {
 	    switch(dirAnt1) {
 		case 0:
-		    this->_player1->runAction(RotateBy::create(0.2, 90));
+		    this->_player1->runAction(RotateBy::create(0.1, 90));
 		    break;
 		case 1:
-		    this->_player1->runAction(RotateBy::create(0.6, 270));
+		    this->_player1->runAction(RotateBy::create(0.1, -90));
 		    break;
 		case 2:
-		    this->_player1->runAction(RotateBy::create(0.4, 180));
+		    this->_player1->runAction(RotateBy::create(0.2, 180));
 		    break;
 		case 3:
 		    break;
@@ -91,15 +98,15 @@ void Batalla::gameUpdate(float interval)
 	else if(left1) {
 	    switch(dirAnt1) {
 		case 0:
-		    this->_player1->runAction(RotateBy::create(0.6, 270));
+		    this->_player1->runAction(RotateBy::create(0.1, -90));
 		    break;
 		case 1:
-		    this->_player1->runAction(RotateBy::create(0.2, 90));
+		    this->_player1->runAction(RotateBy::create(0.1, 90));
 		    break;
 		case 2:
 		    break;
 		case 3:
-		    this->_player1->runAction(RotateBy::create(0.4, 180));
+		    this->_player1->runAction(RotateBy::create(0.2, 180));
 		    break;
 	    }
 	    dirAnt1 = 2;
@@ -110,13 +117,13 @@ void Batalla::gameUpdate(float interval)
 		case 0:
 		    break;
 		case 1:
-		    this->_player2->runAction(RotateBy::create(0.4, 180));
+		    this->_player2->runAction(RotateBy::create(0.2, 180));
 		    break;
 		case 2:
-		    this->_player2->runAction(RotateBy::create(0.2, 90));
+		    this->_player2->runAction(RotateBy::create(0.1, 90));
 		    break;
 		case 3:
-		    this->_player2->runAction(RotateBy::create(0.6, 270));
+		    this->_player2->runAction(RotateBy::create(0.1, -90));
 		    break;
 	    }
 	    dirAnt2 = 0;
@@ -125,15 +132,15 @@ void Batalla::gameUpdate(float interval)
 	else if(down2) {
 	    switch(dirAnt2) {
 		case 0:
-		    this->_player2->runAction(RotateBy::create(0.4, 180));
+		    this->_player2->runAction(RotateBy::create(0.2, 180));
 		    break;
 		case 1:
 		    break;
 		case 2:
-		    this->_player2->runAction(RotateBy::create(0.6, 270));
+		    this->_player2->runAction(RotateBy::create(0.1, -90));
 		    break;
 		case 3:
-		    this->_player2->runAction(RotateBy::create(0.2, 90));
+		    this->_player2->runAction(RotateBy::create(0.1, 90));
 		    break;
 	    }
 	    dirAnt2 = 1;
@@ -142,13 +149,13 @@ void Batalla::gameUpdate(float interval)
 	else if(right2) {
 	    switch(dirAnt2) {
 		case 0:
-		    this->_player2->runAction(RotateBy::create(0.2, 90));
+		    this->_player2->runAction(RotateBy::create(0.1, 90));
 		    break;
 		case 1:
-		    this->_player2->runAction(RotateBy::create(0.6, 270));
+		    this->_player2->runAction(RotateBy::create(0.1, -90));
 		    break;
 		case 2:
-		    this->_player2->runAction(RotateBy::create(0.4, 180));
+		    this->_player2->runAction(RotateBy::create(0.2, 180));
 		    break;
 		case 3:
 		    break;
@@ -159,15 +166,15 @@ void Batalla::gameUpdate(float interval)
 	else if(left2) {
 	   switch(dirAnt2) {
 		case 0:
-		    this->_player2->runAction(RotateBy::create(0.6, 270));
+		    this->_player2->runAction(RotateBy::create(0.1, -90));
 		    break;
 		case 1:
-		    this->_player2->runAction(RotateBy::create(0.2, 90));
+		    this->_player2->runAction(RotateBy::create(0.1, 90));
 		    break;
 		case 2:
 		    break;
 		case 3:
-		    this->_player2->runAction(RotateBy::create(0.4, 180));
+		    this->_player2->runAction(RotateBy::create(0.2, 180));
 		    break;
 	    }
 	    dirAnt2 = 2;
@@ -205,19 +212,317 @@ void Batalla::gameUpdate(float interval)
 	    actM1[i] = false;
 	}
     }
+    /////////////////////////////////////////
+        if(actm1)
+    {
+    	locm1 = misil1->getPosition();
+	bbm1 = misil1->getBoundingBox();
+	switch (dirAnt1)
+	{
+		case 0:
+		    setMisil1Position(ccp(locm1.x,++locm1.y+3));
+		    break;
+		//this->misil1->runAction(RotateTo::create(0.1, 90));
+		case 1:
+		     setMisil1Position(ccp(locm1.x,--locm1.y-3));
+		     break;
+		//this->misil1->runAction(RotateTo::create(0.1, -90));
+		case 2:
+		    setMisil1Position(ccp(--locm1.x-3,locm1.y));
+		    break;
+		//this->misil1->runAction(RotateTo::create(0.1, 0));
+		case 3:
+		    setMisil1Position(ccp(++locm1.x+3,locm1.y));
+		//this->misil1->runAction(RotateTo::create(0.1, 180));
+	}
+	if(bbm1.intersectsRect(bbP2))
+	{
+		this->removeChild(misil1);
+		actm1 = false;
+		p2.setHealth(p2.getHealth()-20);
+		if(p2.getHealth()<0)
+		p2.setHealth(0);
+	}
+	for(i=0; i<3; i++) {
+	    if((actM2[i]) && bbm1.intersectsRect(bbM2[i])) {
+		this->removeChild(minaP2[i]);
+		actM2[i] = false;
+		explosion(misil1);
+		//std::this_thread::sleep_for(std::chrono::seconds(2));
+		this->removeChild(misil1);
+		actm1 = false;
+	    }
+	}
+    }
+    if(actm2)
+    {
+	locm2 = misil2->getPosition();
+	bbm2 = misil2->getBoundingBox();
+	switch (dirAnt2)
+	{
+		case 0:
+		    setMisil2Position(ccp(locm2.x,++locm2.y+3));
+		    break;
+		case 1:
+		    setMisil2Position(ccp(locm2.x,--locm2.y-3));
+		    break;
+		case 2:
+		    setMisil2Position(ccp(--locm2.x-3,locm2.y));
+		    break;
+		case 3:
+		    setMisil2Position(ccp(++locm2.x+3,locm2.y));
+	}
+	if(bbm2.intersectsRect(bbP1))
+	{
+		this->removeChild(misil2);
+		actm2 = false;
+		p1.setHealth(p1.getHealth()-20);
+		if(p1.getHealth()<0)
+		p1.setHealth(0);
+	}
+	for(i=0; i<3; i++) {
+	    if((actM1[i]) && bbm2.intersectsRect(bbM1[i])) {
+		this->removeChild(minaP1[i]);
+		actM1[i] = false;
+		explosion(misil2);
+		//std::this_thread::sleep_for(std::chrono::seconds(2));
+		actm2 = false;
+		this->removeChild(misil2);
+	    }
+	}
+	if(actm1) {
+	    if(bbm1.intersectsRect(bbm2)) {
+		explosion(misil2);
+		//std::this_thread::sleep_for(std::chrono::seconds(5));
+		actm2 = false;
+		this->removeChild(misil2);
+		actm1 = false;
+		this->removeChild(misil1);
+	    }
+	}
+    }
+    ////////////////////////////////////
+    /// Barras de vida
+  switch (p1.getHealth()) {
+    case 100:
+      removeChild(HB1);
+      HB1 = Sprite::create("healthBar.png");
+      HB1->setPosition(Vec2(3*visibleSize.width/16, 15*visibleSize.height/16));
+      HB1->setScaleX(0.9);
+      addChild(HB1);
+      break;
+    case 80:
+      removeChild(HB1);
+      HB1 = Sprite::create("healthBar.png");
+      HB1->setPosition(Vec2(3*visibleSize.width/16, 15*visibleSize.height/16));
+      HB1->setScaleX(0.72);
+      addChild(HB1);
+      break;
+    case 60:
+      removeChild(HB1);
+      HB1 = Sprite::create("healthBar.png");
+      HB1->setPosition(Vec2(3*visibleSize.width/16, 15*visibleSize.height/16));
+      HB1->setScaleX(0.54);
+      addChild(HB1);
+      break;
+    case 50:
+      removeChild(HB1);
+      HB1 = Sprite::create("healthBar.png");
+      HB1->setPosition(Vec2(3*visibleSize.width/16, 15*visibleSize.height/16));
+      HB1->setScaleX(0.45);
+      addChild(HB1);
+      break;
+    case 40:
+      removeChild(HB1);
+      HB1 = Sprite::create("healthBar.png");
+      HB1->setPosition(Vec2(3*visibleSize.width/16, 15*visibleSize.height/16));
+      HB1->setScaleX(0.36);
+      addChild(HB1);
+      break;
+    case 30:
+        removeChild(HB1);
+        HB1 = Sprite::create("healthBar.png");
+        HB1->setPosition(Vec2(3*visibleSize.width/16, 15*visibleSize.height/16));
+        HB1->setScaleX(0.27);
+        addChild(HB1);
+        break;
+    case 20:
+        removeChild(HB1);
+        HB1 = Sprite::create("healthBar.png");
+        HB1->setPosition(Vec2(3*visibleSize.width/16, 15*visibleSize.height/16));
+        HB1->setScaleX(0.18);
+        addChild(HB1);
+        break;
+    case 10:
+        removeChild(HB1);
+        HB1 = Sprite::create("healthBar.png");
+        HB1->setPosition(Vec2(3*visibleSize.width/16, 15*visibleSize.height/16));
+        HB1->setScaleX(0.09);
+        addChild(HB1);
+        break;
+    case 0:
+        removeChild(HB1);
+        HB1 = Sprite::create("healthBar.png");
+        HB1->setPosition(Vec2(3*visibleSize.width/16, 15*visibleSize.height/16));
+        HB1->setScaleX(0.005);
+        addChild(HB1);
+        break;
+  }
+  switch (p2.getHealth()) {
+    case 100:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(Vec2(13*visibleSize.width/16, 15*visibleSize.height/16));
+      HB2->setScaleX(0.9);
+      addChild(HB2);
+      break;
+    case 80:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(Vec2(13*visibleSize.width/16, 15*visibleSize.height/16));
+      HB2->setScaleX(0.72);
+      addChild(HB2);
+      break;
+    case 60:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(Vec2(13*visibleSize.width/16, 15*visibleSize.height/16));
+      HB2->setScaleX(0.54);
+      addChild(HB2);
+      break;
+    case 50:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(Vec2(13*visibleSize.width/16, 15*visibleSize.height/16));
+      HB2->setScaleX(0.45);
+      addChild(HB2);
+      break;
+    case 40:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(Vec2(13*visibleSize.width/16, 15*visibleSize.height/16));
+      HB2->setScaleX(0.36);
+      addChild(HB2);
+      break;
+    case 30:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(Vec2(13*visibleSize.width/16, 15*visibleSize.height/16));
+      HB2->setScaleX(0.27);
+      addChild(HB2);
+      break;
+    case 20:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(Vec2(13*visibleSize.width/16, 15*visibleSize.height/16));
+      HB2->setScaleX(0.18);
+      addChild(HB2);
+      break;
+    case 10:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(Vec2(13*visibleSize.width/16, 15*visibleSize.height/16));
+      HB2->setScaleX(0.09);
+      addChild(HB2);
+      break;
+    case 0:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(Vec2(13*visibleSize.width/16, 15*visibleSize.height/16));
+      HB2->setScaleX(0.005);
+      addChild(HB2);
+      break;
+  }
+    ////////////////////////////////////////////////////
+    // Para explosiones
+    /*if(!p2.getHealth() && !explodeP2) {
+	explosion(_player2);
+	//DelayTime::create(3.0f);
+	//chrono::seconds duration( 5.0f ); 
+	//std::this_thread::sleep_for(std::chrono::seconds(2));
+	//usleep(5000000);
+	explodeP2 = true;
+    }
+    if(!p1.getHealth() && !explodeP1) {
+	explosion(_player1);
+	//DelayTime::create(3.0f);
+	//std::this_thread::sleep_for(std::chrono::seconds(2));
+	explodeP1 = true;
+    }*/
     ///////////////////////////////////////
-
+    //Game Over
+    if(!p1.getHealth()) {
+	explosion(_player1);
+	auto gameOver = Label::createWithTTF("  Game Over\nPlayer 2 Won", "fonts/Marker Felt.ttf", 26);
+    	gameOver->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2));
+    	this->addChild(gameOver, 1);
+	pause = true;
+    }
     if(!p2.getHealth()) {
-	Size vS = Director::getInstance()->getVisibleSize();
-	Vec2 ori = Director::getInstance()->getVisibleOrigin();
-	auto gameOver = Label::createWithTTF("Game Over\n Player 1 Won", "fonts/Marker Felt.ttf", 26);
-    	gameOver->setPosition(Vec2(ori.x + vS.width/2,
-                            ori.y + vS.height/2));
+	explosion(_player2);
+	auto gameOver = Label::createWithTTF("  Game Over\nPlayer 1 Won", "fonts/Marker Felt.ttf", 26);
+    	gameOver->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2));
     	this->addChild(gameOver, 1);
 	pause = true;
     }
 
 }
+
+void Batalla::explosion(Sprite *player)
+{
+    player->runAction(FadeOut::create(0.1f));
+    Vector<SpriteFrame*> animFrames(4);
+    auto acc = 0;
+    for (i = 0; i < 4; i++){
+	auto frame = SpriteFrame::create("player_explosion.png", Rect(acc, 0, 50, 63));
+	acc += 50;
+	animFrames.pushBack(frame);
+    }
+    auto animation = Animation::createWithSpriteFrames(animFrames, 0.25f);
+    _explosionAnimation = Animate::create(animation);
+    player->runAction(_explosionAnimation);
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+}
+/*void Batalla::explosion(Sprite *player)
+{
+    Vector<SpriteFrame*> animFrames(4);
+    char str[100] = {0};
+    for(int i = 1; i < 5; i++) {
+	sprintf(str, "exp%d.png",i);
+	auto frame = SpriteFrame::create(str,Rect(0,0,50,63));
+	animFrames.pushBack(frame);
+    }
+    auto animation = Animation::createWithSpriteFrames(animFrames, 5.0f);
+    auto animate = Animate::create(animation);
+    player->runAction(animate);
+}*/
+/*void Batalla::explosion(Sprite *player)
+{
+    log("Exp 1");
+    explode = Sprite::create("exp1.png");
+    explode->setPosition(player->getPosition());
+    this->addChild(explode, 1);
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    this->removeChild(explode);
+    log("Exp 2");
+    explode = Sprite::create("exp2.png");
+    explode->setPosition(player->getPosition());
+    this->addChild(explode, 1);
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    this->removeChild(explode);
+    log("Exp 3");
+    explode = Sprite::create("exp3.png");
+    explode->setPosition(player->getPosition());
+    this->addChild(explode, 1);
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    this->removeChild(explode);
+    log("Exp 4");
+    explode = Sprite::create("exp4.png");
+    explode->setPosition(player->getPosition());
+    this->addChild(explode, 1);
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    this->removeChild(explode);
+}*/
 
 void Batalla::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 {
@@ -239,7 +544,7 @@ void Batalla::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
  	case EventKeyboard::KeyCode::KEY_S:
 	    down1 = true;
 	    break;
-	case EventKeyboard::KeyCode::KEY_C:
+	case EventKeyboard::KeyCode::KEY_Q:
 	    if(cantM1>0){
 		for(i=0; i<3; i++) {
 		    if(actM1[i]==false) {
@@ -255,7 +560,15 @@ void Batalla::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 		}
 	    }
 	    break;
-
+	case EventKeyboard::KeyCode::KEY_E:
+	    if(actm1==false) {
+		misil1 = Sprite::create("c1.png");
+		misil1->setPosition(_player1->getPosition());
+		misil1->setScale(0.4);
+		this->addChild(misil1);
+		actm1 = true;
+	    }
+	    break;
 	case EventKeyboard::KeyCode::KEY_J:
 	    left2 = true;
 	    break;
@@ -268,7 +581,7 @@ void Batalla::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
  	case EventKeyboard::KeyCode::KEY_K:
 	    down2 = true;
 	    break;
-	case EventKeyboard::KeyCode::KEY_O:
+	case EventKeyboard::KeyCode::KEY_U:
 	    if(cantM2>0){
 		for(i=0; i<3; i++) {
 		    if(actM2[i]==false) {
@@ -282,6 +595,15 @@ void Batalla::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 			break;
 		    }
 		}
+	    }
+	    break;
+	case EventKeyboard::KeyCode::KEY_O:
+	    if(actm2==false) {
+		misil2 = Sprite::create("c1.png");
+		misil2->setPosition(_player2->getPosition());
+		misil2->setScale(0.4);
+		this->addChild(misil2);
+		actm2 = true;
 	    }
 	    break;
     }
@@ -323,7 +645,7 @@ void Batalla::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
 
 void Batalla::setPlayer1Position(Point position)
 {
-    Point tileCoord = this->tileCoordForPosition(position);
+    /*Point tileCoord = this->tileCoordForPosition(position);
     int tileGid = _blockage->getTileGIDAt(tileCoord);
     if (tileGid) {
         auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
@@ -334,13 +656,13 @@ void Batalla::setPlayer1Position(Point position)
                 return;
             }
         }else return;
-    }
+    }*/
     _player1->setPosition(position);
 }
 
 void Batalla::setPlayer2Position(Point position)
 {
-    Point tileCoord = this->tileCoordForPosition(position);
+    /*Point tileCoord = this->tileCoordForPosition(position);
     int tileGid = _blockage->getTileGIDAt(tileCoord);
     log("tileGid = %d", tileGid);
     if (tileGid) {
@@ -353,10 +675,47 @@ void Batalla::setPlayer2Position(Point position)
                 return;
             }
         }else return;
-    }
+    }*/
     _player2->setPosition(position);
 }
 
+void Batalla::setMisil1Position(Point position)
+{
+    /*Point tileCoord = this->tileCoordForPosition(position);
+    int tileGid = _blockage->getTileGIDAt(tileCoord);
+    if (tileGid) {
+        auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
+        if (!properties.empty()) {
+            auto collision = properties["Collision"].asString();
+            if ("True" == collision) {
+	    this->removeChild(misil1);
+	    actm1 = false;
+	    log("COLISION");
+            return;
+            }
+        }else return;
+    }*/
+    misil1->setPosition(position);
+}
+
+void Batalla::setMisil2Position(Point position)
+{
+    /*Point tileCoord = this->tileCoordForPosition(position);
+    int tileGid = _blockage->getTileGIDAt(tileCoord);
+    if (tileGid) {
+        auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
+        if (!properties.empty()) {
+            auto collision = properties["Collision"].asString();
+            if ("True" == collision) {
+		this->removeChild(misil2);
+		actm2 = false;
+		log("COLISION");
+                return;
+            }
+        }else return;
+    }*/
+    misil2->setPosition(position);
+}
 
 Scene* Batalla::createScene()
 {
@@ -389,8 +748,8 @@ bool Batalla::init()
     }
 
     
-    Size visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    visibleSize = Director::getInstance()->getVisibleSize();
+    origin = Director::getInstance()->getVisibleOrigin();
 
     Batalla::createButtons(visibleSize);
 
@@ -402,6 +761,10 @@ bool Batalla::init()
 
     /////////////////////////////////
     ///// Manejo de fondos
+    //Se configura el background
+    LayerGradient *bgLayer = LayerGradient::create(ccc4(32, 64, 128, 255), ccc4(255, 255, 255, 255));
+    bgLayer->setZOrder(0);
+    this->addChild(bgLayer);
     //Se carga el mapa y se hacen los collisions tiles con los que el tanque tiene que chocar
     tileMap = new CCTMXTiledMap();    
     tileMap->initWithTMXFile("test2.tmx");
@@ -435,8 +798,18 @@ bool Batalla::init()
     _player2->setScale(0.3);
     addChild(_player2);
     _player2->runAction(RotateBy::create(0.01, 180));
-
-    	
+    
+    //Se crea sprite health bar de player 1
+    HB1 = Sprite::create("healthBar.png");
+    HB1->setPosition(Vec2(3*visibleSize.width/16, 15*visibleSize.height/16));
+    HB1->setScale(0.9);
+	addChild(HB1);
+   //Se crea sprite health bar de player 2
+   	HB2 = Sprite::create("healthBar.png");
+    HB2->setPosition(Vec2(13*visibleSize.width/16, 15*visibleSize.height/16));
+    HB2->setScale(0.9);
+	addChild(HB2);
+	
    //seccion de movimiento
    auto eventListener = EventListenerKeyboard::create();
    eventListener->onKeyPressed = CC_CALLBACK_2(Batalla::onKeyPressed, this);
@@ -470,9 +843,7 @@ bool Batalla::init()
 	    pause = !pause;
 	}
     };
-
-    // Game over
-    
+  
 
     this->_eventDispatcher->addEventListenerWithSceneGraphPriority(pausa,this); 
 
@@ -494,14 +865,13 @@ void Batalla::createButtons(Size visibleSize)
     // Boton para volver al menu de inicio
     auto mbVolver = MenuItemFont::create("Menu de Inicio", CC_CALLBACK_1(Batalla::VolverCallBack, this));
     mbVolver->setAnchorPoint(Vec2(0.0,0.0));
-    mbVolver->setPosition(0, 0);
-    mbVolver->setColor(Color3B(240, 230, 140));
+    mbVolver->setPosition(Vec2(1*visibleSize.width/16, 1*visibleSize.height/10));
+    mbVolver->setColor(Color3B(140, 40, 140));
 
     // Se crea un boton de salir
     auto closeItem = MenuItemImage::create("CloseNormal.png", "CloseSelected.png",
                                            CC_CALLBACK_1(Batalla::menuCloseCallback, this));
-    closeItem->setPosition(Vec2(origin.x + visibleSize.width - closeItem->getContentSize().width/2 ,
-                                origin.y + closeItem->getContentSize().height/2));
+    closeItem->setPosition(Vec2(15*visibleSize.width/16, 1*visibleSize.height/10));
     auto menu = Menu::create(mbVolver, closeItem, NULL);
     menu->setPosition(Vec2::ZERO);
     this->addChild(menu, 2);
