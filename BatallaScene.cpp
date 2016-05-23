@@ -1,17 +1,11 @@
 #include "BatallaScene.h"
 #include "PanzerWarsScene.h"
 #include "SimpleAudioEngine.h"
-#include <chrono>
-#include <ctime>
-#include <thread>
-#include <unistd.h>
 
 
 USING_NS_CC;
 using namespace cocos2d;
 using namespace std;
-
-//high_resolution_clock::time_point start1, start2, crono;
 
 ////////////////////////////////
 //Manejo de fondos y movimientos
@@ -194,9 +188,13 @@ void Batalla::gameUpdate(float interval)
 	    p1.setHealth(p1.getHealth()-50);
 	    if(p1.getHealth()<0)
 	    p1.setHealth(0);
-            log("Player 1 actived mine %d", i);
-	    log("Player 1 Life = %d", p1.getHealth());
-	    this->removeChild(minaP2[i]);
+	    explosion(minaP2[i]);
+	    delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
+	    end += delta;
+	    if (end > 5) {
+		this->removeChild(minaP2[i]);
+		end = 0;
+	    }
 	    actM2[i] = false;
 	}
 	if(bbP2.intersectsRect(bbM1[i]) && (actM1[i]==true)) {
@@ -206,9 +204,13 @@ void Batalla::gameUpdate(float interval)
 	    p2.setHealth(p2.getHealth()-50);
 	    if(p2.getHealth()<0)
 	    p2.setHealth(0);
-	    log("Player 2 actived mine %d", i);
-	    log("Player 2 Life = %d", p2.getHealth());
-	    this->removeChild(minaP1[i]);
+	    explosion(minaP1[i]);
+	    delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
+	    end += delta;
+	    if (end > 5) {
+		this->removeChild(minaP1[i]);
+		end = 0;
+	    }
 	    actM1[i] = false;
 	}
     }
@@ -237,7 +239,13 @@ void Batalla::gameUpdate(float interval)
 	}
 	if(bbm1.intersectsRect(bbP2))
 	{
-		this->removeChild(misil1);
+		explosion(misil1);
+		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
+		end += delta;
+		if (end > 5) {
+		    this->removeChild(misil1);
+		    end = 0;
+		}
 		actm1 = false;
 		p2.setHealth(p2.getHealth()-20);
 		if(p2.getHealth()<0)
@@ -245,12 +253,17 @@ void Batalla::gameUpdate(float interval)
 	}
 	for(i=0; i<3; i++) {
 	    if((actM2[i]) && bbm1.intersectsRect(bbM2[i])) {
-		this->removeChild(minaP2[i]);
-		actM2[i] = false;
 		explosion(misil1);
-		//std::this_thread::sleep_for(std::chrono::seconds(2));
-		this->removeChild(misil1);
+		explosion(minaP2[i]);
+		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
+		end += delta;
+		if (end > 5) {
+		    this->removeChild(misil1);
+		    this->removeChild(minaP2[i]);
+		    end = 0;
+		}
 		actm1 = false;
+		actM2[i] = false;
 	    }
 	}
     }
@@ -274,7 +287,13 @@ void Batalla::gameUpdate(float interval)
 	}
 	if(bbm2.intersectsRect(bbP1))
 	{
-		this->removeChild(misil2);
+		explosion(misil2);
+		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
+		end += delta;
+		if (end > 5) {
+		    this->removeChild(misil2);
+		    end = 0;
+		}
 		actm2 = false;
 		p1.setHealth(p1.getHealth()-20);
 		if(p1.getHealth()<0)
@@ -282,22 +301,32 @@ void Batalla::gameUpdate(float interval)
 	}
 	for(i=0; i<3; i++) {
 	    if((actM1[i]) && bbm2.intersectsRect(bbM1[i])) {
-		this->removeChild(minaP1[i]);
-		actM1[i] = false;
 		explosion(misil2);
-		//std::this_thread::sleep_for(std::chrono::seconds(2));
+		explosion(minaP1[i]);
+		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
+		end += delta;
+		if (end > 5) {
+		    this->removeChild(misil2);
+		    this->removeChild(minaP1[i]);
+		    end = 0;
+		}
 		actm2 = false;
-		this->removeChild(misil2);
+		actM1[i] = false;
 	    }
 	}
 	if(actm1) {
 	    if(bbm1.intersectsRect(bbm2)) {
 		explosion(misil2);
-		//std::this_thread::sleep_for(std::chrono::seconds(5));
+		explosion2(misil1);
+		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
+		end += delta;
+		if (end > 5) {
+		    this->removeChild(misil2);
+		    this->removeChild(misil1);
+		    end = 0;
+		}
 		actm2 = false;
-		this->removeChild(misil2);
 		actm1 = false;
-		this->removeChild(misil1);
 	    }
 	}
     }
@@ -360,13 +389,6 @@ void Batalla::gameUpdate(float interval)
         HB1->setScaleX(0.09);
         addChild(HB1);
         break;
-    case 0:
-        removeChild(HB1);
-        HB1 = Sprite::create("healthBar.png");
-        HB1->setPosition(Vec2(3*visibleSize.width/16, 15*visibleSize.height/16));
-        HB1->setScaleX(0.005);
-        addChild(HB1);
-        break;
   }
   switch (p2.getHealth()) {
     case 100:
@@ -425,65 +447,45 @@ void Batalla::gameUpdate(float interval)
       HB2->setScaleX(0.09);
       addChild(HB2);
       break;
-    case 0:
-      removeChild(HB2);
-      HB2 = Sprite::create("healthBar.png");
-      HB2->setPosition(Vec2(13*visibleSize.width/16, 15*visibleSize.height/16));
-      HB2->setScaleX(0.005);
-      addChild(HB2);
-      break;
   }
-    ////////////////////////////////////////////////////
-    // Para explosiones
-    /*if(!p2.getHealth() && !explodeP2) {
-	explosion(_player2);
-	//DelayTime::create(3.0f);
-	//chrono::seconds duration( 5.0f ); 
-	//std::this_thread::sleep_for(std::chrono::seconds(2));
-	//usleep(5000000);
-	explodeP2 = true;
-    }
-    if(!p1.getHealth() && !explodeP1) {
-	explosion(_player1);
-	//DelayTime::create(3.0f);
-	//std::this_thread::sleep_for(std::chrono::seconds(2));
-	explodeP1 = true;
-    }*/
     ///////////////////////////////////////
     //Game Over
     if(!p1.getHealth()) {
-	explosion(_player1);
+	explosion2(_player1);
+        removeChild(HB1);
+        HB1 = Sprite::create("healthBar.png");
+        HB1->setPosition(Vec2(3*visibleSize.width/16, 15*visibleSize.height/16));
+        HB1->setScaleX(0.005);
+        addChild(HB1);
 	auto gameOver = Label::createWithTTF("  Game Over\nPlayer 2 Won", "fonts/Marker Felt.ttf", 26);
     	gameOver->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2));
     	this->addChild(gameOver, 1);
-	pause = true;
+	deltaGO = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-startGO).count();
+	endGO += deltaGO;
+	if (endGO > 5) {
+	    pause = true;
+	}
     }
     if(!p2.getHealth()) {
-	explosion(_player2);
+	explosion2(_player2);
+	removeChild(HB2);
+        HB2 = Sprite::create("healthBar.png");
+        HB2->setPosition(Vec2(3*visibleSize.width/16, 15*visibleSize.height/16));
+        HB2->setScaleX(0.005);
+        addChild(HB2);
 	auto gameOver = Label::createWithTTF("  Game Over\nPlayer 1 Won", "fonts/Marker Felt.ttf", 26);
     	gameOver->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2));
     	this->addChild(gameOver, 1);
-	pause = true;
+	deltaGO = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-startGO).count();
+	endGO += deltaGO;
+	if (endGO > 5) {
+	    pause = true;
+	}
     }
 
 }
 
 void Batalla::explosion(Sprite *player)
-{
-    player->runAction(FadeOut::create(0.1f));
-    Vector<SpriteFrame*> animFrames(4);
-    auto acc = 0;
-    for (i = 0; i < 4; i++){
-	auto frame = SpriteFrame::create("player_explosion.png", Rect(acc, 0, 50, 63));
-	acc += 50;
-	animFrames.pushBack(frame);
-    }
-    auto animation = Animation::createWithSpriteFrames(animFrames, 0.25f);
-    _explosionAnimation = Animate::create(animation);
-    player->runAction(_explosionAnimation);
-    std::this_thread::sleep_for(std::chrono::seconds(2));
-}
-/*void Batalla::explosion(Sprite *player)
 {
     Vector<SpriteFrame*> animFrames(4);
     char str[100] = {0};
@@ -492,37 +494,28 @@ void Batalla::explosion(Sprite *player)
 	auto frame = SpriteFrame::create(str,Rect(0,0,50,63));
 	animFrames.pushBack(frame);
     }
-    auto animation = Animation::createWithSpriteFrames(animFrames, 5.0f);
+    auto animation = Animation::createWithSpriteFrames(animFrames, 0.25f);
     auto animate = Animate::create(animation);
     player->runAction(animate);
-}*/
-/*void Batalla::explosion(Sprite *player)
+    player->runAction(FadeOut::create(2.0f));
+    start = high_resolution_clock::now();
+}
+
+void Batalla::explosion2(Sprite *player)
 {
-    log("Exp 1");
-    explode = Sprite::create("exp1.png");
-    explode->setPosition(player->getPosition());
-    this->addChild(explode, 1);
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-    this->removeChild(explode);
-    log("Exp 2");
-    explode = Sprite::create("exp2.png");
-    explode->setPosition(player->getPosition());
-    this->addChild(explode, 1);
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-    this->removeChild(explode);
-    log("Exp 3");
-    explode = Sprite::create("exp3.png");
-    explode->setPosition(player->getPosition());
-    this->addChild(explode, 1);
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-    this->removeChild(explode);
-    log("Exp 4");
-    explode = Sprite::create("exp4.png");
-    explode->setPosition(player->getPosition());
-    this->addChild(explode, 1);
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-    this->removeChild(explode);
-}*/
+    Vector<SpriteFrame*> animFrames(4);
+    char str[100] = {0};
+    for(int i = 1; i < 5; i++) {
+	sprintf(str, "exp%d.png",i);
+	auto frame = SpriteFrame::create(str,Rect(0,0,50,63));
+	animFrames.pushBack(frame);
+    }
+    auto animation = Animation::createWithSpriteFrames(animFrames, 0.25f);
+    auto animate = Animate::create(animation);
+    player->runAction(animate);
+    player->runAction(FadeOut::create(2.0f));
+    startGO = high_resolution_clock::now();
+}
 
 void Batalla::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 {
@@ -545,7 +538,7 @@ void Batalla::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    down1 = true;
 	    break;
 	case EventKeyboard::KeyCode::KEY_Q:
-	    if(cantM1>0){
+	    if(cantM1>0 && !pause){
 		for(i=0; i<3; i++) {
 		    if(actM1[i]==false) {
 			cantM1--;
@@ -561,7 +554,7 @@ void Batalla::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    }
 	    break;
 	case EventKeyboard::KeyCode::KEY_E:
-	    if(actm1==false) {
+	    if(actm1==false && !pause) {
 		misil1 = Sprite::create("c1.png");
 		misil1->setPosition(_player1->getPosition());
 		misil1->setScale(0.4);
@@ -582,7 +575,7 @@ void Batalla::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    down2 = true;
 	    break;
 	case EventKeyboard::KeyCode::KEY_U:
-	    if(cantM2>0){
+	    if(cantM2>0 && !pause){
 		for(i=0; i<3; i++) {
 		    if(actM2[i]==false) {
 			cantM2--;
@@ -598,7 +591,7 @@ void Batalla::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    }
 	    break;
 	case EventKeyboard::KeyCode::KEY_O:
-	    if(actm2==false) {
+	    if(actm2==false && !pause) {
 		misil2 = Sprite::create("c1.png");
 		misil2->setPosition(_player2->getPosition());
 		misil2->setScale(0.4);
