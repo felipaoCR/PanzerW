@@ -33,10 +33,10 @@ public:
     bool isKeyPressed(cocos2d::EventKeyboard::KeyCode);
     double keyPressedDuration(cocos2d::EventKeyboard::KeyCode);
     void ModoArcadePlayerPosition(Point position);
+    //Inicio atributos de jugadores: salud, defensa...
     void initPlayerStatus();
-    //Para movimiento continuo
+    //Para actualizar el juego
     void gameUpdate(float interval);
-    void onKeyHold(float interval);
     void KOTHCounter1(Point position);
     void KOTHCounter2(Point position);
     // a selector callback
@@ -61,7 +61,7 @@ private:
     int cantM1 = 5, cantM2 = 5; //Cantidad inicial de minas
     bool actM1[3], actM2[3], actm1 = false, actm2 = false; //Maximo de minas y misiles a la vez
     int i; //Para recorrer arreglos
-    int dirAnt1 = 1, dirAnt2 = 1; //Direccion anterior: 0 up, 1 down, 2 left, 3 right
+    int dirAnt1 = 1, dirAnt2 = 1, dirm1, dirm2; //Direccion anterior: 0 up, 1 down, 2 left, 3 right
 };
 
 #endif // __KOTH_Scene_H__

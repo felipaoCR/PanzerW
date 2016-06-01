@@ -69,7 +69,7 @@ private:
     int cantM1 = 5, cantM2 = 5; //Cantidad inicial de minas
     bool actM1[3], actM2[3], actm1 = false, actm2 = false; //Maximo de minas y misiles a la vez
     int i; //Para recorrer arreglos
-    int dirAnt1 = 1, dirAnt2 = 0; //Direccion anterior: 0 up, 1 down, 2 left, 3 right
+    int dirAnt1 = 1, dirAnt2 = 0, dirm1, dirm2; //Direccion anterior: 0 up, 1 down, 2 left, 3 right
     high_resolution_clock::time_point start, startGO; //Para explosiones y game over
     double end = 0, delta = 0, endGO = 0, deltaGO = 0;
 };
