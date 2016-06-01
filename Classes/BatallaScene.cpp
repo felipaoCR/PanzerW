@@ -782,27 +782,23 @@ bool Batalla::init()
 
     /////////////////////////////////
     ///// Manejo de fondos
-    //Se configura el background
-    LayerGradient *bgLayer = LayerGradient::create(ccc4(32, 64, 128, 255), ccc4(255, 255, 255, 255));
-    bgLayer->setZOrder(0);
-    this->addChild(bgLayer);
     //Se carga el mapa y se hacen los collisions tiles con los que el tanque tiene que chocar
     tileMap = new CCTMXTiledMap();    
-    tileMap->initWithTMXFile("test2.tmx");
-    _blockage = tileMap->layerNamed("Blockage01");
+    tileMap->initWithTMXFile("CTF.tmx");
+    _blockage = tileMap->layerNamed("Collision");
     _blockage->setVisible(false);
 
     tileMap->setPosition(origin.x,origin.y);
     this->addChild(tileMap);
     //Se obtiene la layer de objetos 'palpables' por el juego
-    TMXObjectGroup *objects = tileMap->getObjectGroup("Object Layer 1");	
+    TMXObjectGroup *objects = tileMap->getObjectGroup("Objects");	
     CCASSERT(NULL!=objects, "'Object Layer 1' object group not found");
 
     //Se inician los estados de los players
     initPlayerStatus();
 
     //Se crea el sprite de player 1
-    auto Player = objects->getObject("Player");
+    auto Player = objects->getObject("Player1");
     CCASSERT(!Player.empty(),"Player object not found");
     int x = Player["x"].asInt();
     int y = Player["y"].asInt();
@@ -813,9 +809,12 @@ bool Batalla::init()
     addChild(_player1);
 
     //Se crea el sprite de player 2
+    auto Player2 = objects->getObject("Player2");
+    int x2 = Player2["x"].asInt();
+    int y2 = Player2["y"].asInt();
     _player2 = p2.getPlayer();
     _player2 = Sprite::create("tank3.png");
-    _player2->setPosition(ccp(x+300,y-50));
+    _player2->setPosition(ccp(x2,y2));
     _player2->setScale(0.3);
     addChild(_player2);
     _player2->runAction(RotateBy::create(0.01, 180));
