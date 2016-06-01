@@ -7,6 +7,7 @@ USING_NS_CC;
 using namespace cocos2d;
 using namespace std;
 
+auto audioB = CocosDenshion::SimpleAudioEngine::getInstance();
 ////////////////////////////////
 //Manejo de fondos y movimientos
 Point Batalla::tileCoordForPosition(Point _position)
@@ -551,8 +552,8 @@ void Batalla::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    break;
 	case EventKeyboard::KeyCode::KEY_E:
 	    if(actm1==false && !pause) {
-   	 	audio->playEffect("Audio/explosion3.mp3");
-    		audio->setEffectsVolume(0.3);
+   	 	audioB->playEffect("Audio/explosion3.mp3");
+    		audioB->setEffectsVolume(0.3);
 		misil1 = Sprite::create("c1.png");
 		misil1->setPosition(_player1->getPosition());
 		misil1->setScale(0.4);
@@ -604,8 +605,8 @@ void Batalla::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    break;
 	case EventKeyboard::KeyCode::KEY_O:
 	    if(actm2==false && !pause) {
-   	 	audio->playEffect("Audio/explosion3.mp3");
-    		audio->setEffectsVolume(0.3);
+   	 	audioB->playEffect("Audio/explosion3.mp3");
+    		audioB->setEffectsVolume(0.3);
 		misil2 = Sprite::create("c1.png");
 		misil2->setPosition(_player2->getPosition());
 		misil2->setScale(0.4);
