@@ -31,12 +31,12 @@ void KOTH::initPlayerStatus()
 	p1.setHealth(100);
 	p1.setDefence(5);
 	p1.setAttack(p1.getDefence());
-	p1.setSpeed(2);
+	p1.setSpeed(1);
 	//Inicio estado de player2
 	p2.setHealth(100);
 	p2.setDefence(5);
 	p2.setAttack(p2.getDefence());
-	p2.setSpeed(2);
+	p2.setSpeed(1);
 
 }
 
@@ -143,7 +143,7 @@ void KOTH::gameUpdate(float interval)
 	    }
 	    dirAnt2 = 0;
 	    setPlayer2Position(ccp(loc2.x,++loc2.y+p2.getSpeed())); // player 2 going up
-	    KOTHCounter2(_player2->getPosition());
+	    //KOTHCounter2(_player2->getPosition());
 	}
 	else if(down2) {
 	    switch(dirAnt2) {
@@ -161,7 +161,7 @@ void KOTH::gameUpdate(float interval)
 	    }
 	    dirAnt2 = 1;
 	    setPlayer2Position(ccp(loc2.x,--loc2.y-p2.getSpeed())); // player 2 going down
-	    KOTHCounter2(_player2->getPosition());
+	   // KOTHCounter2(_player2->getPosition());
 	}
 	else if(right2) {
 	    switch(dirAnt2) {
@@ -179,7 +179,7 @@ void KOTH::gameUpdate(float interval)
 	    }
 	    dirAnt2 = 3;
 	    setPlayer2Position(ccp(++loc2.x+p2.getSpeed(),loc2.y)); // player 2 going right
-	    KOTHCounter2(_player2->getPosition());
+	   // KOTHCounter2(_player2->getPosition());
 	}
 	else if(left2) {
 	   switch(dirAnt2) {
@@ -197,7 +197,7 @@ void KOTH::gameUpdate(float interval)
 	    }
 	    dirAnt2 = 2;
 	    setPlayer2Position(ccp(--loc2.x-p2.getSpeed(),loc2.y)); // player 2 going left
-	    KOTHCounter2(_player2->getPosition());
+	  //  KOTHCounter2(_player2->getPosition());
 	}
 
 
@@ -324,61 +324,35 @@ void KOTH::gameUpdate(float interval)
   //Health bar player 1
   switch (p1.getHealth()) {
     case 100:
-      removeChild(HB1);
-      HB1 = Sprite::create("healthBar.png");
-      HB1->setPosition(ccp(x-400,y+525));
-      HB1->setScaleX(0.9);
-      addChild(HB1);
-      break;
-    case 80:
-      removeChild(HB1);
-      HB1 = Sprite::create("healthBar.png");
-      HB1->setPosition(ccp(x-400,y+525));
-      HB1->setScaleX(0.72);
-      addChild(HB1);
-      break;
-    case 60:
-      removeChild(HB1);
-      HB1 = Sprite::create("healthBar.png");
-      HB1->setPosition(ccp(x-400,y+525));
-      HB1->setScaleX(0.54);
-      addChild(HB1);
-      break;
-    case 50:
-      removeChild(HB1);
-      HB1 = Sprite::create("healthBar.png");
-      HB1->setPosition(ccp(x-400,y+525));
-      HB1->setScaleX(0.45);
-      addChild(HB1);
-      break;
-    case 40:
-      removeChild(HB1);
-      HB1 = Sprite::create("healthBar.png");
-      HB1->setPosition(ccp(x-400,y+525));
-      HB1->setScaleX(0.36);
-      addChild(HB1);
-      break;
-    case 30:
         removeChild(HB1);
         HB1 = Sprite::create("healthBar.png");
         HB1->setPosition(ccp(x-400,y+525));
-        HB1->setScaleX(0.27);
+        HB1->setScaleX(0.9);
         addChild(HB1);
+        break;
+    case 80:
+        HB1->setScaleX(0.72);
+        break;
+    case 60:
+        HB1->setScaleX(0.54);
+        break;
+    case 50:
+        HB1->setScaleX(0.45);
+        break;
+    case 40:
+        HB1->setScaleX(0.36);
+        break;
+    case 30:
+        HB1->setScaleX(0.27);
         break;
     case 20:
-        removeChild(HB1);
-        HB1 = Sprite::create("healthBar.png");
-        HB1->setPosition(ccp(x-400,y+525));
         HB1->setScaleX(0.18);
-        addChild(HB1);
         break;
     case 10:
-        removeChild(HB1);
-        HB1 = Sprite::create("healthBar.png");
-        HB1->setPosition(ccp(x-400,y+525));
         HB1->setScaleX(0.09);
-        addChild(HB1);
         break;
+        /////////////////////////////////////
+        //Health bar player 2
   }
   switch (p2.getHealth()) {
     case 100:
@@ -389,54 +363,26 @@ void KOTH::gameUpdate(float interval)
       addChild(HB2);
       break;
     case 80:
-      removeChild(HB2);
-      HB2 = Sprite::create("healthBar.png");
-      HB2->setPosition(ccp(x+300,y+525));
       HB2->setScaleX(0.72);
-      addChild(HB2);
       break;
     case 60:
-      removeChild(HB2);
-      HB2 = Sprite::create("healthBar.png");
-      HB2->setPosition(ccp(x+300,y+525));
       HB2->setScaleX(0.54);
-      addChild(HB2);
       break;
     case 50:
-      removeChild(HB2);
-      HB2 = Sprite::create("healthBar.png");
-      HB2->setPosition(ccp(x+300,y+525));
       HB2->setScaleX(0.45);
-      addChild(HB2);
       break;
     case 40:
-      removeChild(HB2);
-      HB2 = Sprite::create("healthBar.png");
-      HB2->setPosition(ccp(x+300,y+525));
       HB2->setScaleX(0.36);
-      addChild(HB2);
       break;
     case 30:
-      removeChild(HB2);
-      HB2 = Sprite::create("healthBar.png");
-      HB2->setPosition(ccp(x+300,y+525));
       HB2->setScaleX(0.27);
-      addChild(HB2);
       break;
     case 20:
-      removeChild(HB2);
-      HB2 = Sprite::create("healthBar.png");
-      HB2->setPosition(ccp(x+300,y+525));
       HB2->setScaleX(0.18);
-      addChild(HB2);
-      break;
+     break;
     case 10:
-      removeChild(HB2);
-      HB2 = Sprite::create("healthBar.png");
-      HB2->setPosition(ccp(x+300,y+525));
-      HB2->setScaleX(0.09);
-      addChild(HB2);
-      break;
+     HB2->setScaleX(0.09);
+     break;
   }
 
 
@@ -520,6 +466,9 @@ void KOTH::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    break;
 	case EventKeyboard::KeyCode::KEY_E:
 	    if(actm1==false) {
+    //audio->setEffectsVolume(0.03);
+    audio->playEffect("Audio/explosion3.mp3");
+    audio->setEffectsVolume(0.3);
 		misil1 = Sprite::create("c1.png");
 		misil1->setPosition(_player1->getPosition());
 		misil1->setScale(0.4);
@@ -529,6 +478,8 @@ void KOTH::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    break;
 	case EventKeyboard::KeyCode::KEY_U:
 	    if(actm2==false) {
+    //audio->setEffectsVolume(0.3);
+    audio->playEffect("Audio/explosion3.mp3");
 		misil2 = Sprite::create("c1.png");
 		misil2->setPosition(_player2->getPosition());
 		misil2->setScale(0.4);
@@ -790,7 +741,7 @@ bool KOTH::init()
     _player1 = p1.getPlayer();
     _player1 =Sprite::create("tank3.png");
     setPlayer1Position(ccp(x,y));
-    _player1->setScale(0.4);
+    _player1->setScale(0.3);
     addChild(_player1);
 
     //Se crea el sprite de player 2
@@ -800,7 +751,7 @@ bool KOTH::init()
     _player2 = p2.getPlayer();
     _player2 = Sprite::create("tank3.png");
     _player2->setPosition(ccp(x2,y2));
-    _player2->setScale(0.4);
+    _player2->setScale(0.3);
     addChild(_player2);
     //_player2->runAction(RotateBy::create(0.001, 180));
 
@@ -833,6 +784,7 @@ bool KOTH::init()
     audio->preloadBackgroundMusic("Audio/mgs3.mp3");
     //audio->preloadBackgroundMusic("Audio/ff7.mp3");
     audio->playBackgroundMusic("Audio/mgs3.mp3", true);
+audio->setEffectsVolume(0.3);
     crono = high_resolution_clock::now();
 
     // Pausa o continua el juego
