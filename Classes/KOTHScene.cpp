@@ -60,85 +60,81 @@ void KOTH::gameUpdate(float interval)
 		case 0:
 		    break;
 		case 1:
-		    this->_player1->runAction(RotateBy::create(0.2, 180));
+		    this->_player1->runAction(RotateBy::create(0.02, 180));
 		    break;
 		case 2:
-		    this->_player1->runAction(RotateBy::create(0.1, 90));
+		    this->_player1->runAction(RotateBy::create(0.01, 90));
 		    break;
 		case 3:
-		    this->_player1->runAction(RotateBy::create(0.1, -90));
+		    this->_player1->runAction(RotateBy::create(0.01, -90));
 		    break;
 	    }
 	    dirAnt1 = 0;
 	    setPlayer1Position(ccp(loc1.x,++loc1.y+p1.getSpeed())); // player 1 going up
-	    //KOTHCounter1(_player1->getPosition());
 	}
 	else if(down1) {
 	    switch(dirAnt1) {
 		case 0:
-		    this->_player1->runAction(RotateBy::create(0.2, 180));
+		    this->_player1->runAction(RotateBy::create(0.02, 180));
 		    break;
 		case 1:
 		    break;
 		case 2:
-		    this->_player1->runAction(RotateBy::create(0.1, -90));
+		    this->_player1->runAction(RotateBy::create(0.01, -90));
 		    break;
 		case 3:
-		    this->_player1->runAction(RotateBy::create(0.1, 90));
+		    this->_player1->runAction(RotateBy::create(0.01, 90));
 		    break;
 	    }
 	    dirAnt1 = 1;
 	    setPlayer1Position(ccp(loc1.x,--loc1.y-p1.getSpeed())); // player 1 going down
-	    //KOTHCounter1(_player1->getPosition());
 	}
 	else if(right1) {
 	    switch(dirAnt1) {
 		case 0:
-		    this->_player1->runAction(RotateBy::create(0.1, 90));
+		    this->_player1->runAction(RotateBy::create(0.01, 90));
 		    break;
 		case 1:
-		    this->_player1->runAction(RotateBy::create(0.1, -90));
+		    this->_player1->runAction(RotateBy::create(0.01, -90));
 		    break;
 		case 2:
-		    this->_player1->runAction(RotateBy::create(0.2, 180));
+		    this->_player1->runAction(RotateBy::create(0.02, 180));
 		    break;
 		case 3:
 		    break;
 	    }
 	    dirAnt1 = 3;
 	    setPlayer1Position(ccp(++loc1.x+p1.getSpeed(),loc1.y)); // player 1 going right
-	    //KOTHCounter1(_player1->getPosition());
 	}
 	else if(left1) {
 	    switch(dirAnt1) {
 		case 0:
-		    this->_player1->runAction(RotateBy::create(0.1, -90));
+		    this->_player1->runAction(RotateBy::create(0.01, -90));
 		    break;
 		case 1:
-		    this->_player1->runAction(RotateBy::create(0.1, 90));
+		    this->_player1->runAction(RotateBy::create(0.01, 90));
 		    break;
 		case 2:
 		    break;
 		case 3:
-		    this->_player1->runAction(RotateBy::create(0.2, 180));
+		    this->_player1->runAction(RotateBy::create(0.02, 180));
 		    break;
 	    }
 	    dirAnt1 = 2;
 	    setPlayer1Position(ccp(--loc1.x-p1.getSpeed(),loc1.y)); // player 1 going left
-	    //KOTHCounter1(_player1->getPosition());
 	}
 	if(up2) {
 	    switch(dirAnt2) {
 		case 0:
 		    break;
 		case 1:
-		    this->_player2->runAction(RotateBy::create(0.2, 180));
+		    this->_player2->runAction(RotateBy::create(0.02, 180));
 		    break;
 		case 2:
-		    this->_player2->runAction(RotateBy::create(0.1, 90));
+		    this->_player2->runAction(RotateBy::create(0.01, 90));
 		    break;
 		case 3:
-		    this->_player2->runAction(RotateBy::create(0.1, -90));
+		    this->_player2->runAction(RotateBy::create(0.01, -90));
 		    break;
 	    }
 	    dirAnt2 = 0;
@@ -148,15 +144,15 @@ void KOTH::gameUpdate(float interval)
 	else if(down2) {
 	    switch(dirAnt2) {
 		case 0:
-		    this->_player2->runAction(RotateBy::create(0.2, 180));
+		    this->_player2->runAction(RotateBy::create(0.02, 180));
 		    break;
 		case 1:
 		    break;
 		case 2:
-		    this->_player2->runAction(RotateBy::create(0.1, -90));
+		    this->_player2->runAction(RotateBy::create(0.01, -90));
 		    break;
 		case 3:
-		    this->_player2->runAction(RotateBy::create(0.1, 90));
+		    this->_player2->runAction(RotateBy::create(0.01, 90));
 		    break;
 	    }
 	    dirAnt2 = 1;
@@ -166,13 +162,13 @@ void KOTH::gameUpdate(float interval)
 	else if(right2) {
 	    switch(dirAnt2) {
 		case 0:
-		    this->_player2->runAction(RotateBy::create(0.1, 90));
+		    this->_player2->runAction(RotateBy::create(0.01, 90));
 		    break;
 		case 1:
-		    this->_player2->runAction(RotateBy::create(0.1, -90));
+		    this->_player2->runAction(RotateBy::create(0.01, -90));
 		    break;
 		case 2:
-		    this->_player2->runAction(RotateBy::create(0.2, 180));
+		    this->_player2->runAction(RotateBy::create(0.02, 180));
 		    break;
 		case 3:
 		    break;
@@ -184,15 +180,15 @@ void KOTH::gameUpdate(float interval)
 	else if(left2) {
 	   switch(dirAnt2) {
 		case 0:
-		    this->_player2->runAction(RotateBy::create(0.1, -90));
+		    this->_player2->runAction(RotateBy::create(0.01, -90));
 		    break;
 		case 1:
-		    this->_player2->runAction(RotateBy::create(0.1, 90));
+		    this->_player2->runAction(RotateBy::create(0.01, 90));
 		    break;
 		case 2:
 		    break;
 		case 3:
-		    this->_player2->runAction(RotateBy::create(0.2, 180));
+		    this->_player2->runAction(RotateBy::create(0.02, 180));
 		    break;
 	    }
 	    dirAnt2 = 2;

@@ -43,13 +43,13 @@ void Batalla::gameUpdate(float interval)
 		case 0:
 		    break;
 		case 1:
-		    this->_player1->runAction(RotateBy::create(0.1, 180));
+		    this->_player1->runAction(RotateBy::create(0.02, 180));
 		    break;
 		case 2:
-		    this->_player1->runAction(RotateBy::create(0.1, 90));
+		    this->_player1->runAction(RotateBy::create(0.01, 90));
 		    break;
 		case 3:
-		    this->_player1->runAction(RotateBy::create(0.1, -90));
+		    this->_player1->runAction(RotateBy::create(0.01, -90));
 		    break;
 	    }
 	    dirAnt1 = 0;
@@ -58,15 +58,15 @@ void Batalla::gameUpdate(float interval)
 	else if(down1) {
 	    switch(dirAnt1) {
 		case 0:
-		    this->_player1->runAction(RotateBy::create(0.2, 180));
+		    this->_player1->runAction(RotateBy::create(0.02, 180));
 		    break;
 		case 1:
 		    break;
 		case 2:
-		    this->_player1->runAction(RotateBy::create(0.1, -90));
+		    this->_player1->runAction(RotateBy::create(0.01, -90));
 		    break;
 		case 3:
-		    this->_player1->runAction(RotateBy::create(0.1, 90));
+		    this->_player1->runAction(RotateBy::create(0.01, 90));
 		    break;
 	    }
 	    dirAnt1 = 1;
@@ -75,13 +75,13 @@ void Batalla::gameUpdate(float interval)
 	else if(right1) {
 	    switch(dirAnt1) {
 		case 0:
-		    this->_player1->runAction(RotateBy::create(0.1, 90));
+		    this->_player1->runAction(RotateBy::create(0.01, 90));
 		    break;
 		case 1:
-		    this->_player1->runAction(RotateBy::create(0.1, -90));
+		    this->_player1->runAction(RotateBy::create(0.01, -90));
 		    break;
 		case 2:
-		    this->_player1->runAction(RotateBy::create(0.2, 180));
+		    this->_player1->runAction(RotateBy::create(0.02, 180));
 		    break;
 		case 3:
 		    break;
@@ -92,15 +92,15 @@ void Batalla::gameUpdate(float interval)
 	else if(left1) {
 	    switch(dirAnt1) {
 		case 0:
-		    this->_player1->runAction(RotateBy::create(0.1, -90));
+		    this->_player1->runAction(RotateBy::create(0.01, -90));
 		    break;
 		case 1:
-		    this->_player1->runAction(RotateBy::create(0.1, 90));
+		    this->_player1->runAction(RotateBy::create(0.01, 90));
 		    break;
 		case 2:
 		    break;
 		case 3:
-		    this->_player1->runAction(RotateBy::create(0.2, 180));
+		    this->_player1->runAction(RotateBy::create(0.02, 180));
 		    break;
 	    }
 	    dirAnt1 = 2;
@@ -111,13 +111,13 @@ void Batalla::gameUpdate(float interval)
 		case 0:
 		    break;
 		case 1:
-		    this->_player2->runAction(RotateBy::create(0.2, 180));
+		    this->_player2->runAction(RotateBy::create(0.02, 180));
 		    break;
 		case 2:
-		    this->_player2->runAction(RotateBy::create(0.1, 90));
+		    this->_player2->runAction(RotateBy::create(0.01, 90));
 		    break;
 		case 3:
-		    this->_player2->runAction(RotateBy::create(0.1, -90));
+		    this->_player2->runAction(RotateBy::create(0.01, -90));
 		    break;
 	    }
 	    dirAnt2 = 0;
@@ -126,15 +126,15 @@ void Batalla::gameUpdate(float interval)
 	else if(down2) {
 	    switch(dirAnt2) {
 		case 0:
-		    this->_player2->runAction(RotateBy::create(0.2, 180));
+		    this->_player2->runAction(RotateBy::create(0.02, 180));
 		    break;
 		case 1:
 		    break;
 		case 2:
-		    this->_player2->runAction(RotateBy::create(0.1, -90));
+		    this->_player2->runAction(RotateBy::create(0.01, -90));
 		    break;
 		case 3:
-		    this->_player2->runAction(RotateBy::create(0.1, 90));
+		    this->_player2->runAction(RotateBy::create(0.01, 90));
 		    break;
 	    }
 	    dirAnt2 = 1;
@@ -143,13 +143,13 @@ void Batalla::gameUpdate(float interval)
 	else if(right2) {
 	    switch(dirAnt2) {
 		case 0:
-		    this->_player2->runAction(RotateBy::create(0.1, 90));
+		    this->_player2->runAction(RotateBy::create(0.01, 90));
 		    break;
 		case 1:
-		    this->_player2->runAction(RotateBy::create(0.1, -90));
+		    this->_player2->runAction(RotateBy::create(0.01, -90));
 		    break;
 		case 2:
-		    this->_player2->runAction(RotateBy::create(0.2, 180));
+		    this->_player2->runAction(RotateBy::create(0.02, 180));
 		    break;
 		case 3:
 		    break;
@@ -160,15 +160,15 @@ void Batalla::gameUpdate(float interval)
 	else if(left2) {
 	   switch(dirAnt2) {
 		case 0:
-		    this->_player2->runAction(RotateBy::create(0.1, -90));
+		    this->_player2->runAction(RotateBy::create(0.01, -90));
 		    break;
 		case 1:
-		    this->_player2->runAction(RotateBy::create(0.1, 90));
+		    this->_player2->runAction(RotateBy::create(0.01, 90));
 		    break;
 		case 2:
 		    break;
 		case 3:
-		    this->_player2->runAction(RotateBy::create(0.2, 180));
+		    this->_player2->runAction(RotateBy::create(0.02, 180));
 		    break;
 	    }
 	    dirAnt2 = 2;
@@ -224,18 +224,14 @@ void Batalla::gameUpdate(float interval)
 		case 0:
 		    setMisil1Position(ccp(locm1.x,++locm1.y+3));
 		    break;
-		//this->misil1->runAction(RotateTo::create(0.1, 90));
 		case 1:
 		     setMisil1Position(ccp(locm1.x,--locm1.y-3));
 		     break;
-		//this->misil1->runAction(RotateTo::create(0.1, -90));
 		case 2:
 		    setMisil1Position(ccp(--locm1.x-3,locm1.y));
 		    break;
-		//this->misil1->runAction(RotateTo::create(0.1, 0));
 		case 3:
 		    setMisil1Position(ccp(++locm1.x+3,locm1.y));
-		//this->misil1->runAction(RotateTo::create(0.1, 180));
 	}
 	if(bbm1.intersectsRect(bbP2))
 	{
@@ -555,6 +551,8 @@ void Batalla::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    break;
 	case EventKeyboard::KeyCode::KEY_E:
 	    if(actm1==false && !pause) {
+   	 	audio->playEffect("Audio/explosion3.mp3");
+    		audio->setEffectsVolume(0.3);
 		misil1 = Sprite::create("c1.png");
 		misil1->setPosition(_player1->getPosition());
 		misil1->setScale(0.4);
@@ -606,6 +604,8 @@ void Batalla::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    break;
 	case EventKeyboard::KeyCode::KEY_O:
 	    if(actm2==false && !pause) {
+   	 	audio->playEffect("Audio/explosion3.mp3");
+    		audio->setEffectsVolume(0.3);
 		misil2 = Sprite::create("c1.png");
 		misil2->setPosition(_player2->getPosition());
 		misil2->setScale(0.4);
