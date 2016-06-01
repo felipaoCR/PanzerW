@@ -219,7 +219,7 @@ void Batalla::gameUpdate(float interval)
     {
     	locm1 = misil1->getPosition();
 	bbm1 = misil1->getBoundingBox();
-	switch (dirAnt1)
+	switch (dirm1)
 	{
 		case 0:
 		    setMisil1Position(ccp(locm1.x,++locm1.y+3));
@@ -271,7 +271,7 @@ void Batalla::gameUpdate(float interval)
     {
 	locm2 = misil2->getPosition();
 	bbm2 = misil2->getBoundingBox();
-	switch (dirAnt2)
+	switch (dirm2)
 	{
 		case 0:
 		    setMisil2Position(ccp(locm2.x,++locm2.y+3));
@@ -341,25 +341,53 @@ void Batalla::gameUpdate(float interval)
       addChild(HB1);
       break;
     case 80:
-        HB1->setScaleX(0.72);
+      removeChild(HB1);
+      HB1 = Sprite::create("healthBar.png");
+      HB1->setPosition(Vec2(3*visibleSize.width/16, 15*visibleSize.height/16));
+      HB1->setScaleX(0.72);
+      addChild(HB1);
       break;
     case 60:
-        HB1->setScaleX(0.54);
+      removeChild(HB1);
+      HB1 = Sprite::create("healthBar.png");
+      HB1->setPosition(Vec2(3*visibleSize.width/16, 15*visibleSize.height/16));
+      HB1->setScaleX(0.54);
+      addChild(HB1);
       break;
     case 50:
-        HB1->setScaleX(0.45);
+      removeChild(HB1);
+      HB1 = Sprite::create("healthBar.png");
+      HB1->setPosition(Vec2(3*visibleSize.width/16, 15*visibleSize.height/16));
+      HB1->setScaleX(0.45);
+      addChild(HB1);
       break;
     case 40:
-        HB1->setScaleX(0.36);
+      removeChild(HB1);
+      HB1 = Sprite::create("healthBar.png");
+      HB1->setPosition(Vec2(3*visibleSize.width/16, 15*visibleSize.height/16));
+      HB1->setScaleX(0.36);
+      addChild(HB1);
       break;
     case 30:
+        removeChild(HB1);
+        HB1 = Sprite::create("healthBar.png");
+        HB1->setPosition(Vec2(3*visibleSize.width/16, 15*visibleSize.height/16));
         HB1->setScaleX(0.27);
+        addChild(HB1);
         break;
     case 20:
+        removeChild(HB1);
+        HB1 = Sprite::create("healthBar.png");
+        HB1->setPosition(Vec2(3*visibleSize.width/16, 15*visibleSize.height/16));
         HB1->setScaleX(0.18);
+        addChild(HB1);
         break;
     case 10:
+        removeChild(HB1);
+        HB1 = Sprite::create("healthBar.png");
+        HB1->setPosition(Vec2(3*visibleSize.width/16, 15*visibleSize.height/16));
         HB1->setScaleX(0.09);
+        addChild(HB1);
         break;
   }
   switch (p2.getHealth()) {
@@ -371,25 +399,53 @@ void Batalla::gameUpdate(float interval)
       addChild(HB2);
       break;
     case 80:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(Vec2(13*visibleSize.width/16, 15*visibleSize.height/16));
       HB2->setScaleX(0.72);
+      addChild(HB2);
       break;
     case 60:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(Vec2(13*visibleSize.width/16, 15*visibleSize.height/16));
       HB2->setScaleX(0.54);
+      addChild(HB2);
       break;
     case 50:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(Vec2(13*visibleSize.width/16, 15*visibleSize.height/16));
       HB2->setScaleX(0.45);
+      addChild(HB2);
       break;
     case 40:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(Vec2(13*visibleSize.width/16, 15*visibleSize.height/16));
       HB2->setScaleX(0.36);
+      addChild(HB2);
       break;
     case 30:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(Vec2(13*visibleSize.width/16, 15*visibleSize.height/16));
       HB2->setScaleX(0.27);
+      addChild(HB2);
       break;
     case 20:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(Vec2(13*visibleSize.width/16, 15*visibleSize.height/16));
       HB2->setScaleX(0.18);
+      addChild(HB2);
       break;
     case 10:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(Vec2(13*visibleSize.width/16, 15*visibleSize.height/16));
       HB2->setScaleX(0.09);
+      addChild(HB2);
       break;
   }
     ///////////////////////////////////////
@@ -397,6 +453,10 @@ void Batalla::gameUpdate(float interval)
     if(!p1.getHealth()) {
 	explosion2(_player1);
         removeChild(HB1);
+        HB1 = Sprite::create("healthBar.png");
+        HB1->setPosition(Vec2(3*visibleSize.width/16, 15*visibleSize.height/16));
+        HB1->setScaleX(0.005);
+        addChild(HB1);
 	auto gameOver = Label::createWithTTF("  Game Over\nPlayer 2 Won", "fonts/Marker Felt.ttf", 26);
     	gameOver->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2));
     	this->addChild(gameOver, 1);
@@ -409,6 +469,10 @@ void Batalla::gameUpdate(float interval)
     if(!p2.getHealth()) {
 	explosion2(_player2);
 	removeChild(HB2);
+        HB2 = Sprite::create("healthBar.png");
+        HB2->setPosition(Vec2(3*visibleSize.width/16, 15*visibleSize.height/16));
+        HB2->setScaleX(0.005);
+        addChild(HB2);
 	auto gameOver = Label::createWithTTF("  Game Over\nPlayer 1 Won", "fonts/Marker Felt.ttf", 26);
     	gameOver->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2));
     	this->addChild(gameOver, 1);
@@ -496,6 +560,20 @@ void Batalla::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 		misil1->setScale(0.4);
 		this->addChild(misil1);
 		actm1 = true;
+		dirm1 = dirAnt1;
+		switch (dirm1) {
+			case 0:
+		    		misil1->runAction(RotateBy::create(0.001, -90));
+		    		break;
+			case 1:
+		    		misil1->runAction(RotateBy::create(0.001, 90));
+		     		break;
+			case 2:
+		    		misil1->runAction(RotateBy::create(0.001, 180));
+		    		break;
+			default:
+		    		break;
+		}
 	    }
 	    break;
 	case EventKeyboard::KeyCode::KEY_J:
@@ -533,6 +611,20 @@ void Batalla::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 		misil2->setScale(0.4);
 		this->addChild(misil2);
 		actm2 = true;
+		dirm2 = dirAnt2;
+		switch (dirm2) {
+			case 0:
+		    		misil2->runAction(RotateBy::create(0.001, -90));
+		    		break;
+			case 1:
+		    		misil2->runAction(RotateBy::create(0.001, 90));
+		     		break;
+			case 2:
+		    		misil2->runAction(RotateBy::create(0.001, 180));
+		    		break;
+			default:
+		    		break;
+		}
 	    }
 	    break;
     }
@@ -574,7 +666,7 @@ void Batalla::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
 
 void Batalla::setPlayer1Position(Point position)
 {
-    Point tileCoord = this->tileCoordForPosition(position);
+    /*Point tileCoord = this->tileCoordForPosition(position);
     int tileGid = _blockage->getTileGIDAt(tileCoord);
     if (tileGid) {
         auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
@@ -585,13 +677,13 @@ void Batalla::setPlayer1Position(Point position)
                 return;
             }
         }else return;
-    }
+    }*/
     _player1->setPosition(position);
 }
 
 void Batalla::setPlayer2Position(Point position)
 {
-    Point tileCoord = this->tileCoordForPosition(position);
+    /*Point tileCoord = this->tileCoordForPosition(position);
     int tileGid = _blockage->getTileGIDAt(tileCoord);
     log("tileGid = %d", tileGid);
     if (tileGid) {
@@ -604,13 +696,13 @@ void Batalla::setPlayer2Position(Point position)
                 return;
             }
         }else return;
-    }
+    }*/
     _player2->setPosition(position);
 }
 
 void Batalla::setMisil1Position(Point position)
 {
-    Point tileCoord = this->tileCoordForPosition(position);
+    /*Point tileCoord = this->tileCoordForPosition(position);
     int tileGid = _blockage->getTileGIDAt(tileCoord);
     if (tileGid) {
         auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
@@ -623,13 +715,13 @@ void Batalla::setMisil1Position(Point position)
             return;
             }
         }else return;
-    }
+    }*/
     misil1->setPosition(position);
 }
 
 void Batalla::setMisil2Position(Point position)
 {
-    Point tileCoord = this->tileCoordForPosition(position);
+    /*Point tileCoord = this->tileCoordForPosition(position);
     int tileGid = _blockage->getTileGIDAt(tileCoord);
     if (tileGid) {
         auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
@@ -642,7 +734,7 @@ void Batalla::setMisil2Position(Point position)
                 return;
             }
         }else return;
-    }
+    }*/
     misil2->setPosition(position);
 }
 
@@ -691,43 +783,39 @@ bool Batalla::init()
     /////////////////////////////////
     ///// Manejo de fondos
     //Se configura el background
-   /* LayerGradient *bgLayer = LayerGradient::create(ccc4(32, 64, 128, 255), ccc4(255, 255, 255, 255));
+    LayerGradient *bgLayer = LayerGradient::create(ccc4(32, 64, 128, 255), ccc4(255, 255, 255, 255));
     bgLayer->setZOrder(0);
-    this->addChild(bgLayer);*/
+    this->addChild(bgLayer);
     //Se carga el mapa y se hacen los collisions tiles con los que el tanque tiene que chocar
     tileMap = new CCTMXTiledMap();    
-    tileMap->initWithTMXFile("CTF.tmx");
-    _blockage = tileMap->layerNamed("Collision");
+    tileMap->initWithTMXFile("test2.tmx");
+    _blockage = tileMap->layerNamed("Blockage01");
     _blockage->setVisible(false);
 
     tileMap->setPosition(origin.x,origin.y);
     this->addChild(tileMap);
     //Se obtiene la layer de objetos 'palpables' por el juego
-    TMXObjectGroup *objects = tileMap->getObjectGroup("Objects");	
+    TMXObjectGroup *objects = tileMap->getObjectGroup("Object Layer 1");	
     CCASSERT(NULL!=objects, "'Object Layer 1' object group not found");
 
     //Se inician los estados de los players
     initPlayerStatus();
 
     //Se crea el sprite de player 1
-    auto Player1 = objects->getObject("Player1");
-    CCASSERT(!Player1.empty(),"Player object not found");
-    int x1 = Player1["x"].asInt();
-    int y1 = Player1["y"].asInt();
+    auto Player = objects->getObject("Player");
+    CCASSERT(!Player.empty(),"Player object not found");
+    int x = Player["x"].asInt();
+    int y = Player["y"].asInt();
     _player1 = p1.getPlayer();
     _player1 =Sprite::create("tank3.png");
-    setPlayer1Position(ccp(x1,y1));
+    setPlayer1Position(ccp(x-50,y-50));
     _player1->setScale(0.3);
     addChild(_player1);
 
     //Se crea el sprite de player 2
-    auto Player2 = objects->getObject("Player2");
-    CCASSERT(!Player2.empty(),"Player object not found");
-    int x2 = Player2["x"].asInt();
-    int y2 = Player2["y"].asInt();
     _player2 = p2.getPlayer();
     _player2 = Sprite::create("tank3.png");
-    _player2->setPosition(ccp(x2,y2));
+    _player2->setPosition(ccp(x+300,y-50));
     _player2->setScale(0.3);
     addChild(_player2);
     _player2->runAction(RotateBy::create(0.01, 180));

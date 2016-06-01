@@ -31,12 +31,12 @@ void KOTH::initPlayerStatus()
 	p1.setHealth(100);
 	p1.setDefence(5);
 	p1.setAttack(p1.getDefence());
-	p1.setSpeed(1);
+	p1.setSpeed(2);
 	//Inicio estado de player2
 	p2.setHealth(100);
 	p2.setDefence(5);
 	p2.setAttack(p2.getDefence());
-	p2.setSpeed(1);
+	p2.setSpeed(2);
 
 }
 
@@ -143,7 +143,7 @@ void KOTH::gameUpdate(float interval)
 	    }
 	    dirAnt2 = 0;
 	    setPlayer2Position(ccp(loc2.x,++loc2.y+p2.getSpeed())); // player 2 going up
-	    //KOTHCounter2(_player2->getPosition());
+	    KOTHCounter2(_player2->getPosition());
 	}
 	else if(down2) {
 	    switch(dirAnt2) {
@@ -161,7 +161,7 @@ void KOTH::gameUpdate(float interval)
 	    }
 	    dirAnt2 = 1;
 	    setPlayer2Position(ccp(loc2.x,--loc2.y-p2.getSpeed())); // player 2 going down
-	   // KOTHCounter2(_player2->getPosition());
+	    KOTHCounter2(_player2->getPosition());
 	}
 	else if(right2) {
 	    switch(dirAnt2) {
@@ -179,7 +179,7 @@ void KOTH::gameUpdate(float interval)
 	    }
 	    dirAnt2 = 3;
 	    setPlayer2Position(ccp(++loc2.x+p2.getSpeed(),loc2.y)); // player 2 going right
-	   // KOTHCounter2(_player2->getPosition());
+	    KOTHCounter2(_player2->getPosition());
 	}
 	else if(left2) {
 	   switch(dirAnt2) {
@@ -197,7 +197,7 @@ void KOTH::gameUpdate(float interval)
 	    }
 	    dirAnt2 = 2;
 	    setPlayer2Position(ccp(--loc2.x-p2.getSpeed(),loc2.y)); // player 2 going left
-	  //  KOTHCounter2(_player2->getPosition());
+	    KOTHCounter2(_player2->getPosition());
 	}
 
 
@@ -251,24 +251,19 @@ void KOTH::gameUpdate(float interval)
     {
     	locm1 = misil1->getPosition();
 	bbm1 = misil1->getBoundingBox();
-	log("dirAnt1 %d", dirAnt1);
-	switch (dirAnt1)
+	switch (dirm1)
 	{
 		case 0:
 		    setMisil1Position(ccp(locm1.x,++locm1.y+3));
 		    break;
-		//this->misil1->runAction(RotateTo::create(0.1, 90));
 		case 1:
 		     setMisil1Position(ccp(locm1.x,--locm1.y-3));
 		     break;
-		//this->misil1->runAction(RotateTo::create(0.1, -90));
 		case 2:
 		    setMisil1Position(ccp(--locm1.x-3,locm1.y));
 		    break;
-		//this->misil1->runAction(RotateTo::create(0.1, 0));
 		case 3:
 		    setMisil1Position(ccp(++locm1.x+3,locm1.y));
-		//this->misil1->runAction(RotateTo::create(0.1, 180));
 	}
 	if(bbm1.intersectsRect(bbP2))
 	{
@@ -283,7 +278,7 @@ void KOTH::gameUpdate(float interval)
     {
 	locm2 = misil2->getPosition();
 	bbm2 = misil2->getBoundingBox();
-	switch (dirAnt2)
+	switch (dirm2)
 	{
 		case 0:
 		    setMisil2Position(ccp(locm2.x,++locm2.y+3));
@@ -324,35 +319,61 @@ void KOTH::gameUpdate(float interval)
   //Health bar player 1
   switch (p1.getHealth()) {
     case 100:
+      removeChild(HB1);
+      HB1 = Sprite::create("healthBar.png");
+      HB1->setPosition(ccp(x-400,y+525));
+      HB1->setScaleX(0.9);
+      addChild(HB1);
+      break;
+    case 80:
+      removeChild(HB1);
+      HB1 = Sprite::create("healthBar.png");
+      HB1->setPosition(ccp(x-400,y+525));
+      HB1->setScaleX(0.72);
+      addChild(HB1);
+      break;
+    case 60:
+      removeChild(HB1);
+      HB1 = Sprite::create("healthBar.png");
+      HB1->setPosition(ccp(x-400,y+525));
+      HB1->setScaleX(0.54);
+      addChild(HB1);
+      break;
+    case 50:
+      removeChild(HB1);
+      HB1 = Sprite::create("healthBar.png");
+      HB1->setPosition(ccp(x-400,y+525));
+      HB1->setScaleX(0.45);
+      addChild(HB1);
+      break;
+    case 40:
+      removeChild(HB1);
+      HB1 = Sprite::create("healthBar.png");
+      HB1->setPosition(ccp(x-400,y+525));
+      HB1->setScaleX(0.36);
+      addChild(HB1);
+      break;
+    case 30:
         removeChild(HB1);
         HB1 = Sprite::create("healthBar.png");
         HB1->setPosition(ccp(x-400,y+525));
-        HB1->setScaleX(0.9);
+        HB1->setScaleX(0.27);
         addChild(HB1);
         break;
-    case 80:
-        HB1->setScaleX(0.72);
-        break;
-    case 60:
-        HB1->setScaleX(0.54);
-        break;
-    case 50:
-        HB1->setScaleX(0.45);
-        break;
-    case 40:
-        HB1->setScaleX(0.36);
-        break;
-    case 30:
-        HB1->setScaleX(0.27);
-        break;
     case 20:
+        removeChild(HB1);
+        HB1 = Sprite::create("healthBar.png");
+        HB1->setPosition(ccp(x-400,y+525));
         HB1->setScaleX(0.18);
+        addChild(HB1);
         break;
     case 10:
+        removeChild(HB1);
+        HB1 = Sprite::create("healthBar.png");
+        HB1->setPosition(ccp(x-400,y+525));
         HB1->setScaleX(0.09);
+        addChild(HB1);
         break;
-        /////////////////////////////////////
-        //Health bar player 2
   }
   switch (p2.getHealth()) {
     case 100:
@@ -363,26 +384,54 @@ void KOTH::gameUpdate(float interval)
       addChild(HB2);
       break;
     case 80:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(ccp(x+300,y+525));
       HB2->setScaleX(0.72);
+      addChild(HB2);
       break;
     case 60:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(ccp(x+300,y+525));
       HB2->setScaleX(0.54);
+      addChild(HB2);
       break;
     case 50:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(ccp(x+300,y+525));
       HB2->setScaleX(0.45);
+      addChild(HB2);
       break;
     case 40:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(ccp(x+300,y+525));
       HB2->setScaleX(0.36);
+      addChild(HB2);
       break;
     case 30:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(ccp(x+300,y+525));
       HB2->setScaleX(0.27);
+      addChild(HB2);
       break;
     case 20:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(ccp(x+300,y+525));
       HB2->setScaleX(0.18);
-     break;
+      addChild(HB2);
+      break;
     case 10:
-     HB2->setScaleX(0.09);
-     break;
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(ccp(x+300,y+525));
+      HB2->setScaleX(0.09);
+      addChild(HB2);
+      break;
   }
 
 
@@ -449,7 +498,7 @@ void KOTH::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    down1 = true;
 	    break;
 	case EventKeyboard::KeyCode::KEY_Q:
-	    if(cantM1>0){
+	    if(cantM1>0 && !pause){
 		for(i=0; i<3; i++) {
 		    if(actM1[i]==false) {
 			cantM1--;
@@ -465,26 +514,53 @@ void KOTH::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    }
 	    break;
 	case EventKeyboard::KeyCode::KEY_E:
-	    if(actm1==false) {
-    //audio->setEffectsVolume(0.03);
-    audio->playEffect("Audio/explosion3.mp3");
-    audio->setEffectsVolume(0.3);
+	    if(actm1==false && !pause) {
+   	 	audio->playEffect("Audio/explosion3.mp3");
+    		audio->setEffectsVolume(0.3);
 		misil1 = Sprite::create("c1.png");
 		misil1->setPosition(_player1->getPosition());
 		misil1->setScale(0.4);
 		this->addChild(misil1);
 		actm1 = true;
+		dirm1 = dirAnt1;
+		switch (dirm1) {
+			case 0:
+		    		misil1->runAction(RotateBy::create(0.001, -90));
+		    		break;
+			case 1:
+		    		misil1->runAction(RotateBy::create(0.001, 90));
+		     		break;
+			case 2:
+		    		misil1->runAction(RotateBy::create(0.001, 180));
+		    		break;
+			default:
+		    		break;
+		}
 	    }
 	    break;
-	case EventKeyboard::KeyCode::KEY_U:
-	    if(actm2==false) {
-    //audio->setEffectsVolume(0.3);
-    audio->playEffect("Audio/explosion3.mp3");
+	case EventKeyboard::KeyCode::KEY_O:
+	    if(actm2==false && !pause) {
+   	 	audio->playEffect("Audio/explosion3.mp3");
+    		audio->setEffectsVolume(0.3);
 		misil2 = Sprite::create("c1.png");
 		misil2->setPosition(_player2->getPosition());
 		misil2->setScale(0.4);
 		this->addChild(misil2);
 		actm2 = true;
+		dirm2 = dirAnt2;
+		switch (dirm2) {
+			case 0:
+		    		misil2->runAction(RotateBy::create(0.001, -90));
+		    		break;
+			case 1:
+		    		misil2->runAction(RotateBy::create(0.001, 90));
+		     		break;
+			case 2:
+		    		misil2->runAction(RotateBy::create(0.001, 180));
+		    		break;
+			default:
+		    		break;
+		}
 	    }
 	    break;
 	case EventKeyboard::KeyCode::KEY_J:
@@ -499,8 +575,8 @@ void KOTH::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
  	case EventKeyboard::KeyCode::KEY_K:
 	    down2 = true;
 	    break;
-	case EventKeyboard::KeyCode::KEY_O:
-	    if(cantM2>0){
+	case EventKeyboard::KeyCode::KEY_U:
+	    if(cantM2>0 && !pause){
 		for(i=0; i<3; i++) {
 		    if(actM2[i]==false) {
 			cantM2--;
@@ -741,7 +817,7 @@ bool KOTH::init()
     _player1 = p1.getPlayer();
     _player1 =Sprite::create("tank3.png");
     setPlayer1Position(ccp(x,y));
-    _player1->setScale(0.3);
+    _player1->setScale(0.4);
     addChild(_player1);
 
     //Se crea el sprite de player 2
@@ -751,7 +827,7 @@ bool KOTH::init()
     _player2 = p2.getPlayer();
     _player2 = Sprite::create("tank3.png");
     _player2->setPosition(ccp(x2,y2));
-    _player2->setScale(0.3);
+    _player2->setScale(0.4);
     addChild(_player2);
     //_player2->runAction(RotateBy::create(0.001, 180));
 
@@ -784,7 +860,6 @@ bool KOTH::init()
     audio->preloadBackgroundMusic("Audio/mgs3.mp3");
     //audio->preloadBackgroundMusic("Audio/ff7.mp3");
     audio->playBackgroundMusic("Audio/mgs3.mp3", true);
-audio->setEffectsVolume(0.3);
     crono = high_resolution_clock::now();
 
     // Pausa o continua el juego
