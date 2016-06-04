@@ -22,26 +22,38 @@ void Batalla::initPlayerStatus()
 	//Inicio estado de player1
 	p1.setHealth(100);
 	p1.setDefence(5);
-	p1.setAttack(p1.getDefence());
+	p1.setAttack(120);
 	p1.setSpeed(1);
 	//Inicio estado de player2
 	p2.setHealth(100);
 	p2.setDefence(10);
-	p2.setAttack(p2.getDefence());
+	p2.setAttack(120);
 	p2.setSpeed(2);
 	
 }
 
 void Batalla::gameUpdate(float interval)
 {
-    ////////////////////////////////////////////////////////////
-    // Movimiento Jugadores
     loc1 = _player1->getPosition();
     loc2 = _player2->getPosition();
     HB1->setPosition(ccp(loc1.x,loc1.y+40));
     HB2->setPosition(ccp(loc2.x,loc2.y+40));
+    //Se inician/refrescan los porcentajes de salud por hit al tanque
+    HPpercentage1 = p2.getAttack()/p1.getDefence();
+    HPpercentage2 = p1.getAttack()/p2.getDefence();
     if(!pause) {
-	if(up1) {
+    //Se chequea si se toman los upgrades
+	if(!firstSpeed)
+	getUpgrade(speedUp);
+	if(!firstAttack)
+	getUpgrade(attackUp);
+	if(!firstDefence)
+	getUpgrade(defenceUp);
+	if(!firstHP)
+	getUpgrade(HpUp);
+    ////////////////////////////////////////////////////////////
+    // Movimiento Jugadores y se establece la posicion de health bars
+    if(up1) {
 	    switch(dirAnt1) {
 		case 0:
 		    break;
@@ -191,6 +203,7 @@ void Batalla::gameUpdate(float interval)
 	    p1.setHealth(p1.getHealth()-50);
 	    if(p1.getHealth()<0)
 	    p1.setHealth(0);
+	    hitP2 = true;
 	    explosion(minaP2[i]);
 	    delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
 	    end += delta;
@@ -207,6 +220,7 @@ void Batalla::gameUpdate(float interval)
 	    p2.setHealth(p2.getHealth()-50);
 	    if(p2.getHealth()<0)
 	    p2.setHealth(0);
+	    hitP1 = true;
 	    explosion(minaP1[i]);
 	    delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
 	    end += delta;
@@ -217,6 +231,7 @@ void Batalla::gameUpdate(float interval)
 	    actM1[i] = false;
 	}
     }
+    
     /////////////////////////////////////////
         if(actm1)
     {
@@ -246,7 +261,8 @@ void Batalla::gameUpdate(float interval)
 		    end = 0;
 		}
 		actm1 = false;
-		p2.setHealth(p2.getHealth()-20);
+		p2.setHealth(p2.getHealth()-HPpercentage2);
+		hitP1 = true;
 		if(p2.getHealth()<0)
 		p2.setHealth(0);
 	}
@@ -294,7 +310,8 @@ void Batalla::gameUpdate(float interval)
 		    end = 0;
 		}
 		actm2 = false;
-		p1.setHealth(p1.getHealth()-20);
+		p1.setHealth(p1.getHealth()-HPpercentage1);
+		hitP2 = true;
 		if(p1.getHealth()<0)
 		p1.setHealth(0);
 	}
@@ -331,68 +348,49 @@ void Batalla::gameUpdate(float interval)
     }
     ////////////////////////////////////
     /// Barras de vida
-  switch (p1.getHealth()) {
-    case 100:
-      removeChild(HB1);
-      HB1 = Sprite::create("healthBar.png");
-      HB1->setPosition(ccp(loc1.x,loc1.y+40));
-      HB1->setScaleX(0.225);
-      HB1->setScaleY(0.1);
-      addChild(HB1);
-      break;
-    case 80:
-      HB1->setScaleX(0.18);
-      break;
-    case 60:
-      HB1->setScaleX(0.135);
-      break;
-    case 50:
-      HB1->setScaleX(0.1125);
-      break;
-    case 40:
-      HB1->setScaleX(0.09);
-      break;
-    case 30:
-        HB1->setScaleX(0.0725);
-        break;
-    case 20:
-        HB1->setScaleX(0.045);
-        break;
-    case 10:
-        HB1->setScaleX(0.0225);
-        break;
-  }
-  switch (p2.getHealth()) {
-    case 100:
-      removeChild(HB2);
-      HB2 = Sprite::create("healthBar.png");
-      HB2->setPosition(ccp(loc2.x,loc2.y+40));
-      HB2->setScaleY(0.1);
-      HB2->setScaleX(0.225);
-      addChild(HB2);
-      break;
-    case 80:
-      HB2->setScaleX(0.18);
-      break;
-    case 60:
-      HB2->setScaleX(0.135);
-      break;
-    case 50:
-      HB2->setScaleX(0.1125);
-      break;
-    case 40:
-      HB2->setScaleX(0.09);
-      break;
-    case 30:
-      HB2->setScaleX(0.0725);
-      break;
-    case 20:
-      HB2->setScaleX(0.045);
-      break;
-    case 10:
-      HB2->setScaleX(0.0225);
-      break;
-  }
+    if(hitP2)
+    {
+	if(p1.getHealth()==100)
+	{	
+      	  removeChild(HB1);
+      	  HB1 = Sprite::create("healthBar.png");
+      	  HB1->setPosition(ccp(loc1.x,loc1.y+40));
+      	  HB1->setScaleX(0.225);
+      	  HB1->setScaleY(0.1);
+      	  addChild(HB1);		
+	}else if(p1.getHealth()!=100 && p1.getHealth()>0)
+	{
+	  HB1->setScaleX(0.225*((float)p1.getHealth()/100));	
+	}
+	hitP2 = false;
+    }
+    if(hitP1)
+    {
+	if(p2.getHealth()==100)
+	 {	
+      	  removeChild(HB2);
+      	  HB2 = Sprite::create("healthBar.png");
+   	  HB2->setPosition(ccp(loc2.x,loc2.y+40));
+          HB2->setScaleX(0.225);
+      	  HB2->setScaleY(0.1);
+      	  addChild(HB2);		
+	}else if(p2.getHealth()!=100 && p2.getHealth()>0)
+	{
+	  HB2->setScaleX(0.225*((float)p2.getHealth()/100));	
+	}
+	hitP1 = false;
+    }
+    if(hpup1)
+    {
+	HB1->setScaleX(1.2*0.225);
+	hpup1 = false;
+    }
+    if(hpup2)
+    {
+	HB2->setScaleX(1.2*0.225);
+	hpup2 = false;
+    }
+
     ///////////////////////////////////////
     //Game Over
     if(!p1.getHealth()) {
@@ -628,7 +626,7 @@ void Batalla::setPlayer2Position(Point position)
     int tileGid = _blockage->getTileGIDAt(tileCoord);
     log("tileGid = %d", tileGid);
     if (tileGid) {
-	log("DEBUG");
+	//log("DEBUG");
         auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
         if (!properties.empty()) {
             auto collision = properties["Collision"].asString();
@@ -677,6 +675,62 @@ void Batalla::setMisil2Position(Point position)
         }else return;
     }
     misil2->setPosition(position);
+}
+
+void Batalla::getUpgrade(Sprite *upgrade)
+{
+	//log("Tag = %d",upgrade->getTag());
+   bbspeedUp = upgrade->getBoundingBox();
+   if((bbP1).intersectsRect(bbspeedUp) && (!firstHP || !firstSpeed || !firstDefence || !firstAttack))
+   {
+	switch(upgrade->getTag())
+	{
+	  case 1:
+	     p1.setHealth(120);
+	     hpup1 = true;
+	     firstHP = true;
+	  break;
+	  case 2:
+	     p1.setSpeed(2*p1.getSpeed());
+	     firstSpeed = true;
+	  break;
+	  case 3:
+             p1.setDefence(2*p1.getDefence());
+	     firstDefence = true;
+	  break;
+	  case 4:
+	     p1.setAttack(2*p1.getAttack());
+	     firstAttack = true;
+	  break;
+	}
+         removeChild(upgrade);
+   }
+
+   if((bbP2).intersectsRect(bbspeedUp) && (!firstHP || !firstSpeed || !firstDefence || !firstAttack))
+   {
+	switch(upgrade->getTag())
+	{
+	  case 1:
+	     p2.setHealth(120);
+	     firstHP = true;
+	     hpup2 = true;
+	  break;
+	  case 2:
+	     p2.setSpeed(2*p2.getSpeed());
+	     firstSpeed = true;
+	  break;
+	  case 3:
+             p2.setDefence(2*p2.getDefence());
+	     firstDefence = true;
+	  break;
+	  case 4:
+	     p2.setAttack(2*p2.getAttack());
+	     firstAttack = true;
+	  break;
+	}
+        removeChild(upgrade);
+   }
+    
 }
 
 Scene* Batalla::createScene()
@@ -737,6 +791,7 @@ bool Batalla::init()
 
     //Se inician los estados de los players
     initPlayerStatus();
+    
 
     //Se crea el sprite de player 1
     auto Player = objects->getObject("Player1");
@@ -772,6 +827,35 @@ bool Batalla::init()
     HB2->setScaleX(0.225);
     HB2->setScaleY(0.1);
 	addChild(HB2);
+   //Se crean los sprites de upgrade
+    //Tag = 1
+    HpUp = Sprite::create("HpUp.png");
+    HpUp->setPosition(ccp(x2,y2-300));
+    HpUp->setScale(0.3);
+    HpUp->setTag(1);
+    addChild(HpUp);
+
+    //Tag = 2
+    speedUp = Sprite::create("speedUp.png");
+    speedUp->setPosition(ccp(x,y+300));
+    speedUp->setScale(0.3);
+    speedUp->setTag(2);
+    addChild(speedUp);
+
+    //Tag = 3
+    defenceUp = Sprite::create("defenceUp.png");
+    defenceUp->setPosition(ccp(x,y+200));
+    defenceUp->setScale(0.3);
+    defenceUp->setTag(3);
+    addChild(defenceUp); 
+
+    //Tag = 4
+    attackUp = Sprite::create("attackUp.png");
+    attackUp->setPosition(ccp(x,y+100));
+    attackUp->setScale(0.3);
+    attackUp->setTag(4);
+    addChild(attackUp);    
+
 	
    //seccion de movimiento
    auto eventListener = EventListenerKeyboard::create();
