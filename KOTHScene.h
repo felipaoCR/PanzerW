@@ -54,7 +54,7 @@ private:
     Player p1, p2,e1;
     Vec2 loc1, loc2, loc3, locm1, locm2, locmE1;
     double duration1=0, duration2=0;
-    bool pause = false;
+    bool pause = false, hitP1 = false, hitP2 = false;
     bool stop = false;
     Sprite *_player1, *_player2,*_enemy1, *sprite, *minaP1[3], *minaP2[3], *misil1, *misil2,*misil3, *HB1, *HB2;
     CCTMXTiledMap *tileMap;
@@ -65,6 +65,7 @@ private:
     int cantM1 = 5, cantM2 = 5; //Cantidad inicial de minas
     bool actM1[3], actM2[3], actm1 = false, actm2 = false, actmE1=false; //Maximo de minas y misiles a la vez
     int i; //Para recorrer arreglos
+    int HPpercentage1, HPpercentage2; //Porcentaje de salud perdida
     int dirAnt1 = 1, dirAnt2 = 1,dirAntE1=1, dirm1, dirm2, dirmE1; //Direccion anterior: 0 up, 1 down, 2 left, 3 right
 };
 

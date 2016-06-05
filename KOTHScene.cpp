@@ -30,18 +30,18 @@ void KOTH::initPlayerStatus()
 	//Inicio estado de player1
 	p1.setHealth(100);
 	p1.setDefence(5);
-	p1.setAttack(p1.getDefence());
-	p1.setSpeed(2);
+	p1.setAttack(120);
+	p1.setSpeed(1);
 	//Inicio estado de player2
 	p2.setHealth(100);
-	p2.setDefence(5);
-	p2.setAttack(p2.getDefence());
+	p2.setDefence(10);
+	p2.setAttack(120);
 	p2.setSpeed(2);
-  //Inico de estado de enemy1
-  e1.setHealth(200);
-  e1.setDefence(5);
-  e1.setAttack(e1.getDefence());
-  e1.setSpeed(0.2);
+  	//Inicio de estado de enemy1
+  	e1.setHealth(100);
+  	e1.setDefence(5);
+  	e1.setAttack(120);
+  	e1.setSpeed(0.2);
 
 }
 
@@ -54,6 +54,13 @@ void KOTH::gameUpdate(float interval)
     loc1 = _player1->getPosition();
     loc2 = _player2->getPosition();
     loc3 = _enemy1->getPosition();
+    //Se inician barras de vida encima de tanques
+    HB1->setPosition(ccp(loc1.x,loc1.y+40));
+    HB2->setPosition(ccp(loc2.x,loc2.y+40));
+
+    //Se inician/refrescan los porcentajes de salud por hit al tanque
+    HPpercentage1 = p2.getAttack()/p1.getDefence();
+    HPpercentage2 = p1.getAttack()/p2.getDefence();
     if(!pause) {
         timeElapsed = std::chrono::duration<double, std::milli>(std::chrono::high_resolution_clock::now()-crono).count() /1000;
         log("Tiempo = %lf", timeElapsed);
@@ -466,30 +473,8 @@ _enemy1->setAnchorPoint(0.5, 0.5);
     dirAntE1 = 7;
     setEnemy1Position(ccp((--loc3.x),(++loc3.y)));//enemy1 going left and up
   }
-/*}
-else {
-//dispararMisilENemigo();
-dirAntE1=8;
 
-}*/
-/*
-srand (time(NULL));
-int ramdom;
-ramdom= rand()%1000;
-
-if (ramdom<20){
-dispararMisilENemigo();
-}
-
-log("ramdom=%f",ramdom);
-*/
-log("Loc3.x =%f",loc3.x);
-log("Loc1.x =%f",loc1.x);
-log("Loc3.y =%f",loc3.y);
-log("Loc1.y =%f",loc1.y);
-
-
-	////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////
 	// pARA TIempo
 
 	if(dentro1) {
@@ -518,6 +503,7 @@ log("Loc1.y =%f",loc1.y);
 	    p1.setHealth(p1.getHealth()-50);
 	    if(p1.getHealth()<0)
 	    p1.setHealth(0);
+            hitP2 = true;
             log("Player 1 actived mine %d", i);
 	    log("Player 1 Life = %d", p1.getHealth());
 	    this->removeChild(minaP2[i]);
@@ -530,6 +516,7 @@ log("Loc1.y =%f",loc1.y);
 	    p2.setHealth(p2.getHealth()-50);
 	    if(p2.getHealth()<0)
 	    p2.setHealth(0);
+	    hitP1 = true;
 	    log("Player 2 actived mine %d", i);
 	    log("Player 2 Life = %d", p2.getHealth());
 	    this->removeChild(minaP1[i]);
@@ -559,9 +546,10 @@ log("Loc1.y =%f",loc1.y);
 	{
 		this->removeChild(misil1);
 		actm1 = false;
-		p2.setHealth(p2.getHealth()-20);
+		p2.setHealth(p2.getHealth()-HPpercentage2);
 		if(p2.getHealth()<0)
 		p2.setHealth(0);
+		hitP1 = true;
 	}
     }
     if(actm2)
@@ -586,9 +574,10 @@ log("Loc1.y =%f",loc1.y);
 	{
 		this->removeChild(misil2);
 		actm2 = false;
-		p1.setHealth(p1.getHealth()-20);
+		p1.setHealth(p1.getHealth()-HPpercentage1);
 		if(p1.getHealth()<0)
 		p1.setHealth(0);
+		hitP2 = true;
 	}
     }
     ///////////////////////////////////////
@@ -624,9 +613,10 @@ log("Loc1.y =%f",loc1.y);
 	{
 		this->removeChild(misil3);
 		actmE1 = false;
-		p1.setHealth(p1.getHealth()-20);
+		p1.setHealth(p1.getHealth()-HPpercentage1);
 		if(p1.getHealth()<0)
 		p1.setHealth(0);
+		hitP2 = true;
 	}
     }
     ///////////////////////////////////////
@@ -643,188 +633,51 @@ log("Loc1.y =%f",loc1.y);
 		p1.setHealth(100);
 
 	}
-  /////////////////////////////////////////
-  //Health bar player 1
-  switch (p1.getHealth()) {
-    case 100:
-      removeChild(HB1);
-      HB1 = Sprite::create("healthBar.png");
-      HB1->setPosition(ccp(x-400,y+525));
-      HB1->setScaleX(0.9);
-      addChild(HB1);
-      break;
-    case 80:
-      removeChild(HB1);
-      HB1 = Sprite::create("healthBar.png");
-      HB1->setPosition(ccp(x-400,y+525));
-      HB1->setScaleX(0.72);
-      addChild(HB1);
-      break;
-    case 60:
-      removeChild(HB1);
-      HB1 = Sprite::create("healthBar.png");
-      HB1->setPosition(ccp(x-400,y+525));
-      HB1->setScaleX(0.54);
-      addChild(HB1);
-      break;
-    case 50:
-      removeChild(HB1);
-      HB1 = Sprite::create("healthBar.png");
-      HB1->setPosition(ccp(x-400,y+525));
-      HB1->setScaleX(0.45);
-      addChild(HB1);
-      break;
-    case 40:
-      removeChild(HB1);
-      HB1 = Sprite::create("healthBar.png");
-      HB1->setPosition(ccp(x-400,y+525));
-      HB1->setScaleX(0.36);
-      addChild(HB1);
-      break;
-    case 30:
-        removeChild(HB1);
-        HB1 = Sprite::create("healthBar.png");
-        HB1->setPosition(ccp(x-400,y+525));
-        HB1->setScaleX(0.27);
-        addChild(HB1);
-        break;
-    case 20:
-        removeChild(HB1);
-        HB1 = Sprite::create("healthBar.png");
-        HB1->setPosition(ccp(x-400,y+525));
-        HB1->setScaleX(0.18);
-        addChild(HB1);
-        break;
-    case 10:
-        removeChild(HB1);
-        HB1 = Sprite::create("healthBar.png");
-        HB1->setPosition(ccp(x-400,y+525));
-        HB1->setScaleX(0.09);
-        addChild(HB1);
-        break;
-  }
-  switch (p2.getHealth()) {
-    case 100:
-      removeChild(HB2);
-      HB2 = Sprite::create("healthBar.png");
-      HB2->setPosition(ccp(x+300,y+525));
-      HB2->setScaleX(0.9);
-      addChild(HB2);
-      break;
-    case 80:
-      removeChild(HB2);
-      HB2 = Sprite::create("healthBar.png");
-      HB2->setPosition(ccp(x+300,y+525));
-      HB2->setScaleX(0.72);
-      addChild(HB2);
-      break;
-    case 60:
-      removeChild(HB2);
-      HB2 = Sprite::create("healthBar.png");
-      HB2->setPosition(ccp(x+300,y+525));
-      HB2->setScaleX(0.54);
-      addChild(HB2);
-      break;
-    case 50:
-      removeChild(HB2);
-      HB2 = Sprite::create("healthBar.png");
-      HB2->setPosition(ccp(x+300,y+525));
-      HB2->setScaleX(0.45);
-      addChild(HB2);
-      break;
-    case 40:
-      removeChild(HB2);
-      HB2 = Sprite::create("healthBar.png");
-      HB2->setPosition(ccp(x+300,y+525));
-      HB2->setScaleX(0.36);
-      addChild(HB2);
-      break;
-    case 30:
-      removeChild(HB2);
-      HB2 = Sprite::create("healthBar.png");
-      HB2->setPosition(ccp(x+300,y+525));
-      HB2->setScaleX(0.27);
-      addChild(HB2);
-      break;
-    case 20:
-      removeChild(HB2);
-      HB2 = Sprite::create("healthBar.png");
-      HB2->setPosition(ccp(x+300,y+525));
-      HB2->setScaleX(0.18);
-      addChild(HB2);
-      break;
-    case 10:
-      removeChild(HB2);
-      HB2 = Sprite::create("healthBar.png");
-      HB2->setPosition(ccp(x+300,y+525));
-      HB2->setScaleX(0.09);
-      addChild(HB2);
-      break;
-  }
-//-------------------------------------------------
-//Health bar player 1
- switch (p1.getHealth()) {
-    case 100:
-      removeChild(HB1);
-      HB1 = Sprite::create("healthBar.png");
-      HB1->setPosition(ccp(loc1.x,loc1.y+40));
-      HB1->setScaleX(0.225);
-      HB1->setScaleY(0.1);
-      addChild(HB1);
-      break;
-    case 80:
-      HB1->setScaleX(0.18);
-      break;
-    case 60:
-      HB1->setScaleX(0.135);
-      break;
-    case 50:
-      HB1->setScaleX(0.1125);
-      break;
-    case 40:
-      HB1->setScaleX(0.09);
-      break;
-    case 30:
-        HB1->setScaleX(0.0725);
-        break;
-    case 20:
-        HB1->setScaleX(0.045);
-        break;
-    case 10:
-        HB1->setScaleX(0.0225);
-        break;
-  }
-  switch (p2.getHealth()) {
-    case 100:
-      removeChild(HB2);
-      HB2 = Sprite::create("healthBar.png");
-      HB2->setPosition(ccp(loc2.x,loc2.y+40));
-      HB2->setScaleY(0.1);
-      HB2->setScaleX(0.225);
-      addChild(HB2);
-      break;
-    case 80:
-      HB2->setScaleX(0.18);
-      break;
-    case 60:
-      HB2->setScaleX(0.135);
-      break;
-    case 50:
-      HB2->setScaleX(0.1125);
-      break;
-    case 40:
-      HB2->setScaleX(0.09);
-      break;
-    case 30:
-      HB2->setScaleX(0.0725);
-      break;
-    case 20:
-      HB2->setScaleX(0.045);
-      break;
-    case 10:
-      HB2->setScaleX(0.0225);
-      break;
-  }
+    ////////////////////////////////////
+    /// Barras de vida
+    if(hitP2)
+    {
+	if(p1.getHealth()==100)
+	{	
+      	  removeChild(HB1);
+      	  HB1 = Sprite::create("healthBar.png");
+      	  HB1->setPosition(ccp(loc1.x,loc1.y+40));
+      	  HB1->setScaleX(0.225);
+      	  HB1->setScaleY(0.1);
+      	  addChild(HB1);		
+	}else if(p1.getHealth()!=100 && p1.getHealth()>0)
+	{
+	  HB1->setScaleX(0.225*((float)p1.getHealth()/100));	
+	}
+	hitP2 = false;
+    }
+    if(hitP1)
+    {
+	if(p2.getHealth()==100)
+	 {	
+      	  removeChild(HB2);
+      	  HB2 = Sprite::create("healthBar.png");
+   	  HB2->setPosition(ccp(loc2.x,loc2.y+40));
+          HB2->setScaleX(0.225);
+      	  HB2->setScaleY(0.1);
+      	  addChild(HB2);		
+	}else if(p2.getHealth()!=100 && p2.getHealth()>0)
+	{
+	  HB2->setScaleX(0.225*((float)p2.getHealth()/100));	
+	}
+	hitP1 = false;
+    }
+     //Esto es para el upgrade de salud a 120 HP
+    /*if(hpup1)
+    {
+	HB1->setScaleX(1.2*0.225);
+	hpup1 = false;
+    }
+    if(hpup2)
+    {
+	HB2->setScaleX(1.2*0.225);
+	hpup2 = false;
+    }*/
 
 
     ///////////////////////////////////////
@@ -1118,39 +971,39 @@ void KOTH::setMisil2Position(Point position)
 ///MISIL enemigo
 void KOTH::dispararMisilENemigo(){
   if(actmE1==false && !pause) {
-  audio->playEffect("Audio/explosion3.mp3");
+    audio->playEffect("Audio/explosion3.mp3");
     audio->setEffectsVolume(0.3);
-misil3 = Sprite::create("c1.png");
-misil3->setPosition(_enemy1->getPosition());
-misil3->setScale(0.4);
-this->addChild(misil3);
-actmE1 = true;
-dirmE1 = dirAntE1;
-switch (dirmE1) {
-  case 0:
-    misil3->runAction(RotateBy::create(0.001, -90));
-    break;
-  case 1:
-    misil3->runAction(RotateBy::create(0.001, 90));
-    break;
-  case 2:
-    misil3->runAction(RotateBy::create(0.001, 180));
-    break;
-  case 3:
-    break;
-  case 4:
-    misil3->runAction(RotateBy::create(0.001, 45));
-    break;
-  case 5:
-    misil3->runAction(RotateBy::create(0.001, -45));
-    break;
-  case 6:
-    misil3->runAction(RotateBy::create(0.001, -135));
-    break;
-  case 7:
-    misil3->runAction(RotateBy::create(0.001, 135));
-    break;
-default:
+    misil3 = Sprite::create("c1.png");
+    misil3->setPosition(_enemy1->getPosition());
+    misil3->setScale(0.4);
+    this->addChild(misil3);
+    actmE1 = true;
+    dirmE1 = dirAntE1;
+    switch (dirmE1) {
+  	case 0:
+    	  misil3->runAction(RotateBy::create(0.001, -90));
+    	break;
+  	case 1:
+    	  misil3->runAction(RotateBy::create(0.001, 90));
+    	break;
+  	case 2:
+    	  misil3->runAction(RotateBy::create(0.001, 180));
+    	break;
+  	case 3:
+    	break;
+  	case 4:
+    	  misil3->runAction(RotateBy::create(0.001, 45));
+    	break;
+  	case 5:
+    	  misil3->runAction(RotateBy::create(0.001, -45));
+    	break;
+  	case 6:
+    	  misil3->runAction(RotateBy::create(0.001, -135));
+    	break;
+  	case 7:
+    	  misil3->runAction(RotateBy::create(0.001, 135));
+    	break;
+	default:
         break;
       }
   }
@@ -1334,19 +1187,6 @@ bool KOTH::init()
 
 //-------------------------------
 
-
-/*
-    //Se crea sprite health bar de player 1
-    HB1 = Sprite::create("healthBar.png");
-    HB1->setPosition(ccp(x-400,y+525));
-    HB1->setScale(0.9);
-	addChild(HB1);
-   //Se crea sprite health bar de player 2
-   	HB2 = Sprite::create("healthBar.png");
-    HB2->setPosition(ccp(x+300,y+525));
-    HB2->setScale(0.9);
-	addChild(HB2);
-*/
    //seccion de movimiento
    auto eventListener = EventListenerKeyboard::create();
    eventListener->onKeyPressed = CC_CALLBACK_2(KOTH::onKeyPressed, this);
