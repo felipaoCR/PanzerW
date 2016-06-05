@@ -4,13 +4,13 @@
 #include "KOTHScene.h"
 #include "PanzerWarsScene.h"
 #include "SimpleAudioEngine.h"
-
+#include <time.h>
 
 USING_NS_CC;
 using namespace cocos2d;
 using namespace std::chrono;
 
-int x,y,x2,y2;
+int x,y,x2,y2,x3,y3;
 high_resolution_clock::time_point start1, start2, crono;
 bool dentro1, dentro2, stop;
 double temp1, temp2, timeElapsed;
@@ -37,6 +37,11 @@ void KOTH::initPlayerStatus()
 	p2.setDefence(5);
 	p2.setAttack(p2.getDefence());
 	p2.setSpeed(2);
+  //Inico de estado de enemy1
+  e1.setHealth(200);
+  e1.setDefence(5);
+  e1.setAttack(e1.getDefence());
+  e1.setSpeed(0.2);
 
 }
 
@@ -48,8 +53,7 @@ void KOTH::gameUpdate(float interval)
 
     loc1 = _player1->getPosition();
     loc2 = _player2->getPosition();
-    HB1->setPosition(ccp(loc1.x,loc1.y+40));
-    HB2->setPosition(ccp(loc2.x,loc2.y+40));
+    loc3 = _enemy1->getPosition();
     if(!pause) {
         timeElapsed = std::chrono::duration<double, std::milli>(std::chrono::high_resolution_clock::now()-crono).count() /1000;
         log("Tiempo = %lf", timeElapsed);
@@ -57,6 +61,7 @@ void KOTH::gameUpdate(float interval)
 	dentro2 = false;
 	KOTHCounter1(loc1);
 	KOTHCounter2(loc2);
+  //KOTHCounter3(loc3);
 	if(up1) {
 	    switch(dirAnt1) {
 		case 0:
@@ -198,6 +203,291 @@ void KOTH::gameUpdate(float interval)
 	    KOTHCounter2(_player2->getPosition());
 	}
 
+  ////////////////////////////////////////////////////////////////////////////
+//Movimiento del enemigo
+/*_player1->setAnchorPoint(0.5, 0.5);
+_enemy1->setAnchorPoint(0.5, 0.5);
+*/
+//if(dirAntE1==(0||1 || 2 ||3||4||5||6||7)){
+  if((abs(loc1.x-loc3.x)<20) &&((loc1.y-loc3.y)>20 )){//0
+  switch (dirAntE1) {
+    case 0:
+      break;
+    case 1:
+      this->_enemy1->runAction(RotateBy::create(0.00002, 180));
+      break;
+    case 2:
+      this->_enemy1->runAction(RotateBy::create(0.0000001, 90));
+      break;
+    case 3:
+      this->_enemy1->runAction(RotateBy::create(0.0000001, -90));
+      break;
+    case 4:
+      this->_enemy1->runAction(RotateBy::create(0.0000005, -45));
+      break;
+    case 5:
+      this->_enemy1->runAction(RotateBy::create(0.000000015, -135));
+      break;
+    case 6:
+      this->_enemy1->runAction(RotateBy::create(0.0000000015, 135));
+      break;
+    case 7:
+      this->_enemy1->runAction(RotateBy::create(0.00000000005, 45));
+      break;
+    }
+      dirAntE1 = 0;
+      setEnemy1Position(ccp(loc3.x,++loc3.y+e1.getSpeed())); // enemy1 going up
+      log("0");
+      //KOTHCounter3(_enemy1->getPosition());
+      dispararMisilENemigo();
+  }
+  //
+  if((abs(loc1.x-loc3.x)<20) &&((loc3.y-loc1.y)>20 )){//1
+  switch (dirAntE1) {
+    case 0:
+      this->_enemy1->runAction(RotateBy::create(0.02, 180));
+      break;
+    case 1:
+      break;
+    case 2:
+      this->_enemy1->runAction(RotateBy::create(0.01, -90));
+      break;
+    case 3:
+      this->_enemy1->runAction(RotateBy::create(0.01, 90));
+      break;
+    case 4:
+      this->_enemy1->runAction(RotateBy::create(0.015, 135));
+      break;
+    case 5:
+      this->_enemy1->runAction(RotateBy::create(0.005, 45));
+      break;
+    case 6:
+      this->_enemy1->runAction(RotateBy::create(0.005, -45));
+      break;
+    case 7:
+      this->_enemy1->runAction(RotateBy::create(0.015, -135));
+      break;
+    }
+      log("1");
+      dirAntE1 = 1;
+      dispararMisilENemigo();
+      setEnemy1Position(ccp(loc3.x,--loc3.y)); // enemy1 going down
+      //KOTHCounter3(_enemy1->getPosition());
+  }
+  //
+  if(((loc3.x-loc1.x)>20) &&(abs(loc1.y-loc3.y)<20) ){//2
+  switch (dirAntE1) {
+    case 0:
+      this->_enemy1->runAction(RotateBy::create(0.01, -90));
+      break;
+    case 1:
+      this->_enemy1->runAction(RotateBy::create(0.01, 90));
+      break;
+    case 2:
+      break;
+    case 3:
+      this->_enemy1->runAction(RotateBy::create(0.02, 180));
+      break;
+    case 4:
+      this->_enemy1->runAction(RotateBy::create(0.015, -135));
+      break;
+    case 5:
+      this->_enemy1->runAction(RotateBy::create(0.015, 135));
+      break;
+    case 6:
+      this->_enemy1->runAction(RotateBy::create(0.005, 45));
+      break;
+    case 7:
+      this->_enemy1->runAction(RotateBy::create(0.005, -45));
+      break;
+    }
+      log("2");
+      dirAntE1 = 2;
+    //  dispararMisilENemigo();
+      setEnemy1Position(ccp(--loc3.x,loc3.y)); // enemy1 going left
+      //KOTHCounter3(_enemy1->getPosition());
+        //dispararMisilENemigo();
+  }
+  //
+  if(((loc1.x-loc3.x)>20) &&(abs(loc1.y-loc3.y)<20) ){//3
+  switch (dirAntE1) {
+    case 0:
+      this->_enemy1->runAction(RotateBy::create(0.01, 90));
+      break;
+    case 1:
+      this->_enemy1->runAction(RotateBy::create(0.01, -90));
+      break;
+    case 2:
+      this->_enemy1->runAction(RotateBy::create(0.02, 180));
+      break;
+    case 3:
+      break;
+    case 4:
+      this->_enemy1->runAction(RotateBy::create(0.005, 45));
+      break;
+    case 5:
+      this->_enemy1->runAction(RotateBy::create(0.005, -45));
+      break;
+    case 6:
+      this->_enemy1->runAction(RotateBy::create(0.015, -135));
+      break;
+    case 7:
+      this->_enemy1->runAction(RotateBy::create(0.015, 135));
+      break;
+    }
+      dirAntE1 = 3;
+      log("3");
+    // dispararMisilENemigo();
+      setEnemy1Position(ccp(++loc3.x,loc3.y)); // enemy1 going right
+      //KOTHCounter3(_enemy1->getPosition());
+  }
+  //
+  if(((loc1.x-loc3.x)>20) && ((loc1.y-loc3.y)>20)){ //4
+    switch (dirAntE1) {
+      case 0:
+        this->_enemy1->runAction(RotateBy::create(0.005, 45));
+        break;
+      case 1:
+        this->_enemy1->runAction(RotateBy::create(0.015, -135));
+        break;
+      case 2:
+        this->_enemy1->runAction(RotateBy::create(0.015, 135));
+        break;
+      case 3:
+        this->_enemy1->runAction(RotateBy::create(0.005, -45));
+        break;
+      case 4:
+        break;
+      case 5:
+        this->_enemy1->runAction(RotateBy::create(0.01, -90));
+        break;
+      case 6:
+        this->_enemy1->runAction(RotateBy::create(0.02, 180));
+        break;
+      case 7:
+        this->_enemy1->runAction(RotateBy::create(0.01, 90));
+        break;
+      }
+      log("4");
+      dirAntE1 = 4;
+  //  dispararMisilENemigo();
+    setEnemy1Position(ccp((++loc3.x),(++loc3.y)));// enemy 1 going up and right
+  }
+  //
+  if(((loc1.x-loc3.x)>20) && ((loc3.y-loc1.y)>20)){ //5
+    switch (dirAntE1) {
+      case 0:
+        this->_enemy1->runAction(RotateBy::create(0.015, 135));
+        break;
+      case 1:
+        this->_enemy1->runAction(RotateBy::create(0.005, -45));
+        break;
+      case 2:
+        this->_enemy1->runAction(RotateBy::create(0.015, -135));
+        break;
+      case 3:
+        this->_enemy1->runAction(RotateBy::create(0.005, 45));
+        break;
+      case 4:
+        this->_enemy1->runAction(RotateBy::create(0.01, 90));
+        break;
+      case 5:
+        break;
+      case 6:
+        this->_enemy1->runAction(RotateBy::create(0.01, -90));
+        break;
+      case 7:
+        this->_enemy1->runAction(RotateBy::create(0.02, 180));
+        break;
+      }
+    log("5");
+    dirAntE1 = 5;
+    setEnemy1Position(ccp((++loc3.x),(--loc3.y))); //enemy1 going down and right
+  }
+  //
+  if(((loc3.x-loc1.x)>20) && ((loc3.y-loc1.y)>20)){//6
+    switch (dirAntE1) {
+      case 0:
+        this->_enemy1->runAction(RotateBy::create(0.015, -135));
+        break;
+      case 1:
+        this->_enemy1->runAction(RotateBy::create(0.005, 45));
+        break;
+      case 2:
+        this->_enemy1->runAction(RotateBy::create(0.005, -45));
+        break;
+      case 3:
+        this->_enemy1->runAction(RotateBy::create(0.015, 135));
+        break;
+      case 4:
+        this->_enemy1->runAction(RotateBy::create(0.02, 180));
+        break;
+      case 5:
+        this->_enemy1->runAction(RotateBy::create(0.01, 90));
+        break;
+      case 6:
+        break;
+      case 7:
+        this->_enemy1->runAction(RotateBy::create(0.01, -90));
+        break;
+      }
+    log("6");
+    dirAntE1 = 6;
+    //  dispararMisilENemigo();
+    setEnemy1Position(ccp((--loc3.x),(--loc3.y))); //enemy1 going down and left
+  }
+  if(((loc3.x-loc1.x)>20) && ((loc1.y-loc3.y)>20)){//7
+    switch (dirAntE1) {
+      case 0:
+        this->_enemy1->runAction(RotateBy::create(0.005, -45));
+        break;
+      case 1:
+        this->_enemy1->runAction(RotateBy::create(0.015, 135));
+        break;
+      case 2:
+        this->_enemy1->runAction(RotateBy::create(0.005, 45));
+        break;
+      case 3:
+        this->_enemy1->runAction(RotateBy::create(0.015, -135));
+        break;
+      case 4:
+        this->_enemy1->runAction(RotateBy::create(0.01, -90));
+        break;
+      case 5:
+        this->_enemy1->runAction(RotateBy::create(0.02, 180));
+        break;
+      case 6:
+        this->_enemy1->runAction(RotateBy::create(0.01, 90));
+        break;
+      case 7:
+        break;
+      }
+    log("7");
+    dirAntE1 = 7;
+    setEnemy1Position(ccp((--loc3.x),(++loc3.y)));//enemy1 going left and up
+  }
+/*}
+else {
+//dispararMisilENemigo();
+dirAntE1=8;
+
+}*/
+/*
+srand (time(NULL));
+int ramdom;
+ramdom= rand()%1000;
+
+if (ramdom<20){
+dispararMisilENemigo();
+}
+
+log("ramdom=%f",ramdom);
+*/
+log("Loc3.x =%f",loc3.x);
+log("Loc1.x =%f",loc1.x);
+log("Loc3.y =%f",loc3.y);
+log("Loc1.y =%f",loc1.y);
+
 
 	////////////////////////////////////////////////////////
 	// pARA TIempo
@@ -219,6 +509,7 @@ void KOTH::gameUpdate(float interval)
     // Para colisiones entre sprites
     bbP1 = _player1->getBoundingBox();
     bbP2 = _player2->getBoundingBox();
+    bbE1= _enemy1->getBoundingBox();
     for(i=0; i<3; i++) {
 	if(bbP1.intersectsRect(bbM2[i]) && (actM2[i]==true)) {
 	    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Bomb.mp3");
@@ -244,7 +535,8 @@ void KOTH::gameUpdate(float interval)
 	    this->removeChild(minaP1[i]);
 	    actM1[i] = false;
 	}
-    }
+
+	  }
     if(actm1)
     {
     	locm1 = misil1->getPosition();
@@ -300,6 +592,44 @@ void KOTH::gameUpdate(float interval)
 	}
     }
     ///////////////////////////////////////
+    if(actmE1)  {
+	locmE1 = misil3->getPosition();
+	bbmE1 = misil3->getBoundingBox();
+	switch (dirmE1)
+	{
+		case 0:
+		    setMisil3Position(ccp(locmE1.x,++locmE1.y+3));
+		    break;
+		case 1:
+		    setMisil3Position(ccp(locmE1.x,--locmE1.y-3));
+		    break;
+		case 2:
+		    setMisil3Position(ccp(--locmE1.x-3,locmE1.y));
+		    break;
+		case 3:
+		    setMisil3Position(ccp(++locmE1.x+3,locmE1.y));
+    case 4:
+    		setMisil3Position(ccp(++locmE1.x,++locmE1.y+3));
+    		break;
+    case 5:
+    		setMisil3Position(ccp(++locmE1.x,--locmE1.y-3));
+    		break;
+    case 6:
+    		setMisil3Position(ccp(--locmE1.x-3,--locmE1.y));
+    		break;
+    case 7:
+    		setMisil3Position(ccp(--locmE1.x+3,++locmE1.y));
+    }
+	if(bbmE1.intersectsRect(bbP1))
+	{
+		this->removeChild(misil3);
+		actmE1 = false;
+		p1.setHealth(p1.getHealth()-20);
+		if(p1.getHealth()<0)
+		p1.setHealth(0);
+	}
+    }
+    ///////////////////////////////////////
     //Spawneo
 	if(!p2.getHealth())
 	{
@@ -315,6 +645,124 @@ void KOTH::gameUpdate(float interval)
 	}
   /////////////////////////////////////////
   //Health bar player 1
+  switch (p1.getHealth()) {
+    case 100:
+      removeChild(HB1);
+      HB1 = Sprite::create("healthBar.png");
+      HB1->setPosition(ccp(x-400,y+525));
+      HB1->setScaleX(0.9);
+      addChild(HB1);
+      break;
+    case 80:
+      removeChild(HB1);
+      HB1 = Sprite::create("healthBar.png");
+      HB1->setPosition(ccp(x-400,y+525));
+      HB1->setScaleX(0.72);
+      addChild(HB1);
+      break;
+    case 60:
+      removeChild(HB1);
+      HB1 = Sprite::create("healthBar.png");
+      HB1->setPosition(ccp(x-400,y+525));
+      HB1->setScaleX(0.54);
+      addChild(HB1);
+      break;
+    case 50:
+      removeChild(HB1);
+      HB1 = Sprite::create("healthBar.png");
+      HB1->setPosition(ccp(x-400,y+525));
+      HB1->setScaleX(0.45);
+      addChild(HB1);
+      break;
+    case 40:
+      removeChild(HB1);
+      HB1 = Sprite::create("healthBar.png");
+      HB1->setPosition(ccp(x-400,y+525));
+      HB1->setScaleX(0.36);
+      addChild(HB1);
+      break;
+    case 30:
+        removeChild(HB1);
+        HB1 = Sprite::create("healthBar.png");
+        HB1->setPosition(ccp(x-400,y+525));
+        HB1->setScaleX(0.27);
+        addChild(HB1);
+        break;
+    case 20:
+        removeChild(HB1);
+        HB1 = Sprite::create("healthBar.png");
+        HB1->setPosition(ccp(x-400,y+525));
+        HB1->setScaleX(0.18);
+        addChild(HB1);
+        break;
+    case 10:
+        removeChild(HB1);
+        HB1 = Sprite::create("healthBar.png");
+        HB1->setPosition(ccp(x-400,y+525));
+        HB1->setScaleX(0.09);
+        addChild(HB1);
+        break;
+  }
+  switch (p2.getHealth()) {
+    case 100:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(ccp(x+300,y+525));
+      HB2->setScaleX(0.9);
+      addChild(HB2);
+      break;
+    case 80:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(ccp(x+300,y+525));
+      HB2->setScaleX(0.72);
+      addChild(HB2);
+      break;
+    case 60:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(ccp(x+300,y+525));
+      HB2->setScaleX(0.54);
+      addChild(HB2);
+      break;
+    case 50:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(ccp(x+300,y+525));
+      HB2->setScaleX(0.45);
+      addChild(HB2);
+      break;
+    case 40:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(ccp(x+300,y+525));
+      HB2->setScaleX(0.36);
+      addChild(HB2);
+      break;
+    case 30:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(ccp(x+300,y+525));
+      HB2->setScaleX(0.27);
+      addChild(HB2);
+      break;
+    case 20:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(ccp(x+300,y+525));
+      HB2->setScaleX(0.18);
+      addChild(HB2);
+      break;
+    case 10:
+      removeChild(HB2);
+      HB2 = Sprite::create("healthBar.png");
+      HB2->setPosition(ccp(x+300,y+525));
+      HB2->setScaleX(0.09);
+      addChild(HB2);
+      break;
+  }
+//-------------------------------------------------
+//Health bar player 1
  switch (p1.getHealth()) {
     case 100:
       removeChild(HB1);
@@ -379,6 +827,7 @@ void KOTH::gameUpdate(float interval)
   }
 
 
+    ///////////////////////////////////////
     ///////////////////////////////////////
     //Game Over
     if(timeElapsed>90)
@@ -606,6 +1055,29 @@ void KOTH::setPlayer2Position(Point position)
     _player2->setPosition(position);
 }
 
+void KOTH::setEnemy1Position(Point position)
+{
+    Point tileCoord = this->tileCoordForPosition(position);
+    int tileGid = _blockage->getTileGIDAt(tileCoord);
+    if (tileGid) {
+        auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
+        if (!properties.empty()) {
+            auto collision = properties["Collision"].asString();
+            if ("True" == collision) {
+		log("COLISION");
+
+    //_enemy1->setPosition(ccp(++loc3.x,loc3.y));
+    //_enemy1->setPosition(ccp(loc3.x,++loc3.y));
+    //this->_enemy1->runAction(RotateBy::create(0.02, 180));
+                return;
+            }
+        }else return;
+    }
+    _enemy1->setPosition(position);
+}
+
+
+
 void KOTH::setMisil1Position(Point position)
 {
     Point tileCoord = this->tileCoordForPosition(position);
@@ -643,7 +1115,67 @@ void KOTH::setMisil2Position(Point position)
     }
     misil2->setPosition(position);
 }
+///MISIL enemigo
+void KOTH::dispararMisilENemigo(){
+  if(actmE1==false && !pause) {
+  audio->playEffect("Audio/explosion3.mp3");
+    audio->setEffectsVolume(0.3);
+misil3 = Sprite::create("c1.png");
+misil3->setPosition(_enemy1->getPosition());
+misil3->setScale(0.4);
+this->addChild(misil3);
+actmE1 = true;
+dirmE1 = dirAntE1;
+switch (dirmE1) {
+  case 0:
+    misil3->runAction(RotateBy::create(0.001, -90));
+    break;
+  case 1:
+    misil3->runAction(RotateBy::create(0.001, 90));
+    break;
+  case 2:
+    misil3->runAction(RotateBy::create(0.001, 180));
+    break;
+  case 3:
+    break;
+  case 4:
+    misil3->runAction(RotateBy::create(0.001, 45));
+    break;
+  case 5:
+    misil3->runAction(RotateBy::create(0.001, -45));
+    break;
+  case 6:
+    misil3->runAction(RotateBy::create(0.001, -135));
+    break;
+  case 7:
+    misil3->runAction(RotateBy::create(0.001, 135));
+    break;
+default:
+        break;
+      }
+  }
+}
 
+void KOTH::setMisil3Position(Point position)
+{
+    Point tileCoord = this->tileCoordForPosition(position);
+    int tileGid = _blockage->getTileGIDAt(tileCoord);
+    if (tileGid) {
+        auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
+        if (!properties.empty()) {
+            auto collision = properties["Collision"].asString();
+            if ("True" == collision) {
+		this->removeChild(misil3);
+		actmE1 = false;
+		log("COLISION");
+                return;
+            }
+        }else return;
+    }
+    misil3->setPosition(position);
+}
+
+//----------------------------------------------------------------------------------------
 void KOTH::KOTHCounter1(Point position)
 {
     Point tileCoord = this->tileCoordForPosition(position);
@@ -761,7 +1293,7 @@ bool KOTH::init()
     _player1 = p1.getPlayer();
     _player1 =Sprite::create("tank3.png");
     setPlayer1Position(ccp(x,y));
-    _player1->setScale(0.3);
+    _player1->setScale(0.4);
     addChild(_player1);
 
     //Se crea el sprite de player 2
@@ -771,12 +1303,24 @@ bool KOTH::init()
     _player2 = p2.getPlayer();
     _player2 = Sprite::create("tank3.png");
     _player2->setPosition(ccp(x2,y2));
-    _player2->setScale(0.3);
+    _player2->setScale(0.4);
     addChild(_player2);
     //_player2->runAction(RotateBy::create(0.001, 180));
 
-     //Se crea sprite health bar de player 1
-    HB1 = Sprite::create("healthBar.png");	
+    //Se crea el sprite de enemigo
+    auto Enemy1 = objects->getObject("Enemy1");
+    x3 = Enemy1["x"].asInt();
+    y3 = Enemy1["y"].asInt();
+    _enemy1 = p2.getPlayer();
+    _enemy1 = Sprite::create("tank1.png");
+    setEnemy1Position(ccp(x-400,y+150));
+//    _enemy1->setPosition(ccp(x-400,y+150));
+    _enemy1->setScale(0.4);
+    addChild(_enemy1);
+
+//--------------------------------
+//Se crea sprite health bar de player 1
+    HB1 = Sprite::create("healthBar.png");
     HB1->setPosition(ccp(x,y+40));
     HB1->setScaleX(0.225);
     HB1->setScaleY(0.1);
@@ -788,7 +1332,21 @@ bool KOTH::init()
     HB2->setScaleY(0.1);
 	addChild(HB2);
 
+//-------------------------------
 
+
+/*
+    //Se crea sprite health bar de player 1
+    HB1 = Sprite::create("healthBar.png");
+    HB1->setPosition(ccp(x-400,y+525));
+    HB1->setScale(0.9);
+	addChild(HB1);
+   //Se crea sprite health bar de player 2
+   	HB2 = Sprite::create("healthBar.png");
+    HB2->setPosition(ccp(x+300,y+525));
+    HB2->setScale(0.9);
+	addChild(HB2);
+*/
    //seccion de movimiento
    auto eventListener = EventListenerKeyboard::create();
    eventListener->onKeyPressed = CC_CALLBACK_2(KOTH::onKeyPressed, this);
@@ -804,9 +1362,9 @@ bool KOTH::init()
 
 
     // set the background music and continuously play it.
-    audio->preloadBackgroundMusic("Audio/mgs3.mp3");
+    audio->preloadBackgroundMusic("Audio/DoneD.mp3");
     //audio->preloadBackgroundMusic("Audio/ff7.mp3");
-    audio->playBackgroundMusic("Audio/mgs3.mp3", true);
+    audio->playBackgroundMusic("Audio/DoneD.mp3", true);
     crono = high_resolution_clock::now();
 
     // Pausa o continua el juego
