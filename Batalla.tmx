@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="24" tilewidth="32" tileheight="32" nextobjectid="5">
+ <tileset firstgid="1" name="magecity" tilewidth="32" tileheight="32" tilecount="360" columns="8">
+  <image source="magecity.png" width="256" height="1450"/>
+ </tileset>
+ <tileset firstgid="361" name="rpg1" tilewidth="32" tileheight="32" tilecount="2016" columns="32">
+  <image source="rpg1.png" width="1024" height="2016"/>
+  <tile id="263">
+   <properties>
+    <property name="Collision" value="True"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Tile Layer 1" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJzVlr0SgjAMgOOom7+LPwu8gDqJj8DrOzgwMHZReQTSO3oXuCYNSuEcvuOAJl9S2h75DCAfiFTBUC7OH6pNijcAsMbrBtkiO2VPmv60/j1eD8gROQmepKGPf44sSGx3TAntvL78CYNmbpbISvAbaOf84H0BfE9cLTSejq+g3Yfkd7Hf+LteSgFhP42vevpDe6QK+B+CT/JLPVPegr9k/Gd8dkGuwPtfSr80/5z/hs8y5O5ZT337l/zP5l23F87vaqBuab1qvn/K9ML5ffk1Y7j55+ZR6/8FI+Qfwy+toSyy+x/R7vlY2PU6ZQ1G2C9DY88Vez65fwjunIiJPTfcP8TYblrDVO4Y1Lpl7zU=
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJztls9OAjEQh6ePIuBBwQN4Eo/6BjwtkKBgoiD45wCBE3AxeiG8gr/J0jA0bbe73cCFSb4sYSd8Q7P9bXtE9ASewQi852QMHhTRozq8mt9JxwS8gjcwBBeglpMyJVUHDYNb2tdc0Df8RdQdaBrci/srwSn8skL9Pdo/I/JzbIX6ZU+R6xXq/wRf4Dugvw06Bt1Ifx375hLXhkrv7+/uS14i/VfgGlQD+nl/T4T7g5JsiPHLSuuf0eEa8H+fH9H/Y/H/HtGvf1f612BzYv/07I/yc+7qPMnq/wNbR5/MNl/xnAOBK1Nsfptb91Uoybam8vt5TvO84SqdQb7s0X4+c5QC/Nx3s+tlyp5ezhteryG5s0f7F4DVtv1p+ksU5l8K/yrFz89GSyWkzZCltN9Xpr/IGUL8I4s/6wz8vh/kpOvwVzLMEHtm/wctYetV
+  </data>
+ </layer>
+ <layer name="Tile Layer 3" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJxjYBhcIJFK5ogDsQQOuTl49GVSyX55IFbAIbcEj75CIBZgJGz+FyD+CsTfSHQXPgCylxi7QeAPEP8F4n8k2lEKxGVAXA7EFSTqRQYsjJCwIgQWoPFrgbgOiOuBuIEC+4kFK9D4rUDcBsTtQNxBB/vRQS8Q9wFxPxBPGAD7pwLxNCCeDsQzBsB+GCA2nY+CUYAMFgyw/ejlyXAA1KoTyAWk1glrCMgn42BjA7xAzMNAWp2wBYhF8chn42DjAsTUCY1A3ITEl8VjXjEONi4AKosHuk6A1QfsI6xeAAC+ByVO
+  </data>
+ </layer>
+ <layer name="Tile Layer 4" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJztlbkNgFAMxRKubaCD/VfilDiFy0yQFD+WXLt4xRMpi15FBo3rj7SnwH4kMy64BvVPvPAO6iu7V1gXun+SJInFfsKGOx6OffsJD774OfbtJzTYYpf/kDjxAwKrEk0=
+  </data>
+ </layer>
+ <layer name="Tile Layer 5" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJxjYECAj0D8CYg/MwwM+AnEv4D49wDZz8jIwMAExMyMA+QAOoHReB4Z8TwKRsEoGAWEwGh9MFofjIKRCQAJbRFo
+  </data>
+ </layer>
+ <objectgroup name="Objects">
+  <object id="1" name="Player1" x="567" y="94" width="66" height="99"/>
+  <object id="3" name="Player2" x="894" y="418" width="66" height="105"/>
+ </objectgroup>
+ <layer name="Collision" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJzlkzsOACAIQ40n9v6Tk4mDIoViIjZho7z6odVSWpIaYvtRWXONHoak7DNLc87TfXkzWvk7n3UuykbyamYy+J7d+IEv9UqKyJuRj8xF+CvPrZxIfxTf8/4v8E+K3H+NsvPRv8Lcfw0fkYXPYr1WHTdJr+c=
+  </data>
+ </layer>
+</map>
