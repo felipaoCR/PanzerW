@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="24" tilewidth="32" tileheight="32" nextobjectid="3">
+ <tileset firstgid="1" name="rpg1" tilewidth="32" tileheight="32" tilecount="2016" columns="32">
+  <image source="rpg1.png" width="1024" height="2016"/>
+  <tile id="263">
+   <properties>
+    <property name="Collision" value="True"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Tile Layer 1" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJztwwENAAAMAiAf3eYGOWz0kqqqqi8OnkmGEA==
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJytlEtOxDAMht0yajZs4ApwgeEGU7pGKjcACc1+bgASC8SIxzFY8NzBDVjw3MEt4AQ4aiJcj52knf6S1ch5fE5U/wDDqBoBPBqAJ4yJaXJ7pgmrcQ5wn7VjKx8I7vSFrG+M0tWw79hTrK1G1kfWjl2Fb9enaKUAGBXt3Jn5Hx8ZWNAJ5i5cLKMd5G5gbBbyfKmcf5XAvcU1dwnrtpFdKXxNz+zcU7MYbxjvHd5nldQwJWN/D3vmHOMa48a085r4O/3Y/4XFbxaui9/jBcev5H6+Nw6E/43yJXZqLfweE8I9dN/jAJ+z17FnHvC7ht9LNhfjl4R7TvoztM9yKNt6xmfW+Imvw8+l3N+/gZXUn3wf9S3LnjlOTeoIeZnWb94rY3zqWzOB4eeluRDfe6Uk3ydDKMVvuHyfSN5Aa6N9HFvLJfVc19piPuXXSpJ6jirVb6T37eNVsf3aOSk+2aWGrl7H+X19MpXNz+F86lfUt2heqkFj8700L/HHueyZNC95pcbge2le4te57Jk0L3mlxuB7uQ9L/7/mmSGvDDFCZ/bxN02cUSV41LL8Px3dosA=
+  </data>
+ </layer>
+ <layer name="Tile Layer 3" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJzTYGGAAyckNjawk52BYRc7fjWEwCIS9WsguekmUO8tdsLuxAcOUeh+YgElbhwF2MFT5pFtPy4QCUzT6QOY3ippmKcCgGHOBMVvmGhnDz3tJ6VsGI7+hwFYOOCrV+jhf1i9Qgv7YyjMG5TaX0ODvEnIHR+wyFOzfOIBhgUvDswPxAJkltOpRLpRB2g+Ix5sQKb9rUD7PdkIq/MBmu+LA/szQ9IMuSCTjfhwIATekqmvdYDtH0kAAHgVIWg=
+  </data>
+ </layer>
+ <objectgroup name="Objects">
+  <object id="1" name="Player1" x="96" y="216" width="66" height="106"/>
+  <object id="2" name="Player2" x="642" y="256" width="65" height="98"/>
+ </objectgroup>
+ <layer name="Collision" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJzFlFEKwDAIQ7u/3v/E+y2iMalKA2Wg6NPOur+19uODdPqzGJaV8bOasnrVOrs5bN4pvpqjKjsjE3x2dhQpbwDN0vlVeAzf+r0Ydd463r+ax8t5y49qUfi3/aNcirr4FbG7coLP/r8XfGS/zY1mJ7N1+BlWdY9U3rP1dSriePski7X27A48e8Q/v1Es2yvak6h/9jA1oH5YfuUuMqk9T5wfJQgKlg==
+  </data>
+ </layer>
+</map>
