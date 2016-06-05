@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="24" tilewidth="32" tileheight="32" nextobjectid="8">
+ <tileset firstgid="1" name="rpg1" tilewidth="32" tileheight="32" tilecount="2016" columns="32">
+  <image source="rpg1.png" width="1024" height="2016"/>
+  <tile id="263">
+   <properties>
+    <property name="Collision" value="True"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="2017" name="SNES_-_The_Legend_of_Zelda_A_Link_to_the_Past_-_Wo" tilewidth="32" tileheight="32" tilecount="320" columns="20">
+  <image source="SNES_-_The_Legend_of_Zelda_A_Link_to_the_Past_-_Wo.bmp" width="649" height="512"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJztzaENADAMBLHveFkscweWRmqhwcGTK0kt63PbPj/j8/l8Pp/P5/P5bw3L++xx
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJytVktOwzAQdVInrOkNQBUSSzgDULblArCoSNdcoRKwpTeATVhzA6ASXIPPBcIJGKseeXBnJk7Jk54sO5l5M/HYk7ow5hE4A3I4FtYrWK+9bU18cO+PYe0GeAs8Lf7OK2/XZMbsE/5kwf4Dnn+69+x6DDPiQ0IVxUjniLNsnYisNCYvZf8pwBjfgO9RzOeW17+wuk8NoxbbabEiYjsPunfAYb65NkXD7CeHCeg9ZYFXRL9h7BsfK13HNVpHmFOcz9jXYkr8nD23XxKdLc2H1j+nF8cf2zvQ/eK48ORs4/ovSa20xY5w+8XFMFT2kcvfnek9G86287mItPH8t8UgxYpYWj7/XZL/Adgfep/oSzv/GANq34PPh4S6ku6sCZMDlz9dozbPsPaSoI/A+0gDl3+XO7HtLpLg9uVa0JBqgoPWWzZFav6Xpd5b+oL0jbv2lp2t/mNL7S2atsvDDgK79Eatt6TiP/oasI5T6nk0COwLr6C5LFajq+dp4pmaR/mfJNhhz6XjF/Dbj/Q7xCMXV9s3OyLPaM+hI81fG7n7V3oW/1tQbdTFOc1fG7n7V3oW9xba7/B/Hee/ot+eFQ==
+  </data>
+ </layer>
+ <layer name="Tile Layer 3" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJxjYBhcIJCdgUGRnf72wuycMgB2I9uPi08JeMoMwYRABgtuuTdMCDUHgfgDE2n2Uwp4gGbwAjEfEPMDsQAVzMQF2lgZGNyB2IMVIaYDtI8RCRvQyH6Q3cuAOB2IM5Ds9wHa5wvEfkDsD8QBNLJ/GSt2cRY8aQOul426biEWOAHd7EjlfEuNNDuU7ac3wFf2UAsEDlDZDgMDVbcMBkCP+B0FuMFAtKlGAf0AuXUvANekE7E=
+  </data>
+ </layer>
+ <layer name="Collision" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJzNk8EOwCAIQ93N///iXQmxtIAaTTwMoQ+qm98Y89Htlz9j+ascxPH19juqYXylB3VVapReojirU1jKLJH+KgfVMA3Ej2ZQ5mTnqs+ot4z3zIeMTzamvN/KObsn5Av6rnrjNdS32fk3kB6riXpW+FEPLC8zp9dButl+s9yVP1mtzj37WJe/Y93iI992zvIyv9IXyz/FjxhdPuNlttW7zWZe+dhpdmf/qZMM+g==
+  </data>
+ </layer>
+ <objectgroup name="Objects">
+  <object id="1" name="Player2" x="69" y="197" width="53" height="91"/>
+  <object id="6" name="Player1" x="706" y="578" width="58" height="88"/>
+ </objectgroup>
+</map>
