@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="24" tilewidth="32" tileheight="32" nextobjectid="3">
+ <tileset firstgid="1" name="rpg1" tilewidth="32" tileheight="32" tilecount="2016" columns="32">
+  <image source="rpg1.png" width="1024" height="2016"/>
+  <tile id="263">
+   <properties>
+    <property name="Collision" value="True"/>
+   </properties>
+  </tile>
+  <tile id="341">
+   <properties>
+    <property name="Magma" value="True"/>
+   </properties>
+  </tile>
+  <tile id="1021">
+   <properties>
+    <property name="Magma" value="True"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Tile Layer 1" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJztln0KgCAMxR0dpG6S9z9FJ5GIGExxfsz5EfTHQ0ifv9hrptuMcQJdxpdkjxpWLV/znXaIP6Mq8ayusKY5tfpW5YfZUh3A82t9HF+aU6mvZF9tfo/8pdLiY7az+Ce8msXX7j/sEzrGaozz1Meti/Uhx39qacEfYzXGeerj1oWyCX6Pnmj5H6zMD3Mdzdc4E3/+d7+/UfzUnSKn1FmHugF6LZWi
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJztVjEOgzAMZMvvmr0d2cvSqYz9QstPygbtRyh9Sg8pFpblBMRgOuSkUxxHsXOKZF3piuIAlgkeldwFfIBNiOX5aaEm9byB57DGeFVyd/AJtiGW5/VCTeo5vcGDE3qsL/Dt1sWELfc800/9P1hH8OvWxYQt9zzTX7FaVqiY/r1A+vdC1p/1c/2xedGJN3Yip82kVD2C1B+bF4OoO4icNpNS9WL6rfFv/2+NrH/2ItaQ/scamv+xhOZ/rPtb+B/uefneyv9wz8v3FP8A/XuFHQ==
+  </data>
+ </layer>
+ <layer name="Tile Layer 3" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFowAVKLMPtAtIA0PJvUPJrYMRkBp+o+E9CkbBKKAEjJYhpIGhFl7J7Lgxte3Bxm5mx42pCZrZMdkAl9UJuw==
+  </data>
+ </layer>
+ <layer name="Collision" width="32" height="24">
+  <data encoding="base64" compression="zlib">
+   eJzjYGRg4BhgPFAA3X56+5dS+6mlb6DAqP2j9g9l+6mtn9gyEp8+bOqoUf7Qw35iAS492OwnZM5QtJ9aYNT+UftH7R94+wcSAwB7zAcb
+  </data>
+ </layer>
+ <objectgroup name="Objects">
+  <object id="1" name="Player1" x="638.667" y="541.333" width="68" height="98.6667"/>
+  <object id="2" name="Player2" x="322.667" y="546.667" width="68" height="101.333"/>
+ </objectgroup>
+</map>
