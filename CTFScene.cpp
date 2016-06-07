@@ -306,7 +306,6 @@ void CTF::gameUpdate(float interval)
 	    dirAnt2 = 2;
 	    setPlayer2Position(ccp(--loc2.x-p2.getSpeed(),loc2.y)); // player 2 going left
 	}
-    }
 
     /////////////////////////////////////////////
     // Para colisiones entre sprites
@@ -708,6 +707,7 @@ void CTF::gameUpdate(float interval)
 	}
     }
 
+}
 }
 
 void CTF::explosion(Sprite *player)
