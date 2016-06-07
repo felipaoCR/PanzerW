@@ -38,18 +38,19 @@ void CTF::initPlayer2Status()
 
 void CTF::gameUpdate(float interval)
 {
-    loc1 = _player1->getPosition();
-    loc2 = _player2->getPosition();
-    bbP1 = _player1->getBoundingBox();
-    bbP2 = _player2->getBoundingBox();
-    bbB1 = ban1->getBoundingBox();
-    bbB2 = ban2->getBoundingBox();
-    HB1->setPosition(ccp(loc1.x,loc1.y+40));
-    HB2->setPosition(ccp(loc2.x,loc2.y+40));
-    //Se inician/refrescan los porcentajes de salud por hit al tanque
-    HPpercentage1 = p2.getAttack()/p1.getDefence();
-    HPpercentage2 = p1.getAttack()/p2.getDefence();
     if(!pause) {
+	loc1 = _player1->getPosition();
+	loc2 = _player2->getPosition();
+	bbP1 = _player1->getBoundingBox();
+	bbP2 = _player2->getBoundingBox();
+	bbB1 = ban1->getBoundingBox();
+	bbB2 = ban2->getBoundingBox();
+	HB1->setPosition(ccp(loc1.x,loc1.y+40));
+	HB2->setPosition(ccp(loc2.x,loc2.y+40));
+	//Se inician/refrescan los porcentajes de salud por hit al tanque
+	HPpercentage1 = p2.getAttack()/p1.getDefence();
+	HPpercentage2 = p1.getAttack()/p2.getDefence();
+
 	timePlaying = std::chrono::duration<double, std::milli>(std::chrono::high_resolution_clock::now()-inicio).count() /1000;
     //Se chequea si se toman los upgrades
 	if(!firstSpeed)
@@ -642,8 +643,6 @@ void CTF::gameUpdate(float interval)
     ///////////////////////////////////////
     //Game Over
     if(timePlaying>180) {
-	pause = true;
-	audioCTF->stopBackgroundMusic();
 	if (scoreP1 == scoreP2) { //Tie
 	    Size vS3 = Director::getInstance()->getVisibleSize();
 	    Vec2 ori3 = Director::getInstance()->getVisibleOrigin();
@@ -666,6 +665,10 @@ void CTF::gameUpdate(float interval)
 	    gameOver3->enableOutline(Color4B(255,0,255,255),3);
     	    this->addChild(gameOver3, 1);
 	}
+	pause = true;
+	audioC->stopAllEffects();
+	audioCTF->stopBackgroundMusic();
+	Director::sharedDirector()->pause();
     }
 
     //Spawneo
@@ -1061,6 +1064,8 @@ bool CTF::init()
 	actnPnt1[j] = false;
 	actnPnt2[j] = false;
     }
+
+    Director::sharedDirector()->resume();
 
     inicio = high_resolution_clock::now();
     
