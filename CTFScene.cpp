@@ -135,6 +135,38 @@ void CTF::gameUpdate(float interval)
 		    break;
 	    }
 	}
+	if (bbP1.intersectsRect(bbB1)) {
+	    switch(dirAnt1) {
+		case 0:
+		    up1 = false;
+		    break;
+		case 1:
+		    down1 = false;
+		    break;
+		case 2:
+		    left1 = false;
+		    break;
+		case 3:
+		    right1 = false;
+		    break;
+	    }
+	}
+	if (bbP2.intersectsRect(bbB2)) {
+	    switch(dirAnt2) {
+		case 0:
+		    up1 = false;
+		    break;
+		case 1:
+		    down1 = false;
+		    break;
+		case 2:
+		    left1 = false;
+		    break;
+		case 3:
+		    right1 = false;
+		    break;
+	    }
+	}
 
 	////////////////////////////////////////////////////////////
 	// Movimiento Jugadores y se establece la posicion de health bars
@@ -327,7 +359,7 @@ void CTF::gameUpdate(float interval)
 		}
 		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count()/1000;
 		end = delta;
-		if (end > 2) {
+		if (end > 1) {
 		    removeChild(pnt1[j-1]);
 		    removeChild(minaP1[i]);
 		    npnt1[j-1]->runAction(FadeIn::create(0.01f));
@@ -345,7 +377,7 @@ void CTF::gameUpdate(float interval)
 		}
 		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count()/1000;
 		end = delta;
-		if (end > 2) {
+		if (end > 1) {
 		    removeChild(pnt1[j-1]);
 		    removeChild(minaP2[i]);
 		    npnt1[j-1]->runAction(FadeIn::create(0.01f));
@@ -363,7 +395,7 @@ void CTF::gameUpdate(float interval)
 		}
 		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count()/1000;
 		end = delta;
-		if (end > 2) {
+		if (end > 1) {
 		    removeChild(pnt2[j-1]);
 		    removeChild(minaP1[i]);
 		    npnt2[j-1]->runAction(FadeIn::create(0.01f));
@@ -381,7 +413,7 @@ void CTF::gameUpdate(float interval)
 		}
 		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count()/1000;
 		end = delta;
-		if (end > 2) {
+		if (end > 1) {
 		    removeChild(pnt2[j-1]);
 		    removeChild(minaP2[i]);
 		    npnt2[j-1]->runAction(FadeIn::create(0.01f));
@@ -579,29 +611,33 @@ void CTF::gameUpdate(float interval)
     //Bandera capturada
     if (bbP1.intersectsRect(bbB2)) {
 	ban2->setPosition(loc1);
-	ban2->setScale(0.5f);
+	ban2->setScale(0.75f);
 	b2WasTaken = true;
+	if (b2WasTaken)
+		log("Ban 2 tomada");
     }
     if (bbP2.intersectsRect(bbB1)) {
 	ban1->setPosition(loc2);
-	ban1->setScale(0.5f);
+	ban1->setScale(0.75f);
 	b1WasTaken = true;
+	if (b1WasTaken)
+		log("Ban 1 tomada");
     }
     if (bbP2.intersectsRect(bbnB2) && b1WasTaken && !b2WasTaken) {
 	scoreP2++;
-	log("Score P1: "+scoreP1);
-	log("Score P2: "+scoreP2);
+	log("Score P1: %d",scoreP1);
+	log("Score P2: %d",scoreP2);
 	b1WasTaken = false;
 	ban1->setPosition(ccp(xC1+175,yC1+227));
 	ban1->setScale(1);
     }
     if (bbP1.intersectsRect(bbnB1) && b2WasTaken && !b1WasTaken) {
 	scoreP1++;
-	log("Score P1: "+scoreP1);
-	log("Score P2: "+scoreP2);
+	log("Score P1: %d",scoreP1);
+	log("Score P2: %d",scoreP2);
 	b2WasTaken = false;
 	ban2->setPosition(ccp(xC2+75,yC2+233));
-	ban2->setScale(2);
+	ban2->setScale(1);
     }
 
     ///////////////////////////////////////
@@ -665,6 +701,7 @@ void CTF::gameUpdate(float interval)
 	    _player1->setScale(0.3);
 	    addChild(_player1);
 	    dirAnt1 = 1;
+	    _player1->runAction(FadeIn::create(0.01f));
 	    initPlayer1Status();
 	    hitP2 = true;
 	    endGO=0;
@@ -1206,6 +1243,20 @@ bool CTF::init()
     bbnPnt2[5] = npnt2[5]->getBoundingBox();
     npnt2[5]->runAction(FadeOut::create(0.01f));
 
+    //Banderas
+    noBan1 = Sprite::create("nobandera.png");
+    noBan1->setPosition(ccp(xC1+175,yC1+227));
+    noBan1->setScale(1.235);
+    addChild(noBan1);
+    bbnB1 = noBan1->getBoundingBox();
+    noBan1->runAction(FadeOut::create(0.01f));
+    noBan2 = Sprite::create("nobandera.png");
+    noBan2->setPosition(ccp(xC2+75,yC2+233));
+    noBan2->setScale(1.235);
+    addChild(noBan2);
+    bbnB2 = noBan2->getBoundingBox();
+    noBan2->runAction(FadeOut::create(0.01f));
+
     //Se crea el sprite de player 1
     _player1 = p1.getPlayer();
     _player1 =Sprite::create("tank3.png");
@@ -1222,18 +1273,6 @@ bool CTF::init()
     _player2->runAction(RotateBy::create(0.01, 180));
 
     //Banderas
-    noBan1 = Sprite::create("nobandera.png");
-    noBan1->setPosition(ccp(xC1+175,yC1+227));
-    noBan1->setScale(1.235);
-    addChild(noBan1);
-    bbnB1 = noBan1->getBoundingBox();
-    //noBan1->runAction(FadeOut::create(0.01f));
-    noBan2 = Sprite::create("nobandera.png");
-    noBan2->setPosition(ccp(xC2+75,yC2+233));
-    noBan2->setScale(1.235);
-    addChild(noBan2);
-    bbnB2 = noBan2->getBoundingBox();
-    //noBan2->runAction(FadeOut::create(0.01f));
     ban1 = Sprite::create("bandera.png");
     ban1->setPosition(ccp(xC1+175,yC1+227));
     ban1->setScale(1.235);
