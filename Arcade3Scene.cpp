@@ -51,7 +51,7 @@ void Arcade3::initPlayerStatus()
 
 void Arcade3::gameUpdate(float interval)
 {
-    
+
     if(!pause) {
     //Se chequea si se toman los upgrades
         loc1 = _player1->getPosition();
@@ -900,7 +900,7 @@ log("r1=%d",r1);
       p1.setHealth(p1.getHealth()-50);
       if(p1.getHealth()<0)
       p1.setHealth(0);
-      hitE2 = true;
+      hitP2 = true;
       explosion(minaE2[i]);
       delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
       end += delta;
@@ -1549,7 +1549,7 @@ void Arcade3::setPlayer1Position(Point position)
         auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
         if (!properties.empty()) {
             auto collision = properties["Collision"].asString();
-	    auto magma = properties["Magma"].asString(); 
+	    auto magma = properties["Magma"].asString();
             if(magma=="True")
 	    {
 		p1.setHealth(0);
@@ -1647,7 +1647,8 @@ void Arcade3::setMisil1Position(Point position)
         auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
         if (!properties.empty()) {
             auto collision = properties["Collision"].asString();
-            if ("True" == collision) {
+              auto magma = properties["Magma"].asString();
+            if ("True" == collision && magma != "True") {
 	    	tileMap->removeChild(misil1, misil1->getZOrder());
 	    	actm1 = false;
 	    	log("COLISION");
@@ -1666,7 +1667,8 @@ void Arcade3::setMisil2Position(Point position)
         auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
         if (!properties.empty()) {
             auto collision = properties["Collision"].asString();
-            if ("True" == collision) {
+            auto magma = properties["Magma"].asString();
+            if ("True" == collision && magma != "True") {
 		tileMap->removeChild(misil2, misil2->getZOrder());
 		actm2 = false;
 		log("COLISION");
@@ -1727,7 +1729,8 @@ void Arcade3::setMisil3Position(Point position)
         auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
         if (!properties.empty()) {
             auto collision = properties["Collision"].asString();
-            if ("True" == collision) {
+            auto magma = properties["Magma"].asString();
+            if ("True" == collision && magma != "True") {
 		tileMap->removeChild(misil3, _enemy1->getZOrder());
 		actmE1 = false;
 		log("COLISION");
@@ -1786,7 +1789,8 @@ void Arcade3::setMisil4Position(Point position)
         auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
         if (!properties.empty()) {
             auto collision = properties["Collision"].asString();
-            if ("True" == collision) {
+            auto magma = properties["Magma"].asString();
+            if ("True" == collision && magma != "True") {
 		tileMap->removeChild(misil4, _enemy2->getZOrder());
 		actmE2 = false;
 		log("COLISION");
@@ -1846,11 +1850,12 @@ void Arcade3::setMisil5Position(Point position)
         auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
         if (!properties.empty()) {
             auto collision = properties["Collision"].asString();
-            if ("True" == collision) {
-		tileMap->removeChild(misil5);
-		actmE3 = false;
-		log("COLISION");
-                return;
+            auto magma = properties["Magma"].asString();
+            if ("True" == collision && magma != "True") {
+		              tileMap->removeChild(misil5);
+              		actmE3 = false;
+              		log("COLISION");
+                  return;
             }
         }else return;
     }
@@ -2004,7 +2009,7 @@ bool Arcade3::init()
     tileMap->addChild(_player1, 1);
 
     //Se crea el sprite de player 2
-    auto Player2 = objects->getObject("Player2");
+  auto Player2 = objects->getObject("Player2");
     int x2 = Player2["x"].asInt();
     int y2 = Player2["y"].asInt();
     _player2 = p2.getPlayer();
@@ -2013,14 +2018,14 @@ bool Arcade3::init()
     _player2->setScale(0.3);
     tileMap->addChild(_player2, 1);
     _player2->runAction(RotateBy::create(0.01, 180));
-
+    _player2->runAction(FadeOut::create(0.001));
     //Se crea el sprite de enemigo 1
     auto Enemy1 = objects->getObject("Enemy1");
     int   x3 = Enemy1["x"].asInt();
     int y3 = Enemy1["y"].asInt();
     _enemy1 = e1.getPlayer();
     _enemy1 = Sprite::create("tank1.png");
-    setEnemy1Position(ccp(450,450));
+    setEnemy1Position(ccp(350,450));
     //    _enemy1->setPosition(ccp(x-400,y+150));
     _enemy1->setScale(0.3);
     tileMap->addChild(_enemy1,1);
@@ -2061,6 +2066,7 @@ bool Arcade3::init()
     HB2->setScaleX(0.225);
     HB2->setScaleY(0.1);
 	addChild(HB2);
+    HB2->runAction(FadeOut::create(0.001));
    //Se crean los sprites de upgrade
     //Tag = 1
     HpUp = Sprite::create("HpUp.png");
