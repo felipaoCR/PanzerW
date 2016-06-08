@@ -9,6 +9,7 @@ using namespace cocos2d;
 using namespace std;
 
 auto audioA3 = CocosDenshion::SimpleAudioEngine::getInstance();
+auto audioA3_BM = CocosDenshion::SimpleAudioEngine::getInstance();
 ////////////////////////////////
 //Manejo de fondos y movimientos
 Point Arcade3::tileCoordForPosition(Point _position)
@@ -50,18 +51,19 @@ void Arcade3::initPlayerStatus()
 
 void Arcade3::gameUpdate(float interval)
 {
-    loc1 = _player1->getPosition();
-    loc2 = _player2->getPosition();
-    loc3 = _enemy1->getPosition();
-    loc4 = _enemy2->getPosition();
-    loc5= _enemy3->getPosition();
-    HB1->setPosition(ccp(loc1.x,loc1.y+40));
-    HB2->setPosition(ccp(loc2.x,loc2.y+40));
-    //Se inician/refrescan los porcentajes de salud por hit al tanque
-    HPpercentage1 = p2.getAttack()/p1.getDefence();
-    HPpercentage2 = p1.getAttack()/p2.getDefence();
+    
     if(!pause) {
     //Se chequea si se toman los upgrades
+        loc1 = _player1->getPosition();
+        loc2 = _player2->getPosition();
+        loc3 = _enemy1->getPosition();
+        loc4 = _enemy2->getPosition();
+        loc5= _enemy3->getPosition();
+        HB1->setPosition(ccp(loc1.x,loc1.y+40));
+        HB2->setPosition(ccp(loc2.x,loc2.y+40));
+    //Se inician/refrescan los porcentajes de salud por hit al tanque
+        HPpercentage1 = p2.getAttack()/p1.getDefence();
+        HPpercentage2 = p1.getAttack()/p2.getDefence();
 	if(!firstSpeed)
 	getUpgrade(speedUp);
 	if(!firstAttack)
@@ -868,7 +870,7 @@ log("r1=%d",r1);
       delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
       end += delta;
       if (end > 5) {
-    this->removeChild(minaP2[i]);
+    tileMap->removeChild(minaP2[i]);
     end = 0;
       }
       actM2[i] = false;
@@ -885,7 +887,7 @@ log("r1=%d",r1);
       delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
       end += delta;
       if (end > 5) {
-    this->removeChild(minaP1[i]);
+    tileMap->removeChild(minaP1[i]);
     end = 0;
       }
       actM1[i] = false;
@@ -903,7 +905,7 @@ log("r1=%d",r1);
       delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
       end += delta;
       if (end > 5) {
-    this->removeChild(minaE2[i]);
+    tileMap->removeChild(minaE2[i]);
     end = 0;
       }
       actM4[i] = false;
@@ -935,7 +937,7 @@ log("r1=%d",r1);
     delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
     end += delta;
     if (end > 5) {
-        this->removeChild(misil1);
+        tileMap->removeChild(misil1);
         end = 0;
     }
     actm1 = false;
@@ -950,7 +952,7 @@ log("r1=%d",r1);
     delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
     end += delta;
     if (end > 5) {
-        this->removeChild(misil1);
+        tileMap->removeChild(misil1);
         end = 0;
     }
     actm1 = false;
@@ -966,7 +968,7 @@ log("r1=%d",r1);
     delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
     end += delta;
     if (end > 5) {
-        this->removeChild(misil1);
+        tileMap->removeChild(misil1);
         end = 0;
     }
     actm1 = false;
@@ -982,8 +984,8 @@ log("r1=%d",r1);
     delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
     end += delta;
     if (end > 5) {
-        this->removeChild(misil1);
-        this->removeChild(minaP2[i]);
+        tileMap->removeChild(misil1);
+        tileMap->removeChild(minaP2[i]);
         end = 0;
     }
     actm1 = false;
@@ -997,8 +999,8 @@ log("r1=%d",r1);
     delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
     end += delta;
     if (end > 5) {
-        this->removeChild(misil1);
-        this->removeChild(minaE2[i]);
+        tileMap->removeChild(misil1);
+        tileMap->removeChild(minaE2[i]);
         end = 0;
     }
     actm1 = false;
@@ -1031,7 +1033,7 @@ log("r1=%d",r1);
     delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
     end += delta;
     if (end > 5) {
-        this->removeChild(misil2);
+        tileMap->removeChild(misil2);
         end = 0;
     }
     actm2 = false;
@@ -1047,8 +1049,8 @@ log("r1=%d",r1);
     delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
     end += delta;
     if (end > 5) {
-        this->removeChild(misil2);
-        this->removeChild(minaP1[i]);
+        tileMap->removeChild(misil2);
+        tileMap->removeChild(minaP1[i]);
         end = 0;
     }
     actm2 = false;
@@ -1062,8 +1064,8 @@ log("r1=%d",r1);
     delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
     end += delta;
     if (end > 5) {
-        this->removeChild(misil2);
-        this->removeChild(misil1);
+        tileMap->removeChild(misil2);
+        tileMap->removeChild(misil1);
         end = 0;
     }
     actm2 = false;
@@ -1077,8 +1079,8 @@ log("r1=%d",r1);
     delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
     end += delta;
     if (end > 5) {
-        this->removeChild(misil3);
-        this->removeChild(misil1);
+        tileMap->removeChild(misil3);
+        tileMap->removeChild(misil1);
         end = 0;
     }
     actmE1 = false;
@@ -1092,8 +1094,8 @@ log("r1=%d",r1);
     delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
     end += delta;
     if (end > 5) {
-        this->removeChild(misil4);
-        this->removeChild(misil1);
+        tileMap->removeChild(misil4);
+        tileMap->removeChild(misil1);
         end = 0;
     }
     actmE2 = false;
@@ -1107,8 +1109,8 @@ log("r1=%d",r1);
     delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
     end += delta;
     if (end > 5) {
-        this->removeChild(misil5);
-        this->removeChild(misil1);
+        tileMap->removeChild(misil5);
+        tileMap->removeChild(misil1);
         end = 0;
     }
     actmE3 = false;
@@ -1150,8 +1152,9 @@ log("r1=%d",r1);
       }
     if(bbmE1.intersectsRect(bbP1))
     {
-    this->removeChild(misil3);
+    tileMap->removeChild(misil3);
     actmE1 = false;
+    hitP2 = true;
     p1.setHealth(p1.getHealth()-20);
     if(p1.getHealth()<0)
     p1.setHealth(0);
@@ -1192,8 +1195,9 @@ log("r1=%d",r1);
         }
     if(bbmE2.intersectsRect(bbP1))
     {
-      this->removeChild(misil4);
+      tileMap->removeChild(misil4);
       actmE2 = false;
+      hitP2 = true;
       p1.setHealth(p1.getHealth()-20);
       if(p1.getHealth()<0)
       p1.setHealth(0);
@@ -1230,8 +1234,9 @@ log("r1=%d",r1);
           }
       if(bbmE3.intersectsRect(bbP1))
       {
-        this->removeChild(misil5);
+        tileMap->removeChild(misil5);
         actmE3 = false;
+        hitP2 = true;
         p1.setHealth(p1.getHealth()-20);
         if(p1.getHealth()<0)
         p1.setHealth(0);
@@ -1312,7 +1317,6 @@ log("r1=%d",r1);
     //Game Over
     if(!p1.getHealth()) {
 	explosion2(_player1);
-        removeChild(HB1);
 	auto gameOver = Label::createWithTTF("  Game Over\nPlayer 2 Won", "fonts/Marker Felt.ttf", 26);
     	gameOver->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2));
     	this->addChild(gameOver, 1);
@@ -1320,11 +1324,19 @@ log("r1=%d",r1);
 	endGO += deltaGO;
 	if (endGO > 5) {
 	    pause = true;
+            removeChild(HB1);
+            log("Se pauso");
+	    audioA3->stopAllEffects();
+		log("Sin efectos");
+	    audioA3_BM->stopBackgroundMusic();
+		log("Sin musica");
+	    //Director::sharedDirector()->stopAnimation();
+	    Director::sharedDirector()->pause();
+		log("todo pausado");
 	}
     }
     if(!p2.getHealth()) {
 	explosion2(_player2);
-	removeChild(HB2);
 	auto gameOver = Label::createWithTTF("  Game Over\nPlayer 1 Won", "fonts/Marker Felt.ttf", 26);
     	gameOver->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2));
     	this->addChild(gameOver, 1);
@@ -1332,6 +1344,15 @@ log("r1=%d",r1);
 	endGO += deltaGO;
 	if (endGO > 5) {
 	    pause = true;
+            removeChild(HB2);
+            log("Se pauso");
+	    audioA3->stopAllEffects();
+		log("Sin efectos");
+	    audioA3_BM->stopBackgroundMusic();
+		log("Sin musica");
+	    //Director::sharedDirector()->stopAnimation();
+	    Director::sharedDirector()->pause();
+		log("todo pausado");
 	}
     }
 
@@ -1397,7 +1418,7 @@ void Arcade3::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 			minaP1[i] = Sprite::create("mina.png");
 			minaP1[i]->setPosition(_player1->getPosition());
 			minaP1[i]->setScale(0.4);
-			this->addChild(minaP1[i]);
+			tileMap->addChild(minaP1[i], _player1->getZOrder());
 			bbM1[i] = minaP1[i]->getBoundingBox();
 			actM1[i] = true;
 			break;
@@ -1412,7 +1433,7 @@ void Arcade3::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 		misil1 = Sprite::create("c1.png");
 		misil1->setPosition(_player1->getPosition());
 		misil1->setScale(0.4);
-		this->addChild(misil1);
+		tileMap->addChild(misil1, _player1->getZOrder());
 		actm1 = true;
 		dirm1 = dirAnt1;
 		switch (dirm1) {
@@ -1450,7 +1471,7 @@ void Arcade3::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 			minaP2[i] = Sprite::create("mina.png");
 			minaP2[i]->setPosition(_player2->getPosition());
 			minaP2[i]->setScale(0.4);
-			this->addChild(minaP2[i]);
+			tileMap->addChild(minaP2[i],_player2->getZOrder());
 			bbM2[i] = minaP2[i]->getBoundingBox();
 			actM2[i] = true;
 			break;
@@ -1465,7 +1486,7 @@ void Arcade3::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 		misil2 = Sprite::create("c1.png");
 		misil2->setPosition(_player2->getPosition());
 		misil2->setScale(0.4);
-		this->addChild(misil2);
+		tileMap->addChild(misil2,_player2->getZOrder());
 		actm2 = true;
 		dirm2 = dirAnt2;
 		switch (dirm2) {
@@ -1528,7 +1549,12 @@ void Arcade3::setPlayer1Position(Point position)
         auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
         if (!properties.empty()) {
             auto collision = properties["Collision"].asString();
-            if ("True" == collision) {
+	    auto magma = properties["Magma"].asString(); 
+            if(magma=="True")
+	    {
+		p1.setHealth(0);
+            }
+            if ("True" == collision && magma!="True") {
 		log("COLISION");
                 return;
             }
@@ -1547,7 +1573,12 @@ void Arcade3::setPlayer2Position(Point position)
         auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
         if (!properties.empty()) {
             auto collision = properties["Collision"].asString();
-            if ("True" == collision) {
+            auto magma = properties["Magma"].asString();
+            if(magma=="True")
+	    {
+		p2.setHealth(0);
+            }
+            if ("True" == collision && magma!="True") {
 		log("COLISION");
                 return;
             }
@@ -1563,11 +1594,9 @@ void Arcade3::setEnemy1Position(Point position)
         auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
         if (!properties.empty()) {
             auto collision = properties["Collision"].asString();
-            if ("True" == collision) {
+            auto magma = properties["Magma"].asString();
+            if ("True" == collision || magma == "True") {
 		log("COLISION");
-
-
-
                 return;
             }
         }else return;
@@ -1582,11 +1611,9 @@ void Arcade3::setEnemy2Position(Point position)
         auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
         if (!properties.empty()) {
             auto collision = properties["Collision"].asString();
-            if ("True" == collision) {
+            auto magma = properties["Magma"].asString();
+            if ("True" == collision || magma == "True") {
 		log("COLISION");
-
-
-
                 return;
             }
         }else return;
@@ -1602,11 +1629,9 @@ void Arcade3::setEnemy3Position(Point position)
         auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
         if (!properties.empty()) {
             auto collision = properties["Collision"].asString();
-            if ("True" == collision) {
+	    auto magma = properties["Magma"].asString();
+            if ("True" == collision || magma == "True") {
 		log("COLISION");
-
-
-
                 return;
             }
         }else return;
@@ -1623,7 +1648,7 @@ void Arcade3::setMisil1Position(Point position)
         if (!properties.empty()) {
             auto collision = properties["Collision"].asString();
             if ("True" == collision) {
-	    	this->removeChild(misil1);
+	    	tileMap->removeChild(misil1, misil1->getZOrder());
 	    	actm1 = false;
 	    	log("COLISION");
             	return;
@@ -1642,7 +1667,7 @@ void Arcade3::setMisil2Position(Point position)
         if (!properties.empty()) {
             auto collision = properties["Collision"].asString();
             if ("True" == collision) {
-		this->removeChild(misil2);
+		tileMap->removeChild(misil2, misil2->getZOrder());
 		actm2 = false;
 		log("COLISION");
                 return;
@@ -1660,7 +1685,7 @@ void Arcade3::dispararMisilENemigo1(){
     misil3 = Sprite::create("c1.png");
 misil3->setPosition(_enemy1->getPosition());
 misil3->setScale(0.4);
-this->addChild(misil3);
+tileMap->addChild(misil3, _enemy1->getZOrder());
 actmE1 = true;
 dirmE1 = dirAntE1;
 switch (dirmE1) {
@@ -1703,7 +1728,7 @@ void Arcade3::setMisil3Position(Point position)
         if (!properties.empty()) {
             auto collision = properties["Collision"].asString();
             if ("True" == collision) {
-		this->removeChild(misil3);
+		tileMap->removeChild(misil3, _enemy1->getZOrder());
 		actmE1 = false;
 		log("COLISION");
                 return;
@@ -1719,7 +1744,7 @@ void Arcade3::dispararMisilENemigo2(){
     misil4 = Sprite::create("c1.png");
 misil4->setPosition(_enemy2->getPosition());
 misil4->setScale(0.4);
-this->addChild(misil4);
+tileMap->addChild(misil4, _enemy2->getZOrder());
 actmE2 = true;
 dirmE2 = dirAntE2;
 switch (dirmE2) {
@@ -1762,7 +1787,7 @@ void Arcade3::setMisil4Position(Point position)
         if (!properties.empty()) {
             auto collision = properties["Collision"].asString();
             if ("True" == collision) {
-		this->removeChild(misil4);
+		tileMap->removeChild(misil4, _enemy2->getZOrder());
 		actmE2 = false;
 		log("COLISION");
                 return;
@@ -1779,7 +1804,7 @@ void Arcade3::dispararMisilENemigo3(){
     misil5 = Sprite::create("c1.png");
 misil5->setPosition(_enemy3->getPosition());
 misil5->setScale(0.4);
-this->addChild(misil5);
+tileMap->addChild(misil5, _enemy3->getZOrder());
 actmE3 = true;
 dirmE3 = dirAntE3;
 switch (dirmE3) {
@@ -1822,7 +1847,7 @@ void Arcade3::setMisil5Position(Point position)
         if (!properties.empty()) {
             auto collision = properties["Collision"].asString();
             if ("True" == collision) {
-		this->removeChild(misil5);
+		tileMap->removeChild(misil5);
 		actmE3 = false;
 		log("COLISION");
                 return;
@@ -1840,7 +1865,7 @@ void Arcade3::activarMinaE2(Point position){
         minaE2[i] = Sprite::create("mina.png");
         minaE2[i]->setPosition(_enemy2->getPosition());
         minaE2[i]->setScale(0.4);
-        this->addChild(minaE2[i]);
+        tileMap->addChild(minaE2[i],_enemy2->getZOrder());
         bbM4[i] = minaE2[i]->getBoundingBox();
         actM4[i] = true;
         log("Mina %d puesta",i);
@@ -1937,7 +1962,7 @@ bool Arcade3::init()
 	actM2[i] = false;
     }
 
-
+    Director::sharedDirector()->resume();
     visibleSize = Director::getInstance()->getVisibleSize();
     origin = Director::getInstance()->getVisibleOrigin();
 
@@ -1976,7 +2001,7 @@ bool Arcade3::init()
     _player1 =Sprite::create("tank3.png");
     setPlayer1Position(ccp(x-50,y-50));
     _player1->setScale(0.3);
-    addChild(_player1);
+    tileMap->addChild(_player1, 1);
 
     //Se crea el sprite de player 2
     auto Player2 = objects->getObject("Player2");
@@ -1986,7 +2011,7 @@ bool Arcade3::init()
     _player2 = Sprite::create("tank3.png");
     _player2->setPosition(ccp(x2,y2));
     _player2->setScale(0.3);
-    addChild(_player2);
+    tileMap->addChild(_player2, 1);
     _player2->runAction(RotateBy::create(0.01, 180));
 
     //Se crea el sprite de enemigo 1
@@ -1995,10 +2020,10 @@ bool Arcade3::init()
     int y3 = Enemy1["y"].asInt();
     _enemy1 = e1.getPlayer();
     _enemy1 = Sprite::create("tank1.png");
-    setEnemy1Position(ccp(530,100));
+    setEnemy1Position(ccp(450,450));
     //    _enemy1->setPosition(ccp(x-400,y+150));
     _enemy1->setScale(0.3);
-    addChild(_enemy1);
+    tileMap->addChild(_enemy1,1);
 
     //Se crea el sprite de enemigo 2
     auto Enemy2 = objects->getObject("Enemy2");
@@ -2010,7 +2035,7 @@ bool Arcade3::init()
     this->_enemy2->runAction(RotateBy::create(0.0000001,-90));
     //    _enemy1->setPosition(ccp(x-400,y+150));
     _enemy2->setScale(0.3);
-    addChild(_enemy2);
+    tileMap->addChild(_enemy2,1);
 
     //Se crea el sprite de enemigo 3
     auto Enemy3 = objects->getObject("Enemy3");
@@ -2022,7 +2047,7 @@ bool Arcade3::init()
     this->_enemy3->runAction(RotateBy::create(0.0000001, 0));
     //  -enemy2->set(ccp(x-400,y+150));
     _enemy3->setScale(0.3);
-    addChild(_enemy3);
+    tileMap->addChild(_enemy3,1);
 
     //Se crea sprite health bar de player 1
     HB1 = Sprite::create("healthBar.png");
