@@ -484,7 +484,7 @@ void KOTH::gameUpdate(float interval)
 	pause = true;
 	audio->stopBackgroundMusic();
 	audio->stopAllEffects();
-	Director::sharedDirector()->pause();
+	Director::sharedDirector->pause();
      }
    }
 
