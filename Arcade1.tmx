@@ -38,12 +38,12 @@
  </layer>
  <layer name="Tile Layer 4" width="32" height="24">
   <data encoding="base64" compression="zlib">
-   eJxjYECAj0D8CYg/MwwM+AnEv4D4Nw3t0GVkYNAD4jlY5BiB4kxAzMxIO/tNgWabAfESCs35AsRfgfgbFdxEDvgDxH+B+B8JeqiZvliAYchKRDwtQGLTI32hgxVIbHqkr1EwCkYB7cCCAbZ/BWElQwog1wkDUach1wnE1mlrCMgn42BjA8h1AqxOYyNQP2wBYlE88tk42NQEsnjkinGwR8HgAwB/nCXf
+   eJxjYECAj0D8CYg/MwwM+AnEv4D4Nw3t0GVkYNAD4jlY5BiB4kxAzMxIO/tNgWabAfESCs35AsRfgfgbmfphcU0u+APEf4H4Hxl2gtIXLK7JBSzAMGQlIp4WILGR0xcsrmkNViCx6ZG+RsEoGAW0AwsG2P4VhJUMKYBcJ1Bap5EDkOsEYuu0NQTkk3GwsQHkOgFWp7ERqB+2ALEoHvlsHGxqAlk8csU42KNg8AEAKHApug==
   </data>
  </layer>
  <layer name="onTop" width="32" height="24">
   <data encoding="base64" compression="zlib">
-   eJxjYBgF6ICZcaBdQFvwEYg/AfHnAbL/JxD/AuLfA2Q/IzB+mRiHfzyPglEwCkYBITBaH4zWB6NgZAIAcgsLnw==
+   eJzt1SEOACAMBMEe/P+xgAIMp/Gkgp1kdesuAreq7A8AAHivue5G0v3plttJ9+W9L2L38Z8DvmcF0g==
   </data>
  </layer>
  <objectgroup name="Objects">

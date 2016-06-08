@@ -25,8 +25,7 @@ public:
     CCTMXLayer *_blockage;
 
     //Inicio atributos de jugadores: salud, defensa...
-    void initPlayer1Status();
-    void initPlayer2Status();
+    void initPlayerStatus();
 
     //Cosas para los fondos y sprites
     void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
@@ -73,9 +72,6 @@ private:
     Rect bbP1, bbP2, bbM1[3], bbM2[3], bbm1, bbm2, bbspeedUp; //Para las colisiones con las minas
     int cantM1 = 5, cantM2 = 5, layerOrderP1 = 1, layerOrderP2 = 1, layerTempP1, layerTempP2; //Cantidad inicial de minas
     bool actM1[3], actM2[3], actm1 = false, actm2 = false; //Maximo de minas y misiles a la vez
-    bool movm1 = false, movm2 = false; //Movimiento misiles
-    int xB1, xB2, yB1, yB2; //Posiciones iniciales
-    int livesP1 = 3, livesP2 = 3; //Cantidad de vidas de cada jugador
     int i; //Para recorrer arreglos
     int dirAnt1 = 1, dirAnt2 = 0, dirm1, dirm2; //Direccion anterior: 0 up, 1 down, 2 left, 3 right
     int HPpercentage1, HPpercentage2; //Porcentaje de salud perdida

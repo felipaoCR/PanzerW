@@ -42,6 +42,9 @@ public:
     //Para actualizar el juego
     void gameUpdate(float interval);
 
+    //on Top
+    void onTop(Point position,Sprite *player);
+
     //Explosiones
     void explosion(Sprite *player);
     void explosion2(Sprite *player);
@@ -66,7 +69,7 @@ private:
     Sprite *_player1, *_player2, *sprite, *minaP1[3], *minaP2[3], *misil1, *misil2, *HB1, *HB2, *explode, 
     *attackUp, *speedUp, *defenceUp, *HpUp, *pnt1[6], *pnt2[6], *npnt1[6], *npnt2[6], *ban1, *ban2, *noBan1, *noBan2;
     CCTMXTiledMap *tileMap;
-    CCTMXLayer *background;
+    CCTMXLayer *background, *water;
     bool up1 = false, down1 = false, right1 = false, left1 = false; //Para control del player 1
     bool up2 = false, down2 = false, right2 = false, left2 = false; //Para control del player 2
     Rect bbP1,bbP2,bbM1[3],bbM2[3],bbm1,bbm2,bbspeedUp,bbPnt1[6],bbPnt2[6],bbnPnt1[6],bbnPnt2[6]; //Para las colisiones con las minas

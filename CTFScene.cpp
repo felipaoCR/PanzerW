@@ -50,6 +50,9 @@ void CTF::gameUpdate(float interval)
 	//Se inician/refrescan los porcentajes de salud por hit al tanque
 	HPpercentage1 = p2.getAttack()/p1.getDefence();
 	HPpercentage2 = p1.getAttack()/p2.getDefence();
+        //Verifica si player esta en layer 3
+        onTop(ccp(loc1.x,loc1.y), _player1);
+        onTop(ccp(loc2.x,loc2.y), _player2);
 
 	timePlaying = std::chrono::duration<double, std::milli>(std::chrono::high_resolution_clock::now()-inicio).count() /1000;
     //Se chequea si se toman los upgrades
@@ -432,6 +435,11 @@ void CTF::gameUpdate(float interval)
     {
     	locm1 = misil1->getPosition();
 	bbm1 = misil1->getBoundingBox();
+	if(_player1->getZOrder()==2)
+	{
+	    misil1->setZOrder(2);	
+	}
+        //onTop(ccp(locm1.x,locm1.y), misil1);
 	if(movm1) {
 	switch (dirm1)
 	{
@@ -461,7 +469,7 @@ void CTF::gameUpdate(float interval)
 		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count()/1000;
 		end = delta;
 		if (end > 2) {
-		    removeChild(misil1);
+		    tileMap->removeChild(misil1);
 		    actm1 = false;
 		    end = 0;
 		}
@@ -476,7 +484,7 @@ void CTF::gameUpdate(float interval)
 		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count()/1000;
 		end = delta;
 		if (end > 2) {
-		    removeChild(misil1);
+		    tileMap->removeChild(misil1);
 		    removeChild(minaP2[i]);
 		    end = 0;
 		    actm1 = false;
@@ -489,6 +497,11 @@ void CTF::gameUpdate(float interval)
     {
 	locm2 = misil2->getPosition();
 	bbm2 = misil2->getBoundingBox();
+	if(_player2->getZOrder()==2)
+	{
+	    misil2->setZOrder(2);	
+	}
+        //onTop(ccp(locm2.x,locm2.y), misil2);
 	if(movm2){
 	switch (dirm2)
 	{
@@ -518,7 +531,7 @@ void CTF::gameUpdate(float interval)
 		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count()/1000;
 		end = delta;
 		if (end > 2) {
-		    removeChild(misil2);
+		    tileMap->removeChild(misil2);
 		    actm2 = false;
 		    end = 0;
 		}
@@ -533,7 +546,7 @@ void CTF::gameUpdate(float interval)
 		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count()/1000;
 		end = delta;
 		if (end > 2) {
-		    removeChild(misil2);
+		    tileMap->removeChild(misil2);
 		    removeChild(minaP1[i]);
 		    actm2 = false;
 		    actM1[i] = false;
@@ -552,8 +565,8 @@ void CTF::gameUpdate(float interval)
 		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count()/1000;
 		end = delta;
 		if (end > 2) {
-		    removeChild(misil2);
-		    removeChild(misil1);
+		    tileMap->removeChild(misil2);
+		    tileMap->removeChild(misil1);
 		    actm2 = false;
 		    actm1 = false;
 		    end = 0;
@@ -788,7 +801,7 @@ void CTF::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 		misil1 = Sprite::create("c1.png");
 		misil1->setPosition(_player1->getPosition());
 		misil1->setScale(0.4);
-		this->addChild(misil1);
+		tileMap->addChild(misil1);
 		actm1 = true;
 		movm1 = true;
 		dirm1 = dirAnt1;
@@ -842,7 +855,7 @@ void CTF::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 		misil2 = Sprite::create("c1.png");
 		misil2->setPosition(_player2->getPosition());
 		misil2->setScale(0.4);
-		this->addChild(misil2);
+		tileMap->addChild(misil2);
 		actm2 = true;
 		movm2 = true;
 		dirm2 = dirAnt2;
@@ -943,7 +956,7 @@ void CTF::setMisil1Position(Point position)
         if (!properties.empty()) {
             auto collision = properties["Collision"].asString();
             if ("True" == collision) {
-	    	this->removeChild(misil1);
+	    	tileMap->removeChild(misil1);
 	    	actm1 = false;
 	    	log("COLISION");
             	return;
@@ -962,7 +975,7 @@ void CTF::setMisil2Position(Point position)
         if (!properties.empty()) {
             auto collision = properties["Collision"].asString();
             if ("True" == collision) {
-		this->removeChild(misil2);
+		tileMap->removeChild(misil2);
 		actm2 = false;
 		log("COLISION");
                 return;
@@ -1028,6 +1041,30 @@ void CTF::getUpgrade(Sprite *upgrade)
     
 }
 
+void CTF::onTop(Point position,Sprite *player)
+{
+    Point tileCoord = this->tileCoordForPosition(position);
+    int tileGid = _blockage->getTileGIDAt(tileCoord);
+    if (tileGid) {
+        auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
+        if (!properties.empty()) {
+	    auto onTop = properties["onTop"].asString();
+	    auto notTop = properties["notTop"].asString();
+            if (onTop == "True") 
+	    {
+		player->setZOrder(2);
+		return;
+            }
+            if (notTop == "True")
+	    {
+         	player->setZOrder(1);
+		return;
+            }
+		
+        }
+    }
+}
+
 Scene* CTF::createScene()
 {
     // 'scene' is an autorelease object
@@ -1086,6 +1123,8 @@ bool CTF::init()
     tileMap = new CCTMXTiledMap();    
     tileMap->initWithTMXFile("CTF.tmx");
     _blockage = tileMap->layerNamed("Collision");
+    water = tileMap->layerNamed("water");
+    water->setVisible(false);
     _blockage->setVisible(false);
 
     tileMap->setPosition(origin.x,origin.y);
@@ -1115,136 +1154,136 @@ bool CTF::init()
     pnt1[0] = Sprite::create("puente1.png");
     pnt1[0]->setPosition(ccp(xC1-dx-135.85,yC1+dy));
     pnt1[0]->setScale(1.235);
-    addChild(pnt1[0]);
+    tileMap->addChild(pnt1[0],1);
     bbPnt1[0] = pnt1[0]->getBoundingBox();
     pnt1[1] = Sprite::create("puente2.png");
     pnt1[1]->setPosition(ccp(xC1-dx-108.68,yC1+dy));
     pnt1[1]->setScale(1.235);
-    addChild(pnt1[1]);
+    tileMap->addChild(pnt1[1],1);
     bbPnt1[1] = pnt1[1]->getBoundingBox();
     pnt1[2] = Sprite::create("puente3.png");
     pnt1[2]->setPosition(ccp(xC1-dx-81.51,yC1+dy));
     pnt1[2]->setScale(1.235);
-    addChild(pnt1[2]);
+    tileMap->addChild(pnt1[2],1);
     bbPnt1[2] = pnt1[2]->getBoundingBox();
     pnt1[3] = Sprite::create("puente4.png");
     pnt1[3]->setPosition(ccp(xC1-dx-54.34,yC1+dy));
     pnt1[3]->setScale(1.235);
-    addChild(pnt1[3]);
+    tileMap->addChild(pnt1[3],1);
     bbPnt1[3] = pnt1[3]->getBoundingBox();
     pnt1[4] = Sprite::create("puente5.png");
     pnt1[4]->setPosition(ccp(xC1-dx-27.17,yC1+dy));
     pnt1[4]->setScale(1.235);
-    addChild(pnt1[4]);
+    tileMap->addChild(pnt1[4],1);
     bbPnt1[4] = pnt1[4]->getBoundingBox();
     pnt1[5] = Sprite::create("puente6.png");
     pnt1[5]->setPosition(ccp(xC1-dx,yC1+dy));
     pnt1[5]->setScale(1.235);
-    addChild(pnt1[5]);
+    tileMap->addChild(pnt1[5],1);
     bbPnt1[5] = pnt1[5]->getBoundingBox();
     //Puente2
     pnt2[0] = Sprite::create("puente1.png");
     pnt2[0]->setPosition(ccp(xC1-dx-135.85,yC1+dy-35.345));
     pnt2[0]->setScale(1.235);
-    addChild(pnt2[0]);
+    tileMap->addChild(pnt2[0],1);
     bbPnt2[0] = pnt2[0]->getBoundingBox();
     pnt2[1] = Sprite::create("puente2.png");
     pnt2[1]->setPosition(ccp(xC1-dx-108.68,yC1+dy-35.345));
     pnt2[1]->setScale(1.235);
-    addChild(pnt2[1]);
+    tileMap->addChild(pnt2[1],1);
     bbPnt2[1] = pnt2[1]->getBoundingBox();
     pnt2[2] = Sprite::create("puente3.png");
     pnt2[2]->setPosition(ccp(xC1-dx-81.51,yC1+dy-35.345));
     pnt2[2]->setScale(1.235);
-    addChild(pnt2[2]);
+    tileMap->addChild(pnt2[2],1);
     bbPnt2[0] = pnt2[2]->getBoundingBox();
     pnt2[3] = Sprite::create("puente4.png");
     pnt2[3]->setPosition(ccp(xC1-dx-54.34,yC1+dy-35.345));
     pnt2[3]->setScale(1.235);
-    addChild(pnt2[3]);
+    tileMap->addChild(pnt2[3],1);
     bbPnt2[3] = pnt2[3]->getBoundingBox();
     pnt2[4] = Sprite::create("puente5.png");
     pnt2[4]->setPosition(ccp(xC1-dx-27.17,yC1+dy-35.345));
     pnt2[4]->setScale(1.235);
-    addChild(pnt2[4]);
+    tileMap->addChild(pnt2[4],1);
     bbPnt2[4] = pnt2[4]->getBoundingBox();
     pnt2[5] = Sprite::create("puente6.png");
     pnt2[5]->setPosition(ccp(xC1-dx,yC1+dy-35.345));
     pnt2[5]->setScale(1.235);
-    addChild(pnt2[5]);
+    tileMap->addChild(pnt2[5],1);
     bbPnt2[5] = pnt2[5]->getBoundingBox();
     //NoPuente1
     npnt1[0] = Sprite::create("nopuente1.png");
     npnt1[0]->setPosition(ccp(xC1-dx-135.85,yC1+dy));
     npnt1[0]->setScale(1.235);
-    addChild(npnt1[0]);
+    tileMap->addChild(npnt1[0],1);
     bbnPnt1[0] = npnt1[0]->getBoundingBox();
     npnt1[0]->runAction(FadeOut::create(0.01f));
     npnt1[1] = Sprite::create("nopuente2.png");
     npnt1[1]->setPosition(ccp(xC1-dx-108.68,yC1+dy));
     npnt1[1]->setScale(1.235);
-    addChild(npnt1[1]);
+    tileMap->addChild(npnt1[1],1);
     bbnPnt1[1] = npnt1[1]->getBoundingBox();
     npnt1[1]->runAction(FadeOut::create(0.01f));
     npnt1[2] = Sprite::create("nopuente3.png");
     npnt1[2]->setPosition(ccp(xC1-dx-81.51,yC1+dy));
     npnt1[2]->setScale(1.235);
-    addChild(npnt1[2]);
+    tileMap->addChild(npnt1[2],1);
     bbnPnt1[2] = npnt1[2]->getBoundingBox();
     npnt1[2]->runAction(FadeOut::create(0.01f));
     npnt1[3] = Sprite::create("nopuente4.png");
     npnt1[3]->setPosition(ccp(xC1-dx-54.34,yC1+dy));
     npnt1[3]->setScale(1.235);
-    addChild(npnt1[3]);
+    tileMap->addChild(npnt1[3],1);
     bbnPnt1[3] = npnt1[3]->getBoundingBox();
     npnt1[3]->runAction(FadeOut::create(0.01f));
     npnt1[4] = Sprite::create("nopuente5.png");
     npnt1[4]->setPosition(ccp(xC1-dx-27.17,yC1+dy));
     npnt1[4]->setScale(1.235);
-    addChild(npnt1[4]);
+    tileMap->addChild(npnt1[4],1);
     bbnPnt1[4] = npnt1[4]->getBoundingBox();
     npnt1[4]->runAction(FadeOut::create(0.01f));
     npnt1[5] = Sprite::create("nopuente6.png");
     npnt1[5]->setPosition(ccp(xC1-dx,yC1+dy));
     npnt1[5]->setScale(1.235);
-    addChild(npnt1[5]);
+    tileMap->addChild(npnt1[5],1);
     bbnPnt1[5] = npnt1[5]->getBoundingBox();
     npnt1[5]->runAction(FadeOut::create(0.01f));;
     //NoPuente2
     npnt2[0] = Sprite::create("nopuente1.png");
     npnt2[0]->setPosition(ccp(xC1-dx-135.85,yC1+dy-35.345));
     npnt2[0]->setScale(1.235);
-    addChild(npnt2[0]);
+    tileMap->addChild(npnt2[0],1);
     bbnPnt2[0] = npnt2[0]->getBoundingBox();
     npnt2[0]->runAction(FadeOut::create(0.01f));;
     npnt2[1] = Sprite::create("nopuente2.png");
     npnt2[1]->setPosition(ccp(xC1-dx-108.68,yC1+dy-35.345));
     npnt2[1]->setScale(1.235);
-    addChild(npnt2[1]);
+    tileMap->addChild(npnt2[1],1);
     bbnPnt2[1] = npnt2[1]->getBoundingBox();
     npnt2[1]->runAction(FadeOut::create(0.01f));;
     npnt2[2] = Sprite::create("nopuente3.png");
     npnt2[2]->setPosition(ccp(xC1-dx-81.51,yC1+dy-35.345));
     npnt2[2]->setScale(1.235);
-    addChild(npnt2[2]);
+    tileMap->addChild(npnt2[2],1);
     bbnPnt2[2] = npnt2[2]->getBoundingBox();
     npnt2[2]->runAction(FadeOut::create(0.01f));;
     npnt2[3] = Sprite::create("nopuente4.png");
     npnt2[3]->setPosition(ccp(xC1-dx-54.34,yC1+dy-35.345));
     npnt2[3]->setScale(1.235);
-    addChild(npnt2[3]);
+    tileMap->addChild(npnt2[3],1);
     bbnPnt2[3] = npnt2[3]->getBoundingBox();
     npnt2[3]->runAction(FadeOut::create(0.01f));;
     npnt2[4] = Sprite::create("nopuente5.png");
     npnt2[4]->setPosition(ccp(xC1-dx-27.17,yC1+dy-35.345));
     npnt2[4]->setScale(1.235);
-    addChild(npnt2[4]);
+    tileMap->addChild(npnt2[4],1);
     bbnPnt2[4] = npnt2[4]->getBoundingBox();
     npnt2[4]->runAction(FadeOut::create(0.01f));;
     npnt2[5] = Sprite::create("nopuente6.png");
     npnt2[5]->setPosition(ccp(xC1-dx,yC1+dy-35.345));
     npnt2[5]->setScale(1.235);
-    addChild(npnt2[5]);
+    tileMap->addChild(npnt2[5],1);
     bbnPnt2[5] = npnt2[5]->getBoundingBox();
     npnt2[5]->runAction(FadeOut::create(0.01f));
 
@@ -1252,13 +1291,13 @@ bool CTF::init()
     noBan1 = Sprite::create("nobandera.png");
     noBan1->setPosition(ccp(xC1+175,yC1+227));
     noBan1->setScale(1.235);
-    addChild(noBan1);
+    tileMap->addChild(noBan1);
     bbnB1 = noBan1->getBoundingBox();
     noBan1->runAction(FadeOut::create(0.01f));
     noBan2 = Sprite::create("nobandera.png");
     noBan2->setPosition(ccp(xC2+75,yC2+233));
     noBan2->setScale(1.235);
-    addChild(noBan2);
+    tileMap->addChild(noBan2);
     bbnB2 = noBan2->getBoundingBox();
     noBan2->runAction(FadeOut::create(0.01f));
 
@@ -1267,14 +1306,14 @@ bool CTF::init()
     _player1 =Sprite::create("tank3.png");
     setPlayer1Position(ccp(xC1,yC1));
     _player1->setScale(0.3);
-    addChild(_player1);
+    tileMap->addChild(_player1,1);
 
     //Se crea el sprite de player 2
     _player2 = p2.getPlayer();
     _player2 = Sprite::create("tank3.png");
     _player2->setPosition(ccp(xC2,yC2));
     _player2->setScale(0.3);
-    addChild(_player2);
+    tileMap->addChild(_player2,1);
     _player2->runAction(RotateBy::create(0.01, 180));
 
     //Banderas
@@ -1292,13 +1331,13 @@ bool CTF::init()
     HB1->setPosition(ccp(xC1,yC1+40));
     HB1->setScaleX(0.225);
     HB1->setScaleY(0.1);
-	addChild(HB1);
+	addChild(HB1,1);
    //Se crea sprite health bar de player 2
     HB2 = Sprite::create("healthBar.png");
     HB2->setPosition(ccp(xC2,yC2+40));
     HB2->setScaleX(0.225);
     HB2->setScaleY(0.1);
-	addChild(HB2);
+	addChild(HB2,1);
    //Se crean los sprites de upgrade
     //Tag = 1
     HpUp = Sprite::create("HpUp.png");
