@@ -158,16 +158,16 @@ void CTF::gameUpdate(float interval)
 	if (bbP2.intersectsRect(bbB2)) {
 	    switch(dirAnt2) {
 		case 0:
-		    up1 = false;
+		    up2 = false;
 		    break;
 		case 1:
-		    down1 = false;
+		    down2 = false;
 		    break;
 		case 2:
-		    left1 = false;
+		    left2 = false;
 		    break;
 		case 3:
-		    right1 = false;
+		    right2 = false;
 		    break;
 	    }
 	}
@@ -640,7 +640,7 @@ void CTF::gameUpdate(float interval)
 		log("Ban 1 tomada");
 		ban1->setZOrder(3);
 		noBan1->setZOrder(2);
-		}
+	}
     }
     if (bbP2.intersectsRect(bbnB2) && b1WasTaken && !b2WasTaken) {
 	scoreP2++;
