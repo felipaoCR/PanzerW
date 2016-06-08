@@ -1,5 +1,5 @@
-#ifndef __Arcade3_Scene_H__
-#define __Arcade3_Scene_H__
+#ifndef __Arcade2_Scene_H__
+#define __Arcade2_Scene_H__
 
 #include "cocos2d.h"
 #include "Player.h"
@@ -15,7 +15,7 @@ using namespace std;
 using namespace cocos2d;
 using namespace std::chrono;
 
-class Arcade3 : public cocos2d::Layer
+class Arcade2 : public cocos2d::Layer
 {
 public:
     static cocos2d::Scene* createScene();
@@ -59,7 +59,7 @@ public:
     void createButtons(cocos2d::Size size);
 
     // implement the "static create()" method manually
-    CREATE_FUNC(Arcade3);
+    CREATE_FUNC(Arcade2);
 private:
     Player p1, p2,e1,e2;
     Vec2 loc1, loc2,loc3,loc4, locm1, locm2,locmE1,locmE2;
@@ -83,4 +83,4 @@ private:
     double end = 0, delta = 0, endGO = 0, deltaGO = 0;
 };
 
-#endif // __Arcade3_Scene_H__
+#endif // __Arcade2_Scene_H__

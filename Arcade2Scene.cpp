@@ -1,4 +1,4 @@
-#include "Arcade3Scene.h"
+#include "Arcade2Scene.h"
 #include "PanzerWarsScene.h"
 #include "SimpleAudioEngine.h"
 #include <time.h>
@@ -8,17 +8,17 @@ USING_NS_CC;
 using namespace cocos2d;
 using namespace std;
 
-auto audioA3 = CocosDenshion::SimpleAudioEngine::getInstance();
+auto audioA2 = CocosDenshion::SimpleAudioEngine::getInstance();
 ////////////////////////////////
 //Manejo de fondos y movimientos
-Point Arcade3::tileCoordForPosition(Point _position)
+Point Arcade2::tileCoordForPosition(Point _position)
 {
     int x = _position.x / tileMap->getTileSize().width;
     int y = ((tileMap->getMapSize().height*tileMap->getTileSize().height) - _position.y)/tileMap->getTileSize().height;
     return Point(x, y);
 }
 
-void Arcade3::initPlayerStatus()
+void Arcade2::initPlayerStatus()
 {
 	//Inicio estado de player1
 	p1.setHealth(100);
@@ -39,7 +39,7 @@ void Arcade3::initPlayerStatus()
 
 }
 
-void Arcade3::gameUpdate(float interval)
+void Arcade2::gameUpdate(float interval)
 {
     loc1 = _player1->getPosition();
     loc2 = _player2->getPosition();
@@ -976,7 +976,7 @@ void Arcade3::gameUpdate(float interval)
 
 }
 
-void Arcade3::explosion(Sprite *player)
+void Arcade2::explosion(Sprite *player)
 {
     Vector<SpriteFrame*> animFrames(4);
     char str[100] = {0};
@@ -992,7 +992,7 @@ void Arcade3::explosion(Sprite *player)
     start = high_resolution_clock::now();
 }
 
-void Arcade3::explosion2(Sprite *player)
+void Arcade2::explosion2(Sprite *player)
 {
     Vector<SpriteFrame*> animFrames(4);
     char str[100] = {0};
@@ -1008,7 +1008,7 @@ void Arcade3::explosion2(Sprite *player)
     startGO = high_resolution_clock::now();
 }
 
-void Arcade3::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
+void Arcade2::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 {
     log("Key with keycode %d pressed", keyCode);
     switch(keyCode){
@@ -1046,8 +1046,8 @@ void Arcade3::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    break;
 	case EventKeyboard::KeyCode::KEY_E:
 	    if(actm1==false && !pause) {
-   	 	audioA3->playEffect("Audio/explosion3.mp3");
-    		audioA3->setEffectsVolume(0.3);
+   	 	audioA2->playEffect("Audio/explosion3.mp3");
+    		audioA2->setEffectsVolume(0.3);
 		misil1 = Sprite::create("c1.png");
 		misil1->setPosition(_player1->getPosition());
 		misil1->setScale(0.4);
@@ -1099,8 +1099,8 @@ void Arcade3::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    break;
 	case EventKeyboard::KeyCode::KEY_O:
 	    if(actm2==false && !pause) {
-   	 	audioA3->playEffect("Audio/explosion3.mp3");
-    		audioA3->setEffectsVolume(0.3);
+   	 	audioA2->playEffect("Audio/explosion3.mp3");
+    		audioA2->setEffectsVolume(0.3);
 		misil2 = Sprite::create("c1.png");
 		misil2->setPosition(_player2->getPosition());
 		misil2->setScale(0.4);
@@ -1125,7 +1125,7 @@ void Arcade3::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
     }
 }
 
-void Arcade3::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
+void Arcade2::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
 {
     log("Key with keycode %d released", keyCode);
     switch(keyCode){
@@ -1159,7 +1159,7 @@ void Arcade3::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
     }
 }
 
-void Arcade3::setPlayer1Position(Point position)
+void Arcade2::setPlayer1Position(Point position)
 {
     Point tileCoord = this->tileCoordForPosition(position);
     int tileGid = _blockage->getTileGIDAt(tileCoord);
@@ -1176,7 +1176,7 @@ void Arcade3::setPlayer1Position(Point position)
     _player1->setPosition(position);
 }
 
-void Arcade3::setPlayer2Position(Point position)
+void Arcade2::setPlayer2Position(Point position)
 {
     Point tileCoord = this->tileCoordForPosition(position);
     int tileGid = _blockage->getTileGIDAt(tileCoord);
@@ -1194,7 +1194,7 @@ void Arcade3::setPlayer2Position(Point position)
     }
     _player2->setPosition(position);
 }
-void Arcade3::setEnemy1Position(Point position)
+void Arcade2::setEnemy1Position(Point position)
 {
     Point tileCoord = this->tileCoordForPosition(position);
     int tileGid = _blockage->getTileGIDAt(tileCoord);
@@ -1213,7 +1213,7 @@ void Arcade3::setEnemy1Position(Point position)
     }
     _enemy1->setPosition(position);
 }
-void Arcade3::setEnemy2Position(Point position)
+void Arcade2::setEnemy2Position(Point position)
 {
     Point tileCoord = this->tileCoordForPosition(position);
     int tileGid = _blockage->getTileGIDAt(tileCoord);
@@ -1234,7 +1234,7 @@ void Arcade3::setEnemy2Position(Point position)
 }
 
 
-void Arcade3::setMisil1Position(Point position)
+void Arcade2::setMisil1Position(Point position)
 {
     Point tileCoord = this->tileCoordForPosition(position);
     int tileGid = _blockage->getTileGIDAt(tileCoord);
@@ -1253,7 +1253,7 @@ void Arcade3::setMisil1Position(Point position)
     misil1->setPosition(position);
 }
 
-void Arcade3::setMisil2Position(Point position)
+void Arcade2::setMisil2Position(Point position)
 {
     Point tileCoord = this->tileCoordForPosition(position);
     int tileGid = _blockage->getTileGIDAt(tileCoord);
@@ -1273,10 +1273,10 @@ void Arcade3::setMisil2Position(Point position)
 }
 //------------------------------------------
 ///MISIL enemigo
-void Arcade3::dispararMisilENemigo1(){
+void Arcade2::dispararMisilENemigo1(){
   if(actmE1==false && !pause) {
-    audioA3->playEffect("Audio/explosion3.mp3");
-    audioA3->setEffectsVolume(0.3);
+    audioA2->playEffect("Audio/explosion3.mp3");
+    audioA2->setEffectsVolume(0.3);
     misil3 = Sprite::create("c1.png");
 misil3->setPosition(_enemy1->getPosition());
 misil3->setScale(0.4);
@@ -1314,7 +1314,7 @@ default:
   }
 }
 
-void Arcade3::setMisil3Position(Point position)
+void Arcade2::setMisil3Position(Point position)
 {
     Point tileCoord = this->tileCoordForPosition(position);
     int tileGid = _blockage->getTileGIDAt(tileCoord);
@@ -1332,10 +1332,10 @@ void Arcade3::setMisil3Position(Point position)
     }
     misil3->setPosition(position);
 }
-void Arcade3::dispararMisilENemigo2(){
+void Arcade2::dispararMisilENemigo2(){
   if(actmE2==false && !pause) {
-    audioA3->playEffect("Audio/explosion3.mp3");
-    audioA3->setEffectsVolume(0.3);
+    audioA2->playEffect("Audio/explosion3.mp3");
+    audioA2->setEffectsVolume(0.3);
     misil4 = Sprite::create("c1.png");
 misil4->setPosition(_enemy2->getPosition());
 misil4->setScale(0.4);
@@ -1373,7 +1373,7 @@ default:
   }
 }
 
-void Arcade3::setMisil4Position(Point position)
+void Arcade2::setMisil4Position(Point position)
 {
     Point tileCoord = this->tileCoordForPosition(position);
     int tileGid = _blockage->getTileGIDAt(tileCoord);
@@ -1393,7 +1393,7 @@ void Arcade3::setMisil4Position(Point position)
 }
 
 //-----------------------------------------
-void Arcade3::getUpgrade(Sprite *upgrade)
+void Arcade2::getUpgrade(Sprite *upgrade)
 {
 	//log("Tag = %d",upgrade->getTag());
    bbspeedUp = upgrade->getBoundingBox();
@@ -1449,13 +1449,13 @@ void Arcade3::getUpgrade(Sprite *upgrade)
 
 }
 
-Scene* Arcade3::createScene()
+Scene* Arcade2::createScene()
 {
     // 'scene' is an autorelease object
     auto scene = Scene::create();
 
     // 'layer' is an autorelease object
-    auto layer = Arcade3::create();
+    auto layer = Arcade2::create();
 
     // add layer as a child to scene
     scene->addChild(layer);
@@ -1465,7 +1465,7 @@ Scene* Arcade3::createScene()
 }
 
 // on "init" you need to initialize your instance
-bool Arcade3::init()
+bool Arcade2::init()
 {
     //////////////////////////////
     // 1. super init first
@@ -1483,10 +1483,10 @@ bool Arcade3::init()
     visibleSize = Director::getInstance()->getVisibleSize();
     origin = Director::getInstance()->getVisibleOrigin();
 
-    Arcade3::createButtons(visibleSize);
+    Arcade2::createButtons(visibleSize);
 
     //Se agrega una etiqueta con el titulo
-    auto label = Label::createWithTTF("Arcade3", "fonts/Marker Felt.ttf", 26);
+    auto label = Label::createWithTTF("Arcade2", "fonts/Marker Felt.ttf", 26);
     label->setPosition(Vec2(origin.x + visibleSize.width/2,
                             origin.y + visibleSize.height - label->getContentSize().height));
     this->addChild(label, 1);
@@ -1495,7 +1495,7 @@ bool Arcade3::init()
     ///// Manejo de fondos
     //Se carga el mapa y se hacen los collisions tiles con los que el tanque tiene que chocar
     tileMap = new CCTMXTiledMap();
-    tileMap->initWithTMXFile("Arcade3.tmx");
+    tileMap->initWithTMXFile("Arcade2.tmx");
     _blockage = tileMap->layerNamed("Collision");
     _blockage->setVisible(false);
 
@@ -1599,8 +1599,8 @@ bool Arcade3::init()
 
    //seccion de movimiento
    auto eventListener = EventListenerKeyboard::create();
-   eventListener->onKeyPressed = CC_CALLBACK_2(Arcade3::onKeyPressed, this);
-   eventListener->onKeyReleased = CC_CALLBACK_2(Arcade3::onKeyReleased, this);
+   eventListener->onKeyPressed = CC_CALLBACK_2(Arcade2::onKeyPressed, this);
+   eventListener->onKeyReleased = CC_CALLBACK_2(Arcade2::onKeyReleased, this);
 
    this->_eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener,_player1);
 
@@ -1608,7 +1608,7 @@ bool Arcade3::init()
 
     ////////////////////////////////////
     // Actualizacion del juego
-    this->schedule(schedule_selector(Arcade3::gameUpdate));
+    this->schedule(schedule_selector(Arcade2::gameUpdate));
 
 
     // set the background music and continuously play it.
@@ -1620,7 +1620,7 @@ bool Arcade3::init()
     pausa->onKeyPressed = [=](cocos2d::EventKeyboard::KeyCode tecla, cocos2d::Event * event)->void{
 	if (tecla == cocos2d::EventKeyboard::KeyCode::KEY_SPACE){
 	    if (pause){
-		label->setString("Arcade3");
+		label->setString("Arcade2");
 		Director::sharedDirector()->resume();
 	    }
 	    else {
@@ -1643,21 +1643,21 @@ bool Arcade3::init()
 ////////// Se crean los botones del arcade //////////////
 /////////////////////////////////////////////////////////
 
-void Arcade3::createButtons(Size visibleSize)
+void Arcade2::createButtons(Size visibleSize)
 {
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     // set the font for menu with text
     MenuItemFont::setFontSize(14);
 
     // Boton para volver al menu de inicio
-    auto mbVolver = MenuItemFont::create("Menu de Inicio", CC_CALLBACK_1(Arcade3::VolverCallBack, this));
+    auto mbVolver = MenuItemFont::create("Menu de Inicio", CC_CALLBACK_1(Arcade2::VolverCallBack, this));
     mbVolver->setAnchorPoint(Vec2(0.0,0.0));
     mbVolver->setPosition(Vec2(1*visibleSize.width/16, 1*visibleSize.height/10));
     mbVolver->setColor(Color3B(140, 40, 140));
 
     // Se crea un boton de salir
     auto closeItem = MenuItemImage::create("CloseNormal.png", "CloseSelected.png",
-                                           CC_CALLBACK_1(Arcade3::menuCloseCallback, this));
+                                           CC_CALLBACK_1(Arcade2::menuCloseCallback, this));
     closeItem->setPosition(Vec2(15*visibleSize.width/16, 1*visibleSize.height/10));
     auto menu = Menu::create(mbVolver, closeItem, NULL);
     menu->setPosition(Vec2::ZERO);
@@ -1665,7 +1665,7 @@ void Arcade3::createButtons(Size visibleSize)
 }
 
 
-void Arcade3::menuCloseCallback(Ref* pSender)
+void Arcade2::menuCloseCallback(Ref* pSender)
 {
     Director::getInstance()->end();
 
@@ -1674,7 +1674,7 @@ void Arcade3::menuCloseCallback(Ref* pSender)
 #endif
 }
 
-void Arcade3::VolverCallBack(Ref* pSender)
+void Arcade2::VolverCallBack(Ref* pSender)
 {
     CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Button.mp3");
     CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic(true);
