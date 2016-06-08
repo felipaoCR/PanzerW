@@ -49,6 +49,9 @@ public:
     //Para actualizar el juego
     void gameUpdate(float interval);
 
+    //on top de layers
+     void onTop(Point position, Sprite *player);
+
     //Explosiones
     void explosion(Sprite *player);
     void explosion2(Sprite *player);
