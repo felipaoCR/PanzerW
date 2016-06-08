@@ -52,6 +52,11 @@ void Arcade2::gameUpdate(float interval)
     loc3 = _enemy1->getPosition();
     loc4 = _enemy2->getPosition();
 
+    bbP1 = _player1->getBoundingBox();
+    bbP2 = _player2->getBoundingBox();
+    bbE1= _enemy1->getBoundingBox();
+    bbE2= _enemy2->getBoundingBox();
+
     HB1->setPosition(ccp(loc1.x,loc1.y+40));
     HB2->setPosition(ccp(loc2.x,loc2.y+40));
     //Se inician/refrescan los porcentajes de salud por hit al tanque
@@ -63,15 +68,36 @@ void Arcade2::gameUpdate(float interval)
     onTop(ccp(loc3.x,loc3.y), _enemy1);
     onTop(ccp(loc4.x,loc4.y), _enemy2);
 
-/*	if(!firstSpeed)
-	getUpgrade(speedUp);
-	if(!firstAttack)
-	getUpgrade(attackUp);
-	if(!firstDefence)
-	getUpgrade(defenceUp);
-	if(!firstHP)
-	getUpgrade(HpUp);
-*/    ////////////////////////////////////////////////////////////
+///////////////////////////////////////////
+	//Bloqueos
+	if (bbP1.intersectsRect(bbE1) || bbP1.intersectsRect(bbE2)) {
+	    switch(dirAnt1) {
+		case 0:
+		    up1 = false;
+		    break;
+		case 1:
+		    down1 = false;
+		    break;
+		case 2:
+		    left1 = false;
+		    break;
+		case 3:
+		    right1 = false;
+		    break;
+	    }
+	}
+	if (bbP1.intersectsRect(bbE1)) {
+	    e1Collision = true;
+	} else {
+	    e1Collision = false;
+	}
+	if (bbP1.intersectsRect(bbE2)) {
+	    e2Collision = true;
+	} else {
+	    e2Collision = false;
+	}
+
+   ////////////////////////////////////////////////////////////
     // Movimiento Jugadores y se establece la posicion de health bars
     if(up1) {
 	    switch(dirAnt1) {
@@ -211,6 +237,7 @@ void Arcade2::gameUpdate(float interval)
 	}
 
 //MOVIMIENTO DE ENEMIGOS
+if(!e1Collision) {
   if((abs(loc1.x-loc3.x)<20) &&((loc1.y-loc3.y)>20 )){//0
     switch (dirAntE1) {
       case 0:
@@ -471,6 +498,7 @@ void Arcade2::gameUpdate(float interval)
     setEnemy1Position(ccp((--loc3.x),(++loc3.y)));//enemy1 going left and up
     //dispararMisilENemigo();
   }
+}
   srand (time(NULL));
   int ramdom;
   ramdom= rand() % 10;
@@ -489,7 +517,7 @@ void Arcade2::gameUpdate(float interval)
 //---------------------------------------------------------
 //MOVIMIENTO ENEMIGO  2
   //this->_enemy2->runAction(RotateBy::create(0.01, 180));
-
+if(!e2Collision) {
  switch (tramo) {
     case 1:
       /*if (tramoAnt==15) {
@@ -636,28 +664,8 @@ void Arcade2::gameUpdate(float interval)
           tramoAnt=15;
         }
         break;
-    /*  case 16:
-        this->_enemy2->runAction(RotateBy::create(0.01, 135));
-        break;
-      case 17:
-        if(loc4.y<615){
-          setEnemy2Position(ccp(loc4.x,++loc4.y));
-          dirAntE2=0;
-        }else{
-          this->_enemy2->runAction(RotateBy::create(0.01, -90));
-          tramo=18;
-        }
-        break;
-    case 18:
-      if(loc4.x>580){
-        setEnemy2Position(ccp(--loc4.x,loc4.y));
-        dirAntE2=2;
-      }else{
-        this->_enemy2->runAction(RotateBy::create(0.01, -90));
-        tramo=1;
-      }
-      break;*/
   }
+}
   if((loc1.y-loc4.y)<300 &&(loc1.y-loc4.y)>0 && abs(loc1.x-loc4.x)<100 &&dirAntE2==0){
     dispararMisilENemigo2();
   }
@@ -684,11 +692,6 @@ void Arcade2::gameUpdate(float interval)
 
 /////////////////////////////////////////////
 // Para colisiones entre sprites
-bbP1 = _player1->getBoundingBox();
-bbP2 = _player2->getBoundingBox();
-bbE1= _enemy1->getBoundingBox();
-bbE2= _enemy2->getBoundingBox();
-
 for(i=0; i<3; i++) {
 if(bbP1.intersectsRect(bbM2[i]) && (actM2[i]==true)) {
   CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Bomb.mp3");
@@ -896,6 +899,7 @@ actm2 = false;
 actm1 = false;
   }
 }
+}
 if(actm1) {
   if(bbm1.intersectsRect(bbmE1)) {
 explosion(misil3);
@@ -1014,23 +1018,6 @@ if(bbmE2.intersectsRect(bbP1))
 }
   }
 
-
-  ///////////////////////////////////////
-  //Spawneo
-if(!e2.getHealth())
-{
-  setEnemy2Position(ccp(580,590));
-  e2.setHealth(200);
-
-}
-
-if(!e1.getHealth())
-{
-  setEnemy1Position(ccp(530,100));
-  e1.setHealth(200);
-
-}
-
 //------------------------------------------------------------
     ////////////////////////////////////
     /// Barras de vida
@@ -1086,7 +1073,7 @@ if(!e1.getHealth())
     //Game Over
     if(!p1.getHealth()) {
 	explosion2(_player1);
-	auto gameOver = Label::createWithTTF("  Game Over\nPlayer 2 Won", "fonts/Marker Felt.ttf", 26);
+	auto gameOver = Label::createWithTTF("Game Over", "fonts/Marker Felt.ttf", 26);
     	gameOver->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2));
     	this->addChild(gameOver, 1);
 	deltaGO = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-startGO).count();
@@ -1096,9 +1083,9 @@ if(!e1.getHealth())
 	    pause = true;
 	}
     }
-    if(!p2.getHealth()) {
-	explosion2(_player2);
-	auto gameOver = Label::createWithTTF("  Game Over\nPlayer 1 Won", "fonts/Marker Felt.ttf", 26);
+    if(!e2.getHealth() && !e1.getHealth()) {
+	//explosion2(_player2);
+	auto gameOver = Label::createWithTTF("Level 2 clear", "fonts/Marker Felt.ttf", 26);
     	gameOver->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2));
     	this->addChild(gameOver, 1);
 	deltaGO = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-startGO).count();
