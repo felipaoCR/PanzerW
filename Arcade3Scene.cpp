@@ -31,11 +31,20 @@ void Arcade3::initPlayerStatus()
 	p2.setAttack(120);
 	p2.setSpeed(2);
   //Inico de estado de enemy1
-    e1.setHealth(200);
-    e1.setDefence(5);
-    e1.setAttack(e1.getDefence());
-    e1.setSpeed(1);
+  e1.setHealth(200);
+  e1.setDefence(5);
+  e1.setAttack(e1.getDefence());
+  e1.setSpeed(1);
+  //Inico de estado de enemy2
+  e2.setHealth(200);
+  e2.setDefence(5);
+  e2.setAttack(e2.getDefence());
+  e2.setSpeed(1);
 
+  e3.setHealth(200);
+  e3.setDefence(5);
+  e3.setAttack(e1.getDefence());
+  e3.setSpeed(1);
 
 }
 
@@ -45,7 +54,7 @@ void Arcade3::gameUpdate(float interval)
     loc2 = _player2->getPosition();
     loc3 = _enemy1->getPosition();
     loc4 = _enemy2->getPosition();
-
+    loc5= _enemy3->getPosition();
     HB1->setPosition(ccp(loc1.x,loc1.y+40));
     HB2->setPosition(ccp(loc2.x,loc2.y+40));
     //Se inician/refrescan los porcentajes de salud por hit al tanque
@@ -466,7 +475,7 @@ void Arcade3::gameUpdate(float interval)
   ramdom= rand() % 10;
 
   if (ramdom<3){
-    dispararMisilENemigo1();
+  //  dispararMisilENemigo1();
   }
 
   log("ramdom=%d",ramdom);
@@ -478,189 +487,366 @@ void Arcade3::gameUpdate(float interval)
 
 //---------------------------------------------------------
 //MOVIMIENTO ENEMIGO  2
-  switch (tramo) {
-    case 1:
-      if( loc4.y>80){
-        setEnemy2Position(ccp(loc4.x,--loc4.y));
-        dirAntE2=1;
-      }else{
-        this->_enemy2->runAction(RotateBy::create(0.01, 90));
-        tramo=2;
-        }
-      break;
-    case 2:
-      if(loc4.x>250){
-        setEnemy2Position(ccp(--loc4.x,loc4.y));
+//MOVIMIENTO ENEMIGO  2
+//this->_enemy2->runAction(RotateBy::create(0.01, 180));
+
+switch (tramo) {
+  case 1:
+    //this->_enemy2->runAction(RotateBy::create(0.01, 180));
+    if( loc4.x<445){
+      setEnemy2Position(ccp(++loc4.x+e2.getSpeed(),loc4.y));
+      dirAntE2=3;
+    }else{
+      this->_enemy2->runAction(RotateBy::create(0.01, 90));
+      tramo=2;
+      }
+    break;
+  case 2:
+    if(loc4.y>463){
+      setEnemy2Position(ccp(loc4.x,--loc4.y-e2.getSpeed()));
+      dirAntE2=1;
+    }else{
+      this->_enemy2->runAction(RotateBy::create(0.01, -90));
+      tramo=3;
+    }
+    break;
+  case 3:
+    if(loc4.x<697){
+      setEnemy2Position(ccp(++loc4.x+e2.getSpeed(),loc4.y));
+      dirAntE2=3;
+    }else{
+      this->_enemy2->runAction(RotateBy::create(0.01, 90));
+      tramo=4;
+    }
+    break;
+  case 4:
+    if(loc4.y>260){
+      setEnemy2Position(ccp(loc4.x,--loc4.y-e2.getSpeed()));
+      dirAntE2=1;
+    }else{
+      this->_enemy2->runAction(RotateBy::create(0.01, 90));
+      tramo=5;
+    }
+    break;
+  case 5:
+    if(loc4.x>370){
+      setEnemy2Position(ccp(--loc4.x-e2.getSpeed(),loc4.y));
+      dirAntE2=2;
+    }else{
+      this->_enemy2->runAction(RotateBy::create(0.01, 90));
+      tramo=6;
+    }
+    break;
+  case 6:
+    if(loc4.y<380){
+      dirAntE2=0;
+      setEnemy2Position(ccp(loc4.x,++loc4.y+e2.getSpeed()));
+    }else{
+
+      this->_enemy2->runAction(RotateBy::create(0.01, 45));
+      tramo=7;
+    }
+    break;
+  case 7:
+    if(loc4.y<494 && loc4.x<504){
+      dirAntE2=4;
+      setEnemy2Position(ccp(++loc4.x+e2.getSpeed(),++loc4.y+e2.getSpeed()));
+    }else{
+      this->_enemy2->runAction(RotateBy::create(0.01, 45));
+      tramo=16;
+    }
+    break;
+  case 8:
+    if( loc4.x<904){
+      dirAntE2=3;
+      setEnemy2Position(ccp(++loc4.x+e2.getSpeed(),loc4.y));
+    }else{
+      this->_enemy2->runAction(RotateBy::create(0.01, 90));
+      tramo=9;
+    }
+    break;
+  case 9:
+    if(loc4.y>437){
+      dirAntE2=1;
+      setEnemy2Position(ccp(loc4.x,--loc4.y-e2.getSpeed()));
+    }else{
+      this->_enemy2->runAction(RotateBy::create(0.01, 90));
+      tramo=10;
+    }
+    break;
+ case 10:
+    if(loc4.x>697){
+      setEnemy2Position(ccp(--loc4.x-e2.getSpeed(),loc4.y));
+      dirAntE2=2;
+    }else{
+      this->_enemy2->runAction(RotateBy::create(0.01, -90));
+      tramo=11;
+    }
+    break;
+  case 11:
+    if(loc4.y>70){
+      setEnemy2Position(ccp(loc4.x,--loc4.y-e2.getSpeed()));
+      dirAntE2=1;
+    }else{
+      this->_enemy2->runAction(RotateBy::create(0.01, 90));
+      tramo=12;
+    }
+    break;
+    case 12:
+      if(loc4.x>380){
+        setEnemy2Position(ccp(--loc4.x-e2.getSpeed(),loc4.y));
         dirAntE2=2;
       }else{
         this->_enemy2->runAction(RotateBy::create(0.01, 90));
-        tramo=3;
+        tramo=13;
       }
       break;
-    case 3:
-      if(loc4.y<650){
-        setEnemy2Position(ccp(loc4.x,++loc4.y));
+    case 13:
+      if(loc4.y<430){
+        setEnemy2Position(ccp(loc4.x,++loc4.y+e2.getSpeed()));
+        dirAntE2=0;
+      }else{
+        this->_enemy2->runAction(RotateBy::create(0.01, -90));
+        tramo=14;
+      }
+      break;
+    case 14:
+      if(loc4.x>130){
+        setEnemy2Position(ccp(--loc4.x-e2.getSpeed(),loc4.y));
+        dirAntE2=2;
+      }else{
+        this->_enemy2->runAction(RotateBy::create(0.01, 90));
+        tramo=15;
+      }
+      break;
+    case 15:
+      if( loc4.y<595){
+        setEnemy2Position(ccp(loc4.x,++loc4.y+e2.getSpeed()));
         dirAntE2=0;
       }else{
         this->_enemy2->runAction(RotateBy::create(0.01, 90));
-        tramo=4;
+
+        tramo=1;
       }
       break;
-    case 4:
-      if(loc4.x<650){
-        setEnemy2Position(ccp(++loc4.x,loc4.y));
+    case 16:
+
+      if( loc4.x<575){
+        setEnemy2Position(ccp(++loc4.x+e2.getSpeed(),loc4.y));
         dirAntE2=3;
-      }else{
-        this->_enemy2->runAction(RotateBy::create(0.01, 90));
-        tramo=5;
-      }
-      break;
-    case 5:
-      if(loc4.y>615){
-        setEnemy2Position(ccp(loc4.x,--loc4.y));
-        dirAntE2=1;
       }else{
         this->_enemy2->runAction(RotateBy::create(0.01, -90));
-        tramo=6;
-      }
-      break;
-    case 6:
-      if(loc4.x<875){
-        dirAntE2=3;
-        setEnemy2Position(ccp(++loc4.x,loc4.y));
-      }else{
 
-        this->_enemy2->runAction(RotateBy::create(0.01, 90));
-        tramo=7;
+        tramo=17;
       }
+
       break;
-    case 7:
-      if(loc4.y>100){
-        dirAntE2=1;
-        setEnemy2Position(ccp(loc4.x,--loc4.y));
+    case 17:
+      if(loc4.y<608){
+        setEnemy2Position(ccp(loc4.x,++loc4.y+e2.getSpeed()));
+        dirAntE2=0;
       }else{
-        this->_enemy2->runAction(RotateBy::create(0.01, 180));
+        this->_enemy2->runAction(RotateBy::create(0.01, 90));
         tramo=8;
       }
       break;
-    case 8:
-      if(loc4.y<615){
-        dirAntE2=0;
-        setEnemy2Position(ccp(loc4.x,++loc4.y));
-      }else{
-        this->_enemy2->runAction(RotateBy::create(0.01, -90));
-        tramo=9;
-      }
-      break;
-    case 9:
-      if(loc4.x>650){
-        dirAntE2=2;
-        setEnemy2Position(ccp(--loc4.x,loc4.y));
-      }else{
-        this->_enemy2->runAction(RotateBy::create(0.01, 90));
-        tramo=10;
-      }
-      break;
-   case 10:
-      if(loc4.y<660){
-        setEnemy2Position(ccp(loc4.x,++loc4.y));
-        dirAntE2=0;
-      }else{
-        this->_enemy2->runAction(RotateBy::create(0.01, -90));
-        tramo=11;
-      }
-      break;
-    case 11:
-      if(loc4.x>250){
-        setEnemy2Position(ccp(--loc4.x,loc4.y));
-        dirAntE2=2;
-      }else{
-        this->_enemy2->runAction(RotateBy::create(0.01, -90));
-        tramo=12;
-      }
-      break;
-      case 12:
-        if(loc4.y>80){
-          setEnemy2Position(ccp(loc4.x,--loc4.y));
-          dirAntE2=1;
-        }else{
-          this->_enemy2->runAction(RotateBy::create(0.01, -90));
-          tramo=13;
-        }
-        break;
-      case 13:
-        if(loc4.x<560){
-          setEnemy2Position(ccp(++loc4.x,loc4.y));
-          dirAntE2=3;
-        }else{
-          this->_enemy2->runAction(RotateBy::create(0.01, -90));
-          tramo=14;
-        }
-        break;
-      case 14:
-        if(loc4.y<615){
-          setEnemy2Position(ccp(loc4.x,++loc4.y));
-          dirAntE2=0;
-        }else{
-          this->_enemy2->runAction(RotateBy::create(0.01, 90));
-          tramo=15;
-        }
-        break;
-      case 15:
-        if(loc4.x<875){
-          setEnemy2Position(ccp(++loc4.x,loc4.y));
-          dirAntE2=3;
-        }else{
-          this->_enemy2->runAction(RotateBy::create(0.01, 90));
-          tramo=16;
-        }
-        break;
-      case 16:
-        if(loc4.y>100){
-          setEnemy2Position(ccp(loc4.x,--loc4.y));
-          dirAntE2=1;
-        }else{
-          this->_enemy2->runAction(RotateBy::create(0.01, 180));
-          tramo=17;
-        }
-        break;
-      case 17:
-        if(loc4.y<615){
-          setEnemy2Position(ccp(loc4.x,++loc4.y));
-          dirAntE2=0;
-        }else{
-          this->_enemy2->runAction(RotateBy::create(0.01, -90));
-          tramo=18;
-        }
-        break;
-    case 18:
-      if(loc4.x>580){
-        setEnemy2Position(ccp(--loc4.x,loc4.y));
-        dirAntE2=2;
-      }else{
-        this->_enemy2->runAction(RotateBy::create(0.01, -90));
-        tramo=1;
-      }
+/*  case 18:
+    if(loc4.x>580){
+      setEnemy2Position(ccp(--loc4.x,loc4.y));
+      dirAntE2=2;
+    }else{
+      this->_enemy2->runAction(RotateBy::create(0.01, -90));
+      tramo=1;
+    }
 
-      break;
-  }
-  if((loc1.y-loc4.y)<300 &&(loc1.y-loc4.y)>0 && abs(loc1.x-loc4.x)<100 &&dirAntE2==0){
+    break;*/
+}
+/*  if((loc1.y-loc4.y)<300 &&(loc1.y-loc4.y)>0 && abs(loc1.x-loc4.x)<100 &&dirAntE2==0){
+  dispararMisilENemigo2();
+}
+if((loc4.y-loc1.y)<300 && (loc4.y-loc1.y)>0&& abs(loc1.x-loc4.x)<100&& dirAntE2==1){
+  dispararMisilENemigo2();
+}
+if((loc1.x-loc4.x)<300 && (loc1.x-loc4.x)>0 && abs(loc1.y-loc4.y)<100 && dirAntE2==3){
     dispararMisilENemigo2();
-  }
-  if((loc4.y-loc1.y)<300 && (loc4.y-loc1.y)>0&& abs(loc1.x-loc4.x)<100&& dirAntE2==1){
+}
+if((loc4.x-loc1.x)<300 &&(loc4.x-loc1.x)>0 && abs(loc1.y-loc4.y)<100 && dirAntE2==2){
     dispararMisilENemigo2();
-  }
-  if((loc1.x-loc4.x)<300 && (loc1.x-loc4.x)>0 && abs(loc1.y-loc4.y)<100 && dirAntE2==3){
-      dispararMisilENemigo2();
-  }
-  if((loc4.x-loc1.x)<300 &&(loc4.x-loc1.x)>0 && abs(loc1.y-loc4.y)<100 && dirAntE2==2){
-      dispararMisilENemigo2();
 
-  }
+}*/
 
-  log("loc4.x=%f",loc4.x);
-  log("loc4.y=%f",loc4.y);
-  log("tramo=%d",tramo);
+log("loc4.x=%f",loc4.x);
+log("loc4.y=%f",loc4.y);
+log("tramo=%d",tramo);
+
+//ENEMIGO3
+srand (time(NULL));
+int r1= rand()%10;
+if(loc1.y<280&& loc1.x>315&&loc1.x<420){
+
+if (r1<5){
+  switch(dirAntE3) {
+case 0:
+    this->_enemy3->runAction(RotateBy::create(0.02, 180));
+    break;
+case 1:
+  break;
+case 2:
+    this->_enemy3->runAction(RotateBy::create(0.01, -90));
+    break;
+case 3:
+    this->_enemy3->runAction(RotateBy::create(0.01, 90));
+    break;
+  }
+  dirAntE3 = 1;
+  setEnemy3Position(ccp(loc1.x,609));
+}else{
+  switch(dirAntE3) {
+case 0:
+    this->_enemy3->runAction(RotateBy::create(0.02, -90));
+    break;
+case 1:
+  this->_enemy3->runAction(RotateBy::create(0.01, 90));
+  break;
+case 2:
+    break;
+case 3:
+    this->_enemy3->runAction(RotateBy::create(0.01, 180));
+    break;
+  }
+  dirAntE3 = 2;
+  setEnemy3Position(ccp(732,loc1.y));
+}
+}
+
+//---------------------------------------------------------------------------------------------------------
+if(loc1.y<280&& loc1.x>630&&loc1.x<745){
+
+if (r1<5){
+  switch(dirAntE3) {
+case 0:
+    this->_enemy3->runAction(RotateBy::create(0.02, 180));
+    break;
+case 1:
+  break;
+case 2:
+    this->_enemy3->runAction(RotateBy::create(0.01, -90));
+    break;
+case 3:
+    this->_enemy3->runAction(RotateBy::create(0.01, 90));
+    break;
+  }
+  dirAntE3 = 1;
+  setEnemy3Position(ccp(loc1.x,609));
+}else{
+  switch(dirAntE3) {
+case 0:
+    this->_enemy3->runAction(RotateBy::create(0.02, 90));
+    break;
+case 1:
+  this->_enemy3->runAction(RotateBy::create(0.01, -90));
+  break;
+case 2:
+    this->_enemy3->runAction(RotateBy::create(0.01, 180));
+    break;
+case 3:
+    break;
+  }
+  dirAntE3 = 3;
+  setEnemy3Position(ccp(303,loc1.y));
+}
+}
+//----------------------------------------------------
+if(loc1.y<550&&loc1.y>450&& loc1.x>435&&loc1.x<580){
+
+if (r1<5){
+  switch(dirAntE3) {
+case 0:
+    this->_enemy3->runAction(RotateBy::create(0.02, 90));
+    break;
+case 1:
+  this->_enemy3->runAction(RotateBy::create(0.01, -90));
+  break;
+case 2:
+    this->_enemy3->runAction(RotateBy::create(0.01,180));
+    break;
+case 3:
+   break;
+  }
+  dirAntE3 = 3;
+  setEnemy3Position(ccp(135,loc1.y));
+}else{
+  switch(dirAntE3) {
+case 0:
+    this->_enemy3->runAction(RotateBy::create(0.02, -90));
+    break;
+case 1:
+  this->_enemy3->runAction(RotateBy::create(0.01, 90));
+  break;
+case 2:
+    break;
+case 3:
+    this->_enemy3->runAction(RotateBy::create(0.01, 180));
+    break;
+  }
+  dirAntE3 = 2;
+  setEnemy3Position(ccp(891,loc1.y));
+}
+}
+if(loc1.y>575&&loc1.x>630&&loc1.x<770){
+switch(dirAntE3) {
+  case 0:
+      break;
+  case 1:
+    this->_enemy3->runAction(RotateBy::create(0.01, 180));
+    break;
+  case 2:
+      this->_enemy3->runAction(RotateBy::create(0.01, 90));
+      break;
+  case 3:
+      this->_enemy3->runAction(RotateBy::create(0.01, -90));
+      break;
+    }
+dirAntE3 = 0;
+setEnemy3Position(ccp(loc1.x,90));
+
+}
+
+if(loc1.y>575&&loc1.x>297&&loc1.x<423){
+switch(dirAntE3) {
+  case 0:
+      break;
+  case 1:
+    this->_enemy3->runAction(RotateBy::create(0.01, 180));
+    break;
+  case 2:
+      this->_enemy3->runAction(RotateBy::create(0.01, 90));
+      break;
+  case 3:
+      this->_enemy3->runAction(RotateBy::create(0.01, -90));
+      break;
+    }
+dirAntE3 = 0;
+setEnemy3Position(ccp(loc1.x,90));
+
+}
+
+r2=rand() % 10;
+if (r2<3&& r2!=r2ant){
+  activarMinaE2(ccp(loc4.x,loc4.y));
+  r2ant=r2;
+}
+
+if((r1!=0&&6)&&loc5.x!=500&&loc5.y!=500){
+
+  dispararMisilENemigo3();
+}
+if(r1!=1&&3&&5&&7){
+
+  dispararMisilENemigo2();
+}
+//------------------------------------------------------------------------------
+log("r1=%d",r1);
 
 /////////////////////////////////////////////
     // Para colisiones entre sprites
@@ -668,160 +854,272 @@ void Arcade3::gameUpdate(float interval)
     bbP2 = _player2->getBoundingBox();
     bbE1= _enemy1->getBoundingBox();
     bbE2= _enemy2->getBoundingBox();
-
+    bbE3=_enemy3->getBoundingBox();
     for(i=0; i<3; i++) {
-	if(bbP1.intersectsRect(bbM2[i]) && (actM2[i]==true)) {
-	    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Bomb.mp3");
-	    //-10 a health de p1
-	    if(p1.getHealth()>0)
-	    p1.setHealth(p1.getHealth()-50);
-	    if(p1.getHealth()<0)
-	    p1.setHealth(0);
-	    hitP2 = true;
-	    explosion(minaP2[i]);
-	    delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
-	    end += delta;
-	    if (end > 5) {
-		this->removeChild(minaP2[i]);
-		end = 0;
-	    }
-	    actM2[i] = false;
-	}
-	if(bbP2.intersectsRect(bbM1[i]) && (actM1[i]==true)) {
-	    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Bomb.mp3");
-	    //-10 a health de p2
-	    if(p2.getHealth()>0)
-	    p2.setHealth(p2.getHealth()-50);
-	    if(p2.getHealth()<0)
-	    p2.setHealth(0);
-	    hitP1 = true;
-	    explosion(minaP1[i]);
-	    delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
-	    end += delta;
-	    if (end > 5) {
-		this->removeChild(minaP1[i]);
-		end = 0;
-	    }
-	    actM1[i] = false;
-	}
+    if(bbP1.intersectsRect(bbM2[i]) && (actM2[i]==true)) {
+      CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Bomb.mp3");
+      //-10 a health de p1
+      if(p1.getHealth()>0)
+      p1.setHealth(p1.getHealth()-50);
+      if(p1.getHealth()<0)
+      p1.setHealth(0);
+      hitP2 = true;
+      explosion(minaP2[i]);
+      delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
+      end += delta;
+      if (end > 5) {
+    this->removeChild(minaP2[i]);
+    end = 0;
+      }
+      actM2[i] = false;
+    }
+    if(bbP2.intersectsRect(bbM1[i]) && (actM1[i]==true)) {
+      CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Bomb.mp3");
+      //-10 a health de p2
+      if(p2.getHealth()>0)
+      p2.setHealth(p2.getHealth()-50);
+      if(p2.getHealth()<0)
+      p2.setHealth(0);
+      hitP1 = true;
+      explosion(minaP1[i]);
+      delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
+      end += delta;
+      if (end > 5) {
+    this->removeChild(minaP1[i]);
+    end = 0;
+      }
+      actM1[i] = false;
+    }
+
+    if(bbP1.intersectsRect(bbM4[i]) && (actM4[i]==true)) {
+      CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Bomb.mp3");
+      //-10 a health de p1
+      if(p1.getHealth()>0)
+      p1.setHealth(p1.getHealth()-50);
+      if(p1.getHealth()<0)
+      p1.setHealth(0);
+      hitE2 = true;
+      explosion(minaE2[i]);
+      delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
+      end += delta;
+      if (end > 5) {
+    this->removeChild(minaE2[i]);
+    end = 0;
+      }
+      actM4[i] = false;
+    }
     }
 
     /////////////////////////////////////////
         if(actm1)
     {
-    	locm1 = misil1->getPosition();
-	bbm1 = misil1->getBoundingBox();
-	switch (dirm1)
-	{
-		case 0:
-		    setMisil1Position(ccp(locm1.x,++locm1.y+3));
-		    break;
-		case 1:
-		     setMisil1Position(ccp(locm1.x,--locm1.y-3));
-		     break;
-		case 2:
-		    setMisil1Position(ccp(--locm1.x-3,locm1.y));
-		    break;
-		case 3:
-		    setMisil1Position(ccp(++locm1.x+3,locm1.y));
-	}
-	if(bbm1.intersectsRect(bbE1))
-	{
-		explosion(misil1);
-		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
-		end += delta;
-		if (end > 5) {
-		    this->removeChild(misil1);
-		    end = 0;
-		}
-		actm1 = false;
-		e1.setHealth(e1.getHealth()-HPpercentage2);
-		hitP1 = true;
-		if(e1.getHealth()<0)
-		e1.setHealth(0);
-	}
-	for(i=0; i<3; i++) {
-	    if((actM2[i]) && bbm1.intersectsRect(bbM2[i])) {
-		explosion(misil1);
-		explosion(minaP2[i]);
-		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
-		end += delta;
-		if (end > 5) {
-		    this->removeChild(misil1);
-		    this->removeChild(minaP2[i]);
-		    end = 0;
-		}
-		actm1 = false;
-		actM2[i] = false;
-	    }
-	}
+      locm1 = misil1->getPosition();
+    bbm1 = misil1->getBoundingBox();
+    switch (dirm1)
+    {
+    case 0:
+        setMisil1Position(ccp(locm1.x,++locm1.y+3));
+        break;
+    case 1:
+         setMisil1Position(ccp(locm1.x,--locm1.y-3));
+         break;
+    case 2:
+        setMisil1Position(ccp(--locm1.x-3,locm1.y));
+        break;
+    case 3:
+        setMisil1Position(ccp(++locm1.x+3,locm1.y));
+    }
+    if(bbm1.intersectsRect(bbE1))
+    {
+    explosion(misil1);
+    delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
+    end += delta;
+    if (end > 5) {
+        this->removeChild(misil1);
+        end = 0;
+    }
+    actm1 = false;
+    e1.setHealth(e1.getHealth()-50);
+    hitP1 = true;
+    if(e1.getHealth()<0)
+    e1.setHealth(0);
+    }
+    if(bbm1.intersectsRect(bbE2))
+    {
+    explosion(misil1);
+    delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
+    end += delta;
+    if (end > 5) {
+        this->removeChild(misil1);
+        end = 0;
+    }
+    actm1 = false;
+    e2.setHealth(e1.getHealth()-50);
+    hitP1 = true;
+    if(e2.getHealth()<0)
+    e2.setHealth(0);
+    }
+    //---------------
+    if(bbm1.intersectsRect(bbE3))
+    {
+    explosion(misil1);
+    delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
+    end += delta;
+    if (end > 5) {
+        this->removeChild(misil1);
+        end = 0;
+    }
+    actm1 = false;
+    e3.setHealth(e1.getHealth()-50);
+    hitP1 = true;
+    if(e3.getHealth()<0)
+    e3.setHealth(0);
+    }
+    for(i=0; i<3; i++) {
+      if((actM2[i]) && bbm1.intersectsRect(bbM2[i])) {
+    explosion(misil1);
+    explosion(minaP2[i]);
+    delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
+    end += delta;
+    if (end > 5) {
+        this->removeChild(misil1);
+        this->removeChild(minaP2[i]);
+        end = 0;
+    }
+    actm1 = false;
+    actM2[i] = false;
+      }
+    }
+    for(i=0; i<3; i++) {
+      if((actM4[i]) && bbm1.intersectsRect(bbM4[i])) {
+    explosion(misil1);
+    explosion(minaE2[i]);
+    delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
+    end += delta;
+    if (end > 5) {
+        this->removeChild(misil1);
+        this->removeChild(minaE2[i]);
+        end = 0;
+    }
+    actm1 = false;
+    actM4[i] = false;
+      }
+    }
+
     }
     if(actm2)
     {
-	locm2 = misil2->getPosition();
-	bbm2 = misil2->getBoundingBox();
-	switch (dirm2)
-	{
-		case 0:
-		    setMisil2Position(ccp(locm2.x,++locm2.y+3));
-		    break;
-		case 1:
-		    setMisil2Position(ccp(locm2.x,--locm2.y-3));
-		    break;
-		case 2:
-		    setMisil2Position(ccp(--locm2.x-3,locm2.y));
-		    break;
-		case 3:
-		    setMisil2Position(ccp(++locm2.x+3,locm2.y));
-	}
-	if(bbm2.intersectsRect(bbP1))
-	{
-		explosion(misil2);
-		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
-		end += delta;
-		if (end > 5) {
-		    this->removeChild(misil2);
-		    end = 0;
-		}
-		actm2 = false;
-		p1.setHealth(p1.getHealth()-HPpercentage1);
-		hitP2 = true;
-		if(p1.getHealth()<0)
-		p1.setHealth(0);
-	}
-	for(i=0; i<3; i++) {
-	    if((actM1[i]) && bbm2.intersectsRect(bbM1[i])) {
-		explosion(misil2);
-		explosion(minaP1[i]);
-		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
-		end += delta;
-		if (end > 5) {
-		    this->removeChild(misil2);
-		    this->removeChild(minaP1[i]);
-		    end = 0;
-		}
-		actm2 = false;
-		actM1[i] = false;
-	    }
-	}
-	if(actm1) {
-	    if(bbm1.intersectsRect(bbm2)) {
-		explosion(misil2);
-		explosion2(misil1);
-		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
-		end += delta;
-		if (end > 5) {
-		    this->removeChild(misil2);
-		    this->removeChild(misil1);
-		    end = 0;
-		}
-		actm2 = false;
-		actm1 = false;
-	    }
-	}
+    locm2 = misil2->getPosition();
+    bbm2 = misil2->getBoundingBox();
+    switch (dirm2)
+    {
+    case 0:
+        setMisil2Position(ccp(locm2.x,++locm2.y+3));
+        break;
+    case 1:
+        setMisil2Position(ccp(locm2.x,--locm2.y-3));
+        break;
+    case 2:
+        setMisil2Position(ccp(--locm2.x-3,locm2.y));
+        break;
+    case 3:
+        setMisil2Position(ccp(++locm2.x+3,locm2.y));
     }
-///-----------------------------------------------------
-  if(actmE1)  {
+    if(bbm2.intersectsRect(bbP1))
+    {
+    explosion(misil2);
+    delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
+    end += delta;
+    if (end > 5) {
+        this->removeChild(misil2);
+        end = 0;
+    }
+    actm2 = false;
+    p1.setHealth(p1.getHealth()-HPpercentage1);
+    hitP2 = true;
+    if(p1.getHealth()<0)
+    p1.setHealth(0);
+    }
+    for(i=0; i<3; i++) {
+      if((actM1[i]) && bbm2.intersectsRect(bbM1[i])) {
+    explosion(misil2);
+    explosion(minaP1[i]);
+    delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
+    end += delta;
+    if (end > 5) {
+        this->removeChild(misil2);
+        this->removeChild(minaP1[i]);
+        end = 0;
+    }
+    actm2 = false;
+    actM1[i] = false;
+      }
+    }
+    if(actm1) {
+      if(bbm1.intersectsRect(bbm2)) {
+    explosion(misil2);
+    explosion2(misil1);
+    delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
+    end += delta;
+    if (end > 5) {
+        this->removeChild(misil2);
+        this->removeChild(misil1);
+        end = 0;
+    }
+    actm2 = false;
+    actm1 = false;
+      }
+    }
+    if(actm1) {
+      if(bbm1.intersectsRect(bbmE1)) {
+    explosion(misil3);
+    explosion2(misil1);
+    delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
+    end += delta;
+    if (end > 5) {
+        this->removeChild(misil3);
+        this->removeChild(misil1);
+        end = 0;
+    }
+    actmE1 = false;
+    actm1 = false;
+      }
+    }
+    if(actm1) {
+      if(bbm1.intersectsRect(bbmE2)) {
+    explosion(misil4);
+    explosion2(misil1);
+    delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
+    end += delta;
+    if (end > 5) {
+        this->removeChild(misil4);
+        this->removeChild(misil1);
+        end = 0;
+    }
+    actmE2 = false;
+    actm1 = false;
+      }
+    }
+    if(actm1) {
+      if(bbm1.intersectsRect(bbmE3)) {
+    explosion(misil5);
+    explosion2(misil1);
+    delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
+    end += delta;
+    if (end > 5) {
+        this->removeChild(misil5);
+        this->removeChild(misil1);
+        end = 0;
+    }
+    actmE3 = false;
+    actm1 = false;
+      }
+    }
+
+
+    }
+    ///-----------------------------------------------------
+    if(actmE1)  {
     locmE1 = misil3->getPosition();
     bbmE1 = misil3->getBoundingBox();
     switch (dirmE1)
@@ -850,14 +1148,14 @@ void Arcade3::gameUpdate(float interval)
       case 7:
           setMisil3Position(ccp(--locmE1.x-3,++locmE1.y+3));
       }
-  if(bbmE1.intersectsRect(bbP1))
-  {
+    if(bbmE1.intersectsRect(bbP1))
+    {
     this->removeChild(misil3);
     actmE1 = false;
     p1.setHealth(p1.getHealth()-20);
     if(p1.getHealth()<0)
     p1.setHealth(0);
-  }
+    }
     }
 
 
@@ -901,6 +1199,69 @@ void Arcade3::gameUpdate(float interval)
       p1.setHealth(0);
     }
       }
+    if(actmE3)  {
+      locmE3 = misil5->getPosition();
+      bbmE3 = misil5->getBoundingBox();
+      switch (dirmE3)
+      {
+        case 0:
+            setMisil5Position(ccp(locmE3.x,++locmE3.y+3));
+            break;
+        case 1:
+            setMisil5Position(ccp(locmE3.x,--locmE3.y-3));
+            break;
+        case 2:
+            setMisil5Position(ccp(--locmE3.x-3,locmE3.y));
+            break;
+        case 3:
+            setMisil5Position(ccp(++locmE3.x+3,locmE3.y));
+            break;
+        case 4:
+            setMisil5Position(ccp(++locmE3.x+3,++locmE3.y+3));
+            break;
+        case 5:
+            setMisil5Position(ccp(++locmE3.x+3,--locmE3.y-3));
+            break;
+          case 6:
+              setMisil5Position(ccp(--locmE3.x-3,--locmE3.y-3));
+              break;
+          case 7:
+              setMisil5Position(ccp(--locmE3.x-3,++locmE3.y+3));
+          }
+      if(bbmE3.intersectsRect(bbP1))
+      {
+        this->removeChild(misil5);
+        actmE3 = false;
+        p1.setHealth(p1.getHealth()-20);
+        if(p1.getHealth()<0)
+        p1.setHealth(0);
+      }
+        }
+
+
+      ///////////////////////////////////////
+      //Spawneo
+    if(!e2.getHealth())
+    {
+      setEnemy2Position(ccp(580,590));
+      e2.setHealth(200);
+
+    }
+
+    if(!e1.getHealth())
+    {
+      setEnemy1Position(ccp(530,100));
+      e1.setHealth(200);
+
+    }
+
+    if(!e3.getHealth())
+    {
+      setEnemy1Position(ccp(500,500));
+      e3.setHealth(200);
+
+    }
+
 //------------------------------------------------------------
     ////////////////////////////////////
     /// Barras de vida
@@ -1233,6 +1594,25 @@ void Arcade3::setEnemy2Position(Point position)
     _enemy2->setPosition(position);
 }
 
+void Arcade3::setEnemy3Position(Point position)
+{
+    Point tileCoord = this->tileCoordForPosition(position);
+    int tileGid = _blockage->getTileGIDAt(tileCoord);
+    if (tileGid) {
+        auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
+        if (!properties.empty()) {
+            auto collision = properties["Collision"].asString();
+            if ("True" == collision) {
+		log("COLISION");
+
+
+
+                return;
+            }
+        }else return;
+    }
+    _enemy3->setPosition(position);
+}
 
 void Arcade3::setMisil1Position(Point position)
 {
@@ -1391,6 +1771,84 @@ void Arcade3::setMisil4Position(Point position)
     }
     misil4->setPosition(position);
 }
+//---------------
+void Arcade3::dispararMisilENemigo3(){
+  if(actmE3==false && !pause) {
+    audioA3->playEffect("Audio/explosion3.mp3");
+    audioA3->setEffectsVolume(0.3);
+    misil5 = Sprite::create("c1.png");
+misil5->setPosition(_enemy3->getPosition());
+misil5->setScale(0.4);
+this->addChild(misil5);
+actmE3 = true;
+dirmE3 = dirAntE3;
+switch (dirmE3) {
+  case 0:
+    misil5->runAction(RotateBy::create(0.001, -90));
+    break;
+  case 1:
+    misil5->runAction(RotateBy::create(0.001, 90));
+    break;
+  case 2:
+    misil5->runAction(RotateBy::create(0.001, 180));
+    break;
+  case 3:
+    misil5->runAction(RotateBy::create(0.001, -0));
+    break;
+  case 4:
+    misil5->runAction(RotateBy::create(0.001, -45));
+    break;
+  case 5:
+    misil5->runAction(RotateBy::create(0.001, 45));
+    break;
+  case 6:
+    misil5->runAction(RotateBy::create(0.001, 135));
+    break;
+  case 7:
+    misil5->runAction(RotateBy::create(0.001, -135));
+    break;
+default:
+        break;
+      }
+  }
+}
+
+void Arcade3::setMisil5Position(Point position)
+{
+    Point tileCoord = this->tileCoordForPosition(position);
+    int tileGid = _blockage->getTileGIDAt(tileCoord);
+    if (tileGid) {
+        auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
+        if (!properties.empty()) {
+            auto collision = properties["Collision"].asString();
+            if ("True" == collision) {
+		this->removeChild(misil5);
+		actmE3 = false;
+		log("COLISION");
+                return;
+            }
+        }else return;
+    }
+    misil5->setPosition(position);
+}
+
+void Arcade3::activarMinaE2(Point position){
+  if(cantM4>0 && !pause){
+    for(i=0; i<3; i++) {
+      if(actM4[i]==false) {
+        cantM4--;
+        minaE2[i] = Sprite::create("mina.png");
+        minaE2[i]->setPosition(_enemy2->getPosition());
+        minaE2[i]->setScale(0.4);
+        this->addChild(minaE2[i]);
+        bbM4[i] = minaE2[i]->getBoundingBox();
+        actM4[i] = true;
+        log("Mina %d puesta",i);
+        break;
+      }
+    }
+  }
+}
 
 //-----------------------------------------
 void Arcade3::getUpgrade(Sprite *upgrade)
@@ -1539,7 +1997,7 @@ bool Arcade3::init()
     _enemy1 = Sprite::create("tank1.png");
     setEnemy1Position(ccp(530,100));
     //    _enemy1->setPosition(ccp(x-400,y+150));
-    _enemy1->setScale(0.4);
+    _enemy1->setScale(0.3);
     addChild(_enemy1);
 
     //Se crea el sprite de enemigo 2
@@ -1548,12 +2006,23 @@ bool Arcade3::init()
     int y4 = Enemy2["y"].asInt();
     _enemy2 = e2.getPlayer();
     _enemy2 = Sprite::create("tank2.png");
-    setEnemy2Position(ccp(580,590));
+    setEnemy2Position(ccp(108,600));
+    this->_enemy2->runAction(RotateBy::create(0.0000001,-90));
     //    _enemy1->setPosition(ccp(x-400,y+150));
-    _enemy2->setScale(0.4);
+    _enemy2->setScale(0.3);
     addChild(_enemy2);
 
-
+    //Se crea el sprite de enemigo 3
+    auto Enemy3 = objects->getObject("Enemy3");
+    int   x5 = Enemy3["x"].asInt();
+    int y5 = Enemy3["y"].asInt();
+    _enemy3 = e3.getPlayer();
+    _enemy3 = Sprite::create("tank6.png");
+    setEnemy3Position(ccp(500,500));
+    this->_enemy3->runAction(RotateBy::create(0.0000001, 0));
+    //  -enemy2->set(ccp(x-400,y+150));
+    _enemy3->setScale(0.3);
+    addChild(_enemy3);
 
     //Se crea sprite health bar de player 1
     HB1 = Sprite::create("healthBar.png");
