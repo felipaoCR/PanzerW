@@ -1112,7 +1112,8 @@ log("r1=%d",r1);
     actm1 = false;
       }
     }
-    if(actm1) {
+}
+    if(actm1 && actmE1) {
       if(bbm1.intersectsRect(bbmE1)) {
     explosion(misil3);
     explosion2(misil1);
@@ -1127,10 +1128,10 @@ log("r1=%d",r1);
     actm1 = false;
       }
     }
-    if(actm1) {
+    if(actm1 && actmE2) {
       if(bbm1.intersectsRect(bbmE2)) {
-    explosion(misil4);
-    explosion2(misil1);
+    	explosion(misil4);
+    	explosion2(misil1);
     delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
     end += delta;
     if (end > 5) {
@@ -1142,7 +1143,7 @@ log("r1=%d",r1);
     actm1 = false;
       }
     }
-    if(actm1) {
+    if(actm1 && actmE3) {
       if(bbm1.intersectsRect(bbmE3)) {
     explosion(misil5);
     explosion2(misil1);
@@ -1159,7 +1160,6 @@ log("r1=%d",r1);
     }
 
 
-    }
     ///-----------------------------------------------------
     if(actmE1)  {
     locmE1 = misil3->getPosition();
@@ -1357,7 +1357,7 @@ log("r1=%d",r1);
     //Game Over
     if(!p1.getHealth()) {
 	explosion2(_player1);
-	auto gameOver = Label::createWithTTF("  Game Over\nPlayer 2 Won", "fonts/Marker Felt.ttf", 26);
+	auto gameOver = Label::createWithTTF("Game Over", "fonts/Marker Felt.ttf", 26);
     	gameOver->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2));
     	this->addChild(gameOver, 1);
 	deltaGO = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-startGO).count();
@@ -1365,19 +1365,14 @@ log("r1=%d",r1);
 	if (endGO > 5) {
 	    pause = true;
             removeChild(HB1);
-            log("Se pauso");
 	    audioA3->stopAllEffects();
-		log("Sin efectos");
 	    audioA3_BM->stopBackgroundMusic();
-		log("Sin musica");
-	    //Director::sharedDirector()->stopAnimation();
 	    Director::sharedDirector()->pause();
-		log("todo pausado");
 	}
     }
-    if(!p2.getHealth()) {
+    if(!e1.getHealth() && !e2.getHealth() && !e3.getHealth()) {
 	explosion2(_player2);
-	auto gameOver = Label::createWithTTF("  Game Over\nPlayer 1 Won", "fonts/Marker Felt.ttf", 26);
+	auto gameOver = Label::createWithTTF("You are the funcking BOSS", "fonts/Marker Felt.ttf", 26);
     	gameOver->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2));
     	this->addChild(gameOver, 1);
 	deltaGO = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-startGO).count();
@@ -1385,14 +1380,9 @@ log("r1=%d",r1);
 	if (endGO > 5) {
 	    pause = true;
             removeChild(HB2);
-            log("Se pauso");
 	    audioA3->stopAllEffects();
-		log("Sin efectos");
 	    audioA3_BM->stopBackgroundMusic();
-		log("Sin musica");
-	    //Director::sharedDirector()->stopAnimation();
 	    Director::sharedDirector()->pause();
-		log("todo pausado");
 	}
     }
 
