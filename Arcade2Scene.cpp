@@ -21,9 +21,9 @@ Point Arcade2::tileCoordForPosition(Point _position)
 void Arcade2::initPlayerStatus()
 {
 	//Inicio estado de player1
-	p1.setHealth(100);
-	p1.setDefence(5);
-	p1.setAttack(120);
+	p1.setHealth(200);
+	p1.setDefence(20);
+	p1.setAttack(200);
 	p1.setSpeed(1);
 	//Inicio estado de player2
 	p2.setHealth(100);
@@ -51,7 +51,6 @@ void Arcade2::gameUpdate(float interval)
     loc2 = _player2->getPosition();
     loc3 = _enemy1->getPosition();
     loc4 = _enemy2->getPosition();
-
     bbP1 = _player1->getBoundingBox();
     bbP2 = _player2->getBoundingBox();
     bbE1= _enemy1->getBoundingBox();
@@ -68,7 +67,7 @@ void Arcade2::gameUpdate(float interval)
     onTop(ccp(loc3.x,loc3.y), _enemy1);
     onTop(ccp(loc4.x,loc4.y), _enemy2);
 
-///////////////////////////////////////////
+	///////////////////////////////////////////
 	//Bloqueos
 	if (bbP1.intersectsRect(bbE1) || bbP1.intersectsRect(bbE2)) {
 	    switch(dirAnt1) {
@@ -237,7 +236,7 @@ void Arcade2::gameUpdate(float interval)
 	}
 
 //MOVIMIENTO DE ENEMIGOS
-if(!e1Collision) {
+if (!e1Collision) {
   if((abs(loc1.x-loc3.x)<20) &&((loc1.y-loc3.y)>20 )){//0
     switch (dirAntE1) {
       case 0:
@@ -664,6 +663,27 @@ if(!e2Collision) {
           tramoAnt=15;
         }
         break;
+    /*  case 16:
+        this->_enemy2->runAction(RotateBy::create(0.01, 135));
+        break;
+      case 17:
+        if(loc4.y<615){
+          setEnemy2Position(ccp(loc4.x,++loc4.y));
+          dirAntE2=0;
+        }else{
+          this->_enemy2->runAction(RotateBy::create(0.01, -90));
+          tramo=18;
+        }
+        break;
+    case 18:
+      if(loc4.x>580){
+        setEnemy2Position(ccp(--loc4.x,loc4.y));
+        dirAntE2=2;
+      }else{
+        this->_enemy2->runAction(RotateBy::create(0.01, -90));
+        tramo=1;
+      }
+      break;*/
   }
 }
   if((loc1.y-loc4.y)<300 &&(loc1.y-loc4.y)>0 && abs(loc1.x-loc4.x)<100 &&dirAntE2==0){
@@ -692,6 +712,7 @@ if(!e2Collision) {
 
 /////////////////////////////////////////////
 // Para colisiones entre sprites
+
 for(i=0; i<3; i++) {
 if(bbP1.intersectsRect(bbM2[i]) && (actM2[i]==true)) {
   CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Bomb.mp3");
@@ -932,8 +953,6 @@ actm1 = false;
 }
 
 
-
-}
 ///-----------------------------------------------------
 if(actmE1)  {
 locmE1 = misil3->getPosition();
@@ -1018,6 +1037,7 @@ if(bbmE2.intersectsRect(bbP1))
 }
   }
 
+
 //------------------------------------------------------------
     ////////////////////////////////////
     /// Barras de vida
@@ -1084,7 +1104,6 @@ if(bbmE2.intersectsRect(bbP1))
 	}
     }
     if(!e2.getHealth() && !e1.getHealth()) {
-	//explosion2(_player2);
 	auto gameOver = Label::createWithTTF("Level 2 clear", "fonts/Marker Felt.ttf", 26);
     	gameOver->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2));
     	this->addChild(gameOver, 1);

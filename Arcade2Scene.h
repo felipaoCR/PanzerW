@@ -58,6 +58,9 @@ public:
     void VolverCallBack(cocos2d::Ref* pSender);
     void createButtons(cocos2d::Size size);
 
+    //on top de layers
+     void onTop(Point position, Sprite *player);
+
     // implement the "static create()" method manually
     CREATE_FUNC(Arcade2);
 private:
