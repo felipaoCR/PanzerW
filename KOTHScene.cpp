@@ -38,11 +38,11 @@ void KOTH::initPlayerStatus()
 	p2.setAttack(120);
 	p2.setSpeed(2);
   	//Inicio de estado de enemy1
-  	e1.setHealth(100);
+/*  	e1.setHealth(100);
   	e1.setDefence(5);
   	e1.setAttack(120);
   	e1.setSpeed(0.2);
-
+*/
 }
 
 void KOTH::gameUpdate(float interval)
@@ -53,7 +53,7 @@ void KOTH::gameUpdate(float interval)
 
     loc1 = _player1->getPosition();
     loc2 = _player2->getPosition();
-    loc3 = _enemy1->getPosition();
+  //  loc3 = _enemy1->getPosition();
     //Se inician barras de vida encima de tanques
     HB1->setPosition(ccp(loc1.x,loc1.y+40));
     HB2->setPosition(ccp(loc2.x,loc2.y+40));
@@ -214,7 +214,7 @@ void KOTH::gameUpdate(float interval)
 //Movimiento del enemigo
 /*_player1->setAnchorPoint(0.5, 0.5);
 _enemy1->setAnchorPoint(0.5, 0.5);
-*/
+
 //if(dirAntE1==(0||1 || 2 ||3||4||5||6||7)){
   if((abs(loc1.x-loc3.x)<20) &&((loc1.y-loc3.y)>20 )){//0
   switch (dirAntE1) {
@@ -472,7 +472,7 @@ _enemy1->setAnchorPoint(0.5, 0.5);
     log("7");
     dirAntE1 = 7;
     setEnemy1Position(ccp((--loc3.x),(++loc3.y)));//enemy1 going left and up
-  }
+  }*/
 
         ////////////////////////////////////////////////////////
 	// pARA TIempo
@@ -494,7 +494,7 @@ _enemy1->setAnchorPoint(0.5, 0.5);
     // Para colisiones entre sprites
     bbP1 = _player1->getBoundingBox();
     bbP2 = _player2->getBoundingBox();
-    bbE1= _enemy1->getBoundingBox();
+  //  bbE1= _enemy1->getBoundingBox();
     for(i=0; i<3; i++) {
 	if(bbP1.intersectsRect(bbM2[i]) && (actM2[i]==true)) {
 	    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Bomb.mp3");
@@ -506,7 +506,7 @@ _enemy1->setAnchorPoint(0.5, 0.5);
             hitP2 = true;
             log("Player 1 actived mine %d", i);
 	    log("Player 1 Life = %d", p1.getHealth());
-	    this->removeChild(minaP2[i]);
+	    tileMap->removeChild(minaP2[i]);
 	    actM2[i] = false;
 	}
 	if(bbP2.intersectsRect(bbM1[i]) && (actM1[i]==true)) {
@@ -519,7 +519,7 @@ _enemy1->setAnchorPoint(0.5, 0.5);
 	    hitP1 = true;
 	    log("Player 2 actived mine %d", i);
 	    log("Player 2 Life = %d", p2.getHealth());
-	    this->removeChild(minaP1[i]);
+	    tileMap->removeChild(minaP1[i]);
 	    actM1[i] = false;
 	}
 
@@ -544,7 +544,7 @@ _enemy1->setAnchorPoint(0.5, 0.5);
 	}
 	if(bbm1.intersectsRect(bbP2))
 	{
-		this->removeChild(misil1);
+		tileMap->removeChild(misil1);
 		actm1 = false;
 		p2.setHealth(p2.getHealth()-HPpercentage2);
 		if(p2.getHealth()<0)
@@ -572,7 +572,7 @@ _enemy1->setAnchorPoint(0.5, 0.5);
 	}
 	if(bbm2.intersectsRect(bbP1))
 	{
-		this->removeChild(misil2);
+		tileMap->removeChild(misil2);
 		actm2 = false;
 		p1.setHealth(p1.getHealth()-HPpercentage1);
 		if(p1.getHealth()<0)
@@ -611,7 +611,7 @@ _enemy1->setAnchorPoint(0.5, 0.5);
     }
 	if(bbmE1.intersectsRect(bbP1))
 	{
-		this->removeChild(misil3);
+		tileMap->removeChild(misil3);
 		actmE1 = false;
 		p1.setHealth(p1.getHealth()-HPpercentage1);
 		if(p1.getHealth()<0)
@@ -644,7 +644,7 @@ _enemy1->setAnchorPoint(0.5, 0.5);
       	  HB1->setPosition(ccp(loc1.x,loc1.y+40));
       	  HB1->setScaleX(0.225);
       	  HB1->setScaleY(0.1);
-      	  addChild(HB1);		
+      	  tileMap->addChild(HB1,1);		
 	}else if(p1.getHealth()!=100 && p1.getHealth()>0)
 	{
 	  HB1->setScaleX(0.225*((float)p1.getHealth()/100));	
@@ -660,7 +660,7 @@ _enemy1->setAnchorPoint(0.5, 0.5);
    	  HB2->setPosition(ccp(loc2.x,loc2.y+40));
           HB2->setScaleX(0.225);
       	  HB2->setScaleY(0.1);
-      	  addChild(HB2);		
+      	  tileMap->addChild(HB2,1);		
 	}else if(p2.getHealth()!=100 && p2.getHealth()>0)
 	{
 	  HB2->setScaleX(0.225*((float)p2.getHealth()/100));	
@@ -751,7 +751,7 @@ void KOTH::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 			minaP1[i] = Sprite::create("mina.png");
 			minaP1[i]->setPosition(_player1->getPosition());
 			minaP1[i]->setScale(0.4);
-			this->addChild(minaP1[i]);
+			tileMap->addChild(minaP1[i],1);
 			bbM1[i] = minaP1[i]->getBoundingBox();
 			actM1[i] = true;
 			break;
@@ -766,7 +766,7 @@ void KOTH::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 		misil1 = Sprite::create("c1.png");
 		misil1->setPosition(_player1->getPosition());
 		misil1->setScale(0.4);
-		this->addChild(misil1);
+		tileMap->addChild(misil1,1);
 		actm1 = true;
 		dirm1 = dirAnt1;
 		switch (dirm1) {
@@ -791,7 +791,7 @@ void KOTH::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 		misil2 = Sprite::create("c1.png");
 		misil2->setPosition(_player2->getPosition());
 		misil2->setScale(0.4);
-		this->addChild(misil2);
+		tileMap->addChild(misil2,1);
 		actm2 = true;
 		dirm2 = dirAnt2;
 		switch (dirm2) {
@@ -829,7 +829,7 @@ void KOTH::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 			minaP2[i] = Sprite::create("mina.png");
 			minaP2[i]->setPosition(_player2->getPosition());
 			minaP2[i]->setScale(0.4);
-			this->addChild(minaP2[i]);
+			tileMap->addChild(minaP2[i],1);
 			bbM2[i] = minaP2[i]->getBoundingBox();
 			actM2[i] = true;
 			break;
@@ -940,7 +940,7 @@ void KOTH::setMisil1Position(Point position)
         if (!properties.empty()) {
             auto collision = properties["Collision"].asString();
             if ("True" == collision) {
-	    this->removeChild(misil1);
+	    tileMap->removeChild(misil1);
 	    actm1 = false;
 	    log("COLISION");
             return;
@@ -959,7 +959,7 @@ void KOTH::setMisil2Position(Point position)
         if (!properties.empty()) {
             auto collision = properties["Collision"].asString();
             if ("True" == collision) {
-		this->removeChild(misil2);
+		tileMap->removeChild(misil2);
 		actm2 = false;
 		log("COLISION");
                 return;
@@ -976,7 +976,7 @@ void KOTH::dispararMisilENemigo(){
     misil3 = Sprite::create("c1.png");
     misil3->setPosition(_enemy1->getPosition());
     misil3->setScale(0.4);
-    this->addChild(misil3);
+    tileMap->addChild(misil3,1);
     actmE1 = true;
     dirmE1 = dirAntE1;
     switch (dirmE1) {
@@ -1018,7 +1018,7 @@ void KOTH::setMisil3Position(Point position)
         if (!properties.empty()) {
             auto collision = properties["Collision"].asString();
             if ("True" == collision) {
-		this->removeChild(misil3);
+		tileMap->removeChild(misil3);
 		actmE1 = false;
 		log("COLISION");
                 return;
@@ -1147,7 +1147,7 @@ bool KOTH::init()
     _player1 =Sprite::create("tank3.png");
     setPlayer1Position(ccp(x,y));
     _player1->setScale(0.4);
-    addChild(_player1);
+    tileMap->addChild(_player1,1);
 
     //Se crea el sprite de player 2
     auto Player2 = objects->getObject("Player2");
@@ -1157,11 +1157,11 @@ bool KOTH::init()
     _player2 = Sprite::create("tank3.png");
     _player2->setPosition(ccp(x2,y2));
     _player2->setScale(0.4);
-    addChild(_player2);
+    tileMap->addChild(_player2,1);
     //_player2->runAction(RotateBy::create(0.001, 180));
 
     //Se crea el sprite de enemigo
-    auto Enemy1 = objects->getObject("Enemy1");
+ /*   auto Enemy1 = objects->getObject("Enemy1");
     x3 = Enemy1["x"].asInt();
     y3 = Enemy1["y"].asInt();
     _enemy1 = p2.getPlayer();
@@ -1169,21 +1169,21 @@ bool KOTH::init()
     setEnemy1Position(ccp(x-400,y+150));
 //    _enemy1->setPosition(ccp(x-400,y+150));
     _enemy1->setScale(0.4);
-    addChild(_enemy1);
-
+    tileMap->addChild(_enemy1,1);
+*/
 //--------------------------------
 //Se crea sprite health bar de player 1
     HB1 = Sprite::create("healthBar.png");
     HB1->setPosition(ccp(x,y+40));
     HB1->setScaleX(0.225);
     HB1->setScaleY(0.1);
-	addChild(HB1);
+	tileMap->addChild(HB1,1);
    //Se crea sprite health bar de player 2
     HB2 = Sprite::create("healthBar.png");
     HB2->setPosition(ccp(x2,y2+40));
     HB2->setScaleX(0.225);
     HB2->setScaleY(0.1);
-	addChild(HB2);
+	tileMap->addChild(HB2,1);
 
 //-------------------------------
 

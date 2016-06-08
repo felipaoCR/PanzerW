@@ -626,15 +626,19 @@ void CTF::gameUpdate(float interval)
 	ban2->setPosition(loc1);
 	ban2->setScale(0.75f);
 	b2WasTaken = true;
-	if (b2WasTaken)
+	if (b2WasTaken){
 		log("Ban 2 tomada");
+		ban2->setZOrder(3);
+	}
     }
     if (bbP2.intersectsRect(bbB1)) {
 	ban1->setPosition(loc2);
 	ban1->setScale(0.75f);
 	b1WasTaken = true;
-	if (b1WasTaken)
+	if (b1WasTaken){
 		log("Ban 1 tomada");
+		ban1->setZOrder(3);
+		}
     }
     if (bbP2.intersectsRect(bbnB2) && b1WasTaken && !b2WasTaken) {
 	scoreP2++;
@@ -801,7 +805,7 @@ void CTF::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 		misil1 = Sprite::create("c1.png");
 		misil1->setPosition(_player1->getPosition());
 		misil1->setScale(0.4);
-		tileMap->addChild(misil1);
+		tileMap->addChild(misil1,1);
 		actm1 = true;
 		movm1 = true;
 		dirm1 = dirAnt1;
@@ -855,7 +859,7 @@ void CTF::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 		misil2 = Sprite::create("c1.png");
 		misil2->setPosition(_player2->getPosition());
 		misil2->setScale(0.4);
-		tileMap->addChild(misil2);
+		tileMap->addChild(misil2,1);
 		actm2 = true;
 		movm2 = true;
 		dirm2 = dirAnt2;
@@ -1320,11 +1324,11 @@ bool CTF::init()
     ban1 = Sprite::create("bandera.png");
     ban1->setPosition(ccp(xC1+175,yC1+227));
     ban1->setScale(1.235);
-    addChild(ban1);
+    tileMap->addChild(ban1,2);
     ban2 = Sprite::create("bandera.png");
     ban2->setPosition(ccp(xC2+75,yC2+233));
     ban2->setScale(1.235);
-    addChild(ban2);
+    tileMap->addChild(ban2,2);
     
     //Se crea sprite health bar de player 1
     HB1 = Sprite::create("healthBar.png");	

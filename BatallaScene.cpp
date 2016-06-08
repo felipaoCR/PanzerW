@@ -208,7 +208,7 @@ void Batalla::gameUpdate(float interval)
 	    delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
 	    end += delta;
 	    if (end > 5) {
-		this->removeChild(minaP2[i]);
+		tileMap->removeChild(minaP2[i]);
 		end = 0;
 	    }
 	    actM2[i] = false;
@@ -225,7 +225,7 @@ void Batalla::gameUpdate(float interval)
 	    delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
 	    end += delta;
 	    if (end > 5) {
-		this->removeChild(minaP1[i]);
+		tileMap->removeChild(minaP1[i]);
 		end = 0;
 	    }
 	    actM1[i] = false;
@@ -333,7 +333,7 @@ void Batalla::gameUpdate(float interval)
 		end += delta;
 		if (end > 5) {
 		    tileMap->removeChild(misil2);
-		    this->removeChild(minaP1[i]);
+		    tileMap->removeChild(minaP1[i]);
 		    end = 0;
 		}
 		actm2 = false;
@@ -508,7 +508,7 @@ void Batalla::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 			minaP1[i] = Sprite::create("mina.png");
 			minaP1[i]->setPosition(_player1->getPosition());
 			minaP1[i]->setScale(0.4);
-			this->addChild(minaP1[i]);
+			tileMap->addChild(minaP1[i],1);
 			bbM1[i] = minaP1[i]->getBoundingBox();
 			actM1[i] = true;
 			break;
@@ -561,7 +561,7 @@ void Batalla::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 			minaP2[i] = Sprite::create("mina.png");
 			minaP2[i]->setPosition(_player2->getPosition());
 			minaP2[i]->setScale(0.4);
-			this->addChild(minaP2[i]);
+			tileMap->addChild(minaP2[i],1);
 			bbM2[i] = minaP2[i]->getBoundingBox();
 			actM2[i] = true;
 			break;
