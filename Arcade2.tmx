@@ -12,6 +12,11 @@
     <property name="collisionTop" value="True"/>
    </properties>
   </tile>
+  <tile id="262">
+   <properties>
+    <property name="top2" value="True"/>
+   </properties>
+  </tile>
   <tile id="263">
    <properties>
     <property name="Collision" value="True"/>
@@ -47,7 +52,7 @@
  </layer>
  <layer name="Collision" width="32" height="24">
   <data encoding="base64" compression="zlib">
-   eJzFldsKACEIROsl+v8v7lXCy4wpCdKS6NHWbM8x9mf1RNojH5QV8aOconzZPKs5aNwuPhvjVe4e6eCjvcMIcwe8XpIrw0P4t13zYfut4v6zcbSYWb6VC8NH/dbUv7VYjFTxXwQ5hy4++v9+8L39bGzrnWPfjqwdYbFzZCmavc+3rVIsjjZPIl+5b9Uf9ZLFl6vli9bqzUmvflSRHLx6UP7LWUTC1tyhB5SpCnI=
+   eJzFVUEOwCAI2y5z/3/xLjsQA7RFiU2IiwhVV+G9r+s9bBmsH8WwXIgf7QntV93nbh42bxe/mmMVs0Y6+FntKFDeQKYlOyp8DP/s92JUve14/2oeLyfLP37LakhFd0zcc/vfXi4Fu/hXwNxDFz/7/07wz/NWf9XcUZ9Te0fVz3CpdeRxrFJPPB/CCNZ68xGPV09QrJ2Pzp9pKeO3YxSLkPWYyJetq/YMdB6Wf+UuENQzd9gHc7IKog==
   </data>
  </layer>
  <layer name="Tile Layer 5" width="32" height="24">
