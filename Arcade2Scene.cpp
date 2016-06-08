@@ -1616,7 +1616,7 @@ bool Arcade2::init()
 	actM2[i] = false;
     }
 
-
+    Director::sharedDirector()->resume();
     visibleSize = Director::getInstance()->getVisibleSize();
     origin = Director::getInstance()->getVisibleOrigin();
 

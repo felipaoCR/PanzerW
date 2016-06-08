@@ -1678,6 +1678,7 @@ bool ModoArcade::init()
     _player2->setScale(0.3);
     addChild(_player2);
     _player2->runAction(RotateBy::create(0.01, 180));
+    _player2->runAction(FadeOut::create(0.001));
 
     //Se crea el sprite de enemigo 1
     auto Enemy1 = objects->getObject("Enemy1");
@@ -1715,6 +1716,7 @@ bool ModoArcade::init()
     HB2->setScaleX(0.225);
     HB2->setScaleY(0.1);
 	addChild(HB2);
+  HB2->runAction(FadeOut::create(0.001));
    //Se crean los sprites de upgrade
     //Tag = 1
     HpUp = Sprite::create("HpUp.png");
