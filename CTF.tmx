@@ -38,7 +38,7 @@
  </layer>
  <layer name="Tile Layer 3" width="32" height="24">
   <data encoding="base64" compression="zlib">
-   eJxjYKA9cGclXm0gOwODIjuq2EOg/kckmEEOgNk5hR2/Olrbj4tPCXjKDMGEQAYLbrk3TAg1B4H4AxNp9lMKeIBm8AIxHxDzA7EAhWaC0qQHCWlKB2gfIxI2oMB+QvlhGVA+HYgzkNT5AO3zBWI/IPYH4gAqhCkMsCHF+zIcbmPBkzbgetmIs4+U8gAECOV/J6CcI5XzLTXSLLXsx+Z/epSJ9AT4yh5sgBz/Bw5Q2Q4DA1W3DAZAavyOFABLx7TOz9RsT5ALYHUuvroXPTzwhQspYUZqnUMJQPcfPewmtu5FBwB01im7
+   eJxjYKA9cGclXm0gOwODIjuq2EOg/kckmEEOgNk5hR2/Olrbj4tPCXjKDMGEQAYLbrk3TAg1B4H4AxNp9lMKeIBm8AIxHxDzA7EAhWaC0qQHiWmKkRmBKbUbH1gGlE8H4gwkdT5AO32B2A+I/YE4gAphCgNsSPG+DIfbWPCkDbheNuLsI6U8AAFC+d8JKOdI5XxLjTRLLfux+Z8eZSI9Ab6yBxsgx/+BA1S2w8BA1S2DAZAavyMFwNIxrfMzNdsT5AJYnYuv7kUPD3zhQkqYkVrnUALQ/UcPu4mte9EBABUvKVk=
   </data>
  </layer>
  <layer name="Collision" width="32" height="24">
@@ -57,7 +57,7 @@
  </layer>
  <layer name="Tile Layer 6" width="32" height="24">
   <data encoding="base64" compression="zlib">
-   eJztzbENACAMxEBLUcYBxoDJmJuUMACdT3LzzYOk206Y1cp3bwG9GvH3W5Ik6acD2tACQw==
+   eJztzbkNACAQA0FLJ7rh6wIqo26cQQOX7UibOLEE4HeKtNwub6shNdfdcDPyvgEAADJdOoYCpQ==
   </data>
  </layer>
 </map>
