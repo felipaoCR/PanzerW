@@ -725,10 +725,10 @@ void Batalla::setPlayer1Position(Point position)
     if (tileGid) {
         auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
         if (!properties.empty()) {
-	    auto onTop  = properties["onTop"].asString();
+	    auto top2 = properties["top2"].asString();
 	    auto collisionTop = properties["collisionTop"].asString();
             auto collision = properties["Collision"].asString();
-            if ("True" == collision || ((_player1->getZOrder()==2) && (collisionTop == "True"))) {
+            if ("True" == collision || (top2 == "True" && (_player1->getZOrder() == 1)) || ((_player1->getZOrder()==2) && (collisionTop == "True"))) {
 		log("COLISION");
                 return;
             }
@@ -746,10 +746,10 @@ void Batalla::setPlayer2Position(Point position)
 	//log("DEBUG");
         auto properties = tileMap->getPropertiesForGID(tileGid).asValueMap();
         if (!properties.empty()) {
-            auto onTop  = properties["onTop"].asString();
+            auto top2 = properties["top2"].asString();
 	    auto collisionTop = properties["collisionTop"].asString();
             auto collision = properties["Collision"].asString();
-            if ("True" == collision || ((_player2->getZOrder()==2) && (collisionTop == "True"))) {
+            if ("True" == collision  || ((_player2->getZOrder()==2) && (collisionTop == "True"))) {
 		log("COLISION");
                 return;
             }
