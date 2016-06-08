@@ -629,6 +629,7 @@ void CTF::gameUpdate(float interval)
 	if (b2WasTaken){
 		log("Ban 2 tomada");
 		ban2->setZOrder(3);
+		noBan2->setZOrder(2);
 	}
     }
     if (bbP2.intersectsRect(bbB1)) {
@@ -638,6 +639,7 @@ void CTF::gameUpdate(float interval)
 	if (b1WasTaken){
 		log("Ban 1 tomada");
 		ban1->setZOrder(3);
+		noBan1->setZOrder(2);
 		}
     }
     if (bbP2.intersectsRect(bbnB2) && b1WasTaken && !b2WasTaken) {
@@ -646,7 +648,9 @@ void CTF::gameUpdate(float interval)
 	log("Score P2: %d",scoreP2);
 	b1WasTaken = false;
 	ban1->setPosition(ccp(xC1+175,yC1+227));
-	ban1->setScale(1);
+	ban1->setScale(1.235);
+	noBan1->setZOrder(1);
+	ban1->setZOrder(1);
     }
     if (bbP1.intersectsRect(bbnB1) && b2WasTaken && !b1WasTaken) {
 	scoreP1++;
@@ -654,7 +658,9 @@ void CTF::gameUpdate(float interval)
 	log("Score P2: %d",scoreP2);
 	b2WasTaken = false;
 	ban2->setPosition(ccp(xC2+75,yC2+233));
-	ban2->setScale(1);
+	ban2->setScale(1.235);
+	noBan2->setZOrder(1);
+	ban2->setZOrder(1);
     }
 
     ///////////////////////////////////////
@@ -690,8 +696,16 @@ void CTF::gameUpdate(float interval)
 
     //Spawneo
     if(!p2.getHealth()) {
-	if(!endGO)
+	if(!endGO) {
 	    explosion2(_player2);
+	    if (b1WasTaken) {
+		b1WasTaken = false;
+		ban1->setPosition(ccp(xC1+175,yC1+227));
+		ban1->setScale(1.235);
+		noBan1->setZOrder(1);
+		ban1->setZOrder(1);
+	    }
+	}
 	deltaGO = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-startGO).count()/1000;
 	endGO = deltaGO;
 	if(endGO>2.5) {
@@ -709,8 +723,16 @@ void CTF::gameUpdate(float interval)
 	}
     }
     if(!p1.getHealth()) {
-	if(!endGO)
+	if(!endGO) {
 	    explosion2(_player1);
+	    if (b2WasTaken) {
+		b2WasTaken = false;
+		ban2->setPosition(ccp(xC2+75,yC2+233));
+		ban2->setScale(1.235);
+		noBan2->setZOrder(1);
+		ban2->setZOrder(1);
+	    }
+	}
 	deltaGO = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-startGO).count()/1000;
 	endGO = deltaGO;
 	if(endGO>2.5) {
@@ -1295,15 +1317,15 @@ bool CTF::init()
     noBan1 = Sprite::create("nobandera.png");
     noBan1->setPosition(ccp(xC1+175,yC1+227));
     noBan1->setScale(1.235);
-    tileMap->addChild(noBan1);
+    tileMap->addChild(noBan1,1);
     bbnB1 = noBan1->getBoundingBox();
-    noBan1->runAction(FadeOut::create(0.01f));
+    //noBan1->runAction(FadeOut::create(0.01f));
     noBan2 = Sprite::create("nobandera.png");
     noBan2->setPosition(ccp(xC2+75,yC2+233));
     noBan2->setScale(1.235);
-    tileMap->addChild(noBan2);
+    tileMap->addChild(noBan2,1);
     bbnB2 = noBan2->getBoundingBox();
-    noBan2->runAction(FadeOut::create(0.01f));
+    //noBan2->runAction(FadeOut::create(0.01f));
 
     //Se crea el sprite de player 1
     _player1 = p1.getPlayer();
