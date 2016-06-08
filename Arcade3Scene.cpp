@@ -72,6 +72,48 @@ void Arcade3::gameUpdate(float interval)
 	getUpgrade(defenceUp);
 	if(!firstHP)
 	getUpgrade(HpUp);
+
+	//////////////////////////////////////////////
+	// Bounding Box
+    bbP1 = _player1->getBoundingBox();
+    bbP2 = _player2->getBoundingBox();
+    bbE1= _enemy1->getBoundingBox();
+    bbE2= _enemy2->getBoundingBox();
+    bbE3=_enemy3->getBoundingBox();
+
+	///////////////////////////////////////////
+	//Bloqueos
+	if (bbP1.intersectsRect(bbE1) || bbP1.intersectsRect(bbE2) || bbP1.intersectsRect(bbE3)) {
+	    switch(dirAnt1) {
+		case 0:
+		    up1 = false;
+		    break;
+		case 1:
+		    down1 = false;
+		    break;
+		case 2:
+		    left1 = false;
+		    break;
+		case 3:
+		    right1 = false;
+		    break;
+	    }
+	}
+	if (bbP1.intersectsRect(bbE1)) {
+	    e1Collision = true;
+	} else {
+	    e1Collision = false;
+	}
+	if (bbP1.intersectsRect(bbE2)) {
+	    e2Collision = true;
+	} else {
+	    e2Collision = false;
+	}
+	if (bbP1.intersectsRect(bbE3)) {
+	    e3Collision = true;
+	} else {
+	    e3Collision = false;
+	}
     ////////////////////////////////////////////////////////////
     // Movimiento Jugadores y se establece la posicion de health bars
     if(up1) {
@@ -212,7 +254,7 @@ void Arcade3::gameUpdate(float interval)
 	}
     }
 //MOVIMIENTO DE ENEMIGOS
-  if((abs(loc1.x-loc3.x)<20) &&((loc1.y-loc3.y)>20 )){//0
+  if((abs(loc1.x-loc3.x)<20) &&((loc1.y-loc3.y)>20 ) && !e1Collision){//0
     switch (dirAntE1) {
       case 0:
         break;
@@ -244,7 +286,7 @@ void Arcade3::gameUpdate(float interval)
     //KOTHCounter3(_enemy1->getPosition());
     //  dispararMisilENemigo();
   }
-  if((abs(loc1.x-loc3.x)<20) &&((loc3.y-loc1.y)>20 )){//1
+  if((abs(loc1.x-loc3.x)<20) &&((loc3.y-loc1.y)>20 ) && !e1Collision){//1
     switch (dirAntE1) {
       case 0:
         this->_enemy1->runAction(RotateBy::create(0.02, 180));
@@ -277,7 +319,7 @@ void Arcade3::gameUpdate(float interval)
     //KOTHCounter3(_enemy1->getPosition());
   }
   //
-  if(((loc3.x-loc1.x)>20) &&(abs(loc1.y-loc3.y)<20) ){//2
+  if(((loc3.x-loc1.x)>20) &&(abs(loc1.y-loc3.y)<20) && !e1Collision){//2
     switch (dirAntE1) {
       case 0:
         this->_enemy1->runAction(RotateBy::create(0.01, -90));
@@ -311,7 +353,7 @@ void Arcade3::gameUpdate(float interval)
     //  dispararMisilENemigo();
   }
   //
-  if(((loc1.x-loc3.x)>20) &&(abs(loc1.y-loc3.y)<20) ){//3
+  if(((loc1.x-loc3.x)>20) &&(abs(loc1.y-loc3.y)<20) && !e1Collision){//3
     switch (dirAntE1) {
       case 0:
         this->_enemy1->runAction(RotateBy::create(0.01, 90));
@@ -344,7 +386,7 @@ void Arcade3::gameUpdate(float interval)
     //KOTHCounter3(_enemy1->getPosition());
   }
   //
-  if(((loc1.x-loc3.x)>20) && ((loc1.y-loc3.y)>20)){ //4
+  if(((loc1.x-loc3.x)>20) && ((loc1.y-loc3.y)>20) && !e1Collision){ //4
     switch (dirAntE1) {
       case 0:
         this->_enemy1->runAction(RotateBy::create(0.005, 45));
@@ -376,7 +418,7 @@ void Arcade3::gameUpdate(float interval)
     setEnemy1Position(ccp((++loc3.x),(++loc3.y)));// enemy 1 going up and right
   }
   //
-  if(((loc1.x-loc3.x)>20) && ((loc3.y-loc1.y)>20)){ //5
+  if(((loc1.x-loc3.x)>20) && ((loc3.y-loc1.y)>20) && !e1Collision){ //5
     switch (dirAntE1) {
       case 0:
         this->_enemy1->runAction(RotateBy::create(0.015, 135));
@@ -409,7 +451,7 @@ void Arcade3::gameUpdate(float interval)
 
   }
   //
-  if(((loc3.x-loc1.x)>20) && ((loc3.y-loc1.y)>20)){//6
+  if(((loc3.x-loc1.x)>20) && ((loc3.y-loc1.y)>20) && !e1Collision){//6
     switch (dirAntE1) {
       case 0:
         this->_enemy1->runAction(RotateBy::create(0.015, -135));
@@ -441,7 +483,7 @@ void Arcade3::gameUpdate(float interval)
     setEnemy1Position(ccp((--loc3.x),(--loc3.y))); //enemy1 going down and left
     //dispararMisilENemigo();
   }
-  if(((loc3.x-loc1.x)>20) && ((loc1.y-loc3.y)>20)){//7
+  if(((loc3.x-loc1.x)>20) && ((loc1.y-loc3.y)>20) && !e1Collision){//7
     switch (dirAntE1) {
       case 0:
         this->_enemy1->runAction(RotateBy::create(0.005, -45));
@@ -491,7 +533,7 @@ void Arcade3::gameUpdate(float interval)
 //MOVIMIENTO ENEMIGO  2
 //MOVIMIENTO ENEMIGO  2
 //this->_enemy2->runAction(RotateBy::create(0.01, 180));
-
+if(!e2Collision) {
 switch (tramo) {
   case 1:
     //this->_enemy2->runAction(RotateBy::create(0.01, 180));
@@ -663,6 +705,7 @@ switch (tramo) {
 
     break;*/
 }
+}
 /*  if((loc1.y-loc4.y)<300 &&(loc1.y-loc4.y)>0 && abs(loc1.x-loc4.x)<100 &&dirAntE2==0){
   dispararMisilENemigo2();
 }
@@ -684,6 +727,7 @@ log("tramo=%d",tramo);
 //ENEMIGO3
 srand (time(NULL));
 int r1= rand()%10;
+if (!e3Collision) {
 if(loc1.y<280&& loc1.x>315&&loc1.x<420){
 
 if (r1<5){
@@ -832,6 +876,7 @@ dirAntE3 = 0;
 setEnemy3Position(ccp(loc1.x,90));
 
 }
+}
 
 r2=rand() % 10;
 if (r2<3&& r2!=r2ant){
@@ -852,11 +897,6 @@ log("r1=%d",r1);
 
 /////////////////////////////////////////////
     // Para colisiones entre sprites
-    bbP1 = _player1->getBoundingBox();
-    bbP2 = _player2->getBoundingBox();
-    bbE1= _enemy1->getBoundingBox();
-    bbE2= _enemy2->getBoundingBox();
-    bbE3=_enemy3->getBoundingBox();
     for(i=0; i<3; i++) {
     if(bbP1.intersectsRect(bbM2[i]) && (actM2[i]==true)) {
       CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Bomb.mp3");

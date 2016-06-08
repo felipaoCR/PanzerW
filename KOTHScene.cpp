@@ -874,7 +874,7 @@ bool KOTH::init()
 	actM2[i] = false;
     }
 
-    Director::sharedDirector->resume();
+    Director::sharedDirector()->resume();
 
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
