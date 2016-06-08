@@ -37,7 +37,7 @@ public:
     void setMisil2Position(Point position);
     Point tileCoordForPosition(Point _position);
     bool isKeyPressed(cocos2d::EventKeyboard::KeyCode);
-    double keyPressedDuration(cocos2d::EventKeyboard::KeyCode);	
+    double keyPressedDuration(cocos2d::EventKeyboard::KeyCode);
     void ModoArcadePlayerPosition(Point position);
     void getUpgrade(Sprite *upgrade);
     //Para actualizar el juego
@@ -48,12 +48,12 @@ public:
     //Explosiones
     void explosion(Sprite *player);
     void explosion2(Sprite *player);
-    
+
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
     void VolverCallBack(cocos2d::Ref* pSender);
     void createButtons(cocos2d::Size size);
-    
+
     // implement the "static create()" method manually
     CREATE_FUNC(Batalla);
 private:
@@ -61,10 +61,10 @@ private:
     Vec2 loc1, loc2, locm1, locm2;
     Size visibleSize; //Para puntos de referencia de la pantalla
     Vec2 origin;
-    bool pause = false, exp = false, firstSpeed = false, firstHP = false, firstAttack = false, 
+    bool pause = false, exp = false, firstSpeed = false, firstHP = false, firstAttack = false,
     firstDefence = false, hitP1= false, hitP2 = false, hpup1 = false, hpup2 = false, game_Over = false,
     onTopP1 = false, onTopP2 = false;
-    Sprite *_player1, *_player2, *sprite, *minaP1[3], *minaP2[3], *misil1, *misil2, *HB1, *HB2, *explode, 
+    Sprite *_player1, *_player2, *sprite, *minaP1[3], *minaP2[3], *misil1, *misil2, *HB1, *HB2, *explode,
     *attackUp, *speedUp, *defenceUp, *HpUp;
     CCTMXTiledMap *tileMap;
     CCTMXLayer *background, *_layer1,*_layer2, *_layer3, *_onTop;

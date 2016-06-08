@@ -24,7 +24,7 @@ void CTF::initPlayer1Status()
 	p1.setHealth(100);
 	p1.setDefence(5);
 	p1.setAttack(120);
-	p1.setSpeed(1);	
+	p1.setSpeed(1);
 }
 
 void CTF::initPlayer2Status()
@@ -33,7 +33,7 @@ void CTF::initPlayer2Status()
 	p2.setHealth(100);
 	p2.setDefence(10);
 	p2.setAttack(120);
-	p2.setSpeed(2);	
+	p2.setSpeed(2);
 }
 
 void CTF::gameUpdate(float interval)
@@ -64,7 +64,7 @@ void CTF::gameUpdate(float interval)
 	getUpgrade(defenceUp);
 	if(!firstHP)
 	getUpgrade(HpUp);
-	
+
 	////////////////////////////////////////////////////////
 	//Bloqueos
 	for (j=0; j<6; j++) {
@@ -315,7 +315,7 @@ void CTF::gameUpdate(float interval)
     // Para colisiones entre sprites
     for(i=0; i<3; i++) {
 	if(bbP1.intersectsRect(bbM2[i]) && (actM2[i])) {
-	    if (!end) {
+	    //if (!end) {
 	    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Bomb.mp3");
 	    //-10 a health de p1
 	    if(p1.getHealth()>0)
@@ -324,17 +324,17 @@ void CTF::gameUpdate(float interval)
 	    p1.setHealth(0);
 	    hitP2 = true;
 	    explosion(minaP2[i]);
-	    }
+	    //}
 	    delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count()/1000;
 	    end = delta;
 	    if (end > 2) {
 		removeChild(minaP2[i]);
-	        actM2[i] = false;
 		end = 0;
 	    }
+  	        actM2[i] = false;
 	}
 	if(bbP2.intersectsRect(bbM1[i]) && (actM1[i])) {
-	    if(!end){
+	    //if(!end){
 	    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Bomb.mp3");
 	    //-10 a health de p2
 	    if(p2.getHealth()>0)
@@ -343,20 +343,20 @@ void CTF::gameUpdate(float interval)
 	    p2.setHealth(0);
 	    hitP1 = true;
 	    explosion(minaP1[i]);
-	    }
+	    //}
 	    delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count()/1000;
 	    end = delta;
 	    if (end > 2) {
 		removeChild(minaP1[i]);
-		actM1[i] = false;
 		end = 0;
 	    }
+  		actM1[i] = false;
 	}
 	//Destruccion de puente
 	for (j=1; j<7; j++) {
 	    if (bbPnt1[j-1].intersectsRect(bbM1[i]) && (actM1[i]) && (actPnt1[j-1])) {
 		if (!end) {
-		    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Bomb.mp3");	
+		    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Bomb.mp3");
 		    explosion(pnt1[j-1]);
 		    explosion(minaP1[i]);
 		}
@@ -374,7 +374,7 @@ void CTF::gameUpdate(float interval)
 	    }
 	    if (bbPnt1[j-1].intersectsRect(bbM2[i]) && (actM2[i]) && (actPnt1[j-1])) {
 		if (!end) {
-		    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Bomb.mp3");	
+		    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Bomb.mp3");
 		    explosion(pnt1[j-1]);
 		    explosion(minaP2[i]);
 		}
@@ -392,7 +392,7 @@ void CTF::gameUpdate(float interval)
 	    }
 	    if (bbPnt2[j-1].intersectsRect(bbM1[i]) && (actM1[i]) && (actPnt2[j-1])) {
 		if (!end) {
-		    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Bomb.mp3");	
+		    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Bomb.mp3");
 		    explosion(pnt2[j-1]);
 		    explosion(minaP1[i]);
 		}
@@ -410,7 +410,7 @@ void CTF::gameUpdate(float interval)
 	    }
 	    if (bbPnt2[j-1].intersectsRect(bbM2[i]) && (actM2[i]) && (actPnt2[j-1])) {
 		if (!end) {
-		    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Bomb.mp3");	
+		    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("Audio/Bomb.mp3");
 		    explosion(pnt2[j-1]);
 		    explosion(minaP2[i]);
 		}
@@ -428,19 +428,19 @@ void CTF::gameUpdate(float interval)
 	    }
 	}
     }
-    
+
     /////////////////////////////////////////
     //Misiles
         if(actm1)
     {
     	locm1 = misil1->getPosition();
 	bbm1 = misil1->getBoundingBox();
-	if(_player1->getZOrder()==2)
-	{
-	    misil1->setZOrder(2);	
-	}
+	// if(_player1->getZOrder()==2)
+	// {
+	//     misil1->setZOrder(2);
+	// }
         //onTop(ccp(locm1.x,locm1.y), misil1);
-	if(movm1) {
+	//if(movm1) {
 	switch (dirm1)
 	{
 		case 0:
@@ -454,42 +454,42 @@ void CTF::gameUpdate(float interval)
 		    break;
 		case 3:
 		    setMisil1Position(ccp(++locm1.x+3,locm1.y));
-	}
+//	}
 	}
 	if(bbm1.intersectsRect(bbP2))
 	{
-		if(!end) {
+		//if(!end) {
 		explosion(misil1);
 		movm1 = false;
 		p2.setHealth(p2.getHealth()-HPpercentage2);
 		hitP1 = true;
 		if(p2.getHealth()<0)
 		p2.setHealth(0);
-		}
+		//}
 		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count()/1000;
 		end = delta;
 		if (end > 2) {
 		    tileMap->removeChild(misil1);
-		    actm1 = false;
 		    end = 0;
 		}
+    actm1 = false;
 	}
 	for(i=0; i<3; i++) {
 	    if((actM2[i]) && bbm1.intersectsRect(bbM2[i])) {
-		if(!end) {
+		//if(!end) {
 		explosion(misil1);
 		explosion(minaP2[i]);
 		movm1=false;
-		}
+		//}
 		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count()/1000;
 		end = delta;
 		if (end > 2) {
 		    tileMap->removeChild(misil1);
 		    removeChild(minaP2[i]);
 		    end = 0;
-		    actm1 = false;
-		    actM2[i] = false;
 		}
+    actm1 = false;
+    actM2[i] = false;
 	    }
 	}
     }
@@ -497,12 +497,12 @@ void CTF::gameUpdate(float interval)
     {
 	locm2 = misil2->getPosition();
 	bbm2 = misil2->getBoundingBox();
-	if(_player2->getZOrder()==2)
-	{
-	    misil2->setZOrder(2);	
-	}
+	// if(_player2->getZOrder()==2)
+	// {
+	//     misil2->setZOrder(2);
+	// }
         //onTop(ccp(locm2.x,locm2.y), misil2);
-	if(movm2){
+	//if(movm2){
 	switch (dirm2)
 	{
 		case 0:
@@ -517,61 +517,61 @@ void CTF::gameUpdate(float interval)
 		case 3:
 		    setMisil2Position(ccp(++locm2.x+3,locm2.y));
 	}
-	}
+//	}
 	if(bbm2.intersectsRect(bbP1))
 	{
-		if(!end){
+		//if(!end){
 		explosion(misil2);
 		p1.setHealth(p1.getHealth()-HPpercentage1);
 		hitP2 = true;
 		if(p1.getHealth()<0)
 		p1.setHealth(0);
 		movm2 = false;
-		}
+		//}
 		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count()/1000;
 		end = delta;
 		if (end > 2) {
 		    tileMap->removeChild(misil2);
-		    actm2 = false;
 		    end = 0;
 		}
+    actm2 = false;
 	}
 	for(i=0; i<3; i++) {
 	    if((actM1[i]) && bbm2.intersectsRect(bbM1[i])) {
-		if(!end) {
+		//if(!end) {
 		explosion(misil2);
 		explosion(minaP1[i]);
 		movm2=false;
-		}
+		//}
 		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count()/1000;
 		end = delta;
 		if (end > 2) {
 		    tileMap->removeChild(misil2);
 		    removeChild(minaP1[i]);
-		    actm2 = false;
-		    actM1[i] = false;
 		    end = 0;
 		}
+    actm2 = false;
+    actM1[i] = false;
 	    }
 	}
 	if(actm1) {
 	    if(bbm1.intersectsRect(bbm2)) {
-		if(!end) {
+		//if(!end) {
 		explosion(misil2);
 		explosion2(misil1);
 		movm1=false;
 		movm2=false;
-		}
+		//}
 		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count()/1000;
 		end = delta;
 		if (end > 2) {
 		    tileMap->removeChild(misil2);
 		    tileMap->removeChild(misil1);
-		    actm2 = false;
-		    actm1 = false;
 		    end = 0;
 		    endGO = 0;
 		}
+    actm2 = false;
+    actm1 = false;
 	    }
 	}
     }
@@ -580,32 +580,32 @@ void CTF::gameUpdate(float interval)
     if(hitP2)
     {
 	if(p1.getHealth()==100)
-	{	
+	{
       	  removeChild(HB1);
       	  HB1 = Sprite::create("healthBar.png");
       	  HB1->setPosition(ccp(loc1.x,loc1.y+40));
       	  HB1->setScaleX(0.225);
       	  HB1->setScaleY(0.1);
-      	  addChild(HB1);		
+      	  addChild(HB1);
 	}else if(p1.getHealth()!=100 && p1.getHealth()>0)
 	{
-	  HB1->setScaleX(0.225*((float)p1.getHealth()/100));	
+	  HB1->setScaleX(0.225*((float)p1.getHealth()/100));
 	}
 	hitP2 = false;
     }
     if(hitP1)
     {
 	if(p2.getHealth()==100)
-	 {	
+	 {
       	  removeChild(HB2);
       	  HB2 = Sprite::create("healthBar.png");
    	  HB2->setPosition(ccp(loc2.x,loc2.y+40));
           HB2->setScaleX(0.225);
       	  HB2->setScaleY(0.1);
-      	  addChild(HB2);		
+      	  addChild(HB2);
 	}else if(p2.getHealth()!=100 && p2.getHealth()>0)
 	{
-	  HB2->setScaleX(0.225*((float)p2.getHealth()/100));	
+	  HB2->setScaleX(0.225*((float)p2.getHealth()/100));
 	}
 	hitP1 = false;
     }
@@ -1064,7 +1064,7 @@ void CTF::getUpgrade(Sprite *upgrade)
 	}
         removeChild(upgrade);
    }
-    
+
 }
 
 void CTF::onTop(Point position,Sprite *player)
@@ -1076,7 +1076,7 @@ void CTF::onTop(Point position,Sprite *player)
         if (!properties.empty()) {
 	    auto onTop = properties["onTop"].asString();
 	    auto notTop = properties["notTop"].asString();
-            if (onTop == "True") 
+            if (onTop == "True")
 	    {
 		player->setZOrder(2);
 		return;
@@ -1086,7 +1086,7 @@ void CTF::onTop(Point position,Sprite *player)
          	player->setZOrder(1);
 		return;
             }
-		
+
         }
     }
 }
@@ -1095,7 +1095,7 @@ Scene* CTF::createScene()
 {
     // 'scene' is an autorelease object
     auto scene = Scene::create();
-    
+
     // 'layer' is an autorelease object
     auto layer = CTF::create();
 
@@ -1131,13 +1131,13 @@ bool CTF::init()
     Director::sharedDirector()->resume();
 
     inicio = high_resolution_clock::now();
-    
+
     visibleSize = Director::getInstance()->getVisibleSize();
     origin = Director::getInstance()->getVisibleOrigin();
 
     CTF::createButtons(visibleSize);
 
-    //Se agrega una etiqueta con el titulo    
+    //Se agrega una etiqueta con el titulo
     auto label = Label::createWithTTF("Capture the Flag", "fonts/Marker Felt.ttf", 26);
     label->setPosition(Vec2(origin.x + visibleSize.width/2,
                             origin.y + visibleSize.height - label->getContentSize().height));
@@ -1146,7 +1146,7 @@ bool CTF::init()
     /////////////////////////////////
     ///// Manejo de fondos
     //Se carga el mapa y se hacen los collisions tiles con los que el tanque tiene que chocar
-    tileMap = new CCTMXTiledMap();    
+    tileMap = new CCTMXTiledMap();
     tileMap->initWithTMXFile("CTF.tmx");
     _blockage = tileMap->layerNamed("Collision");
     water = tileMap->layerNamed("water");
@@ -1156,13 +1156,13 @@ bool CTF::init()
     tileMap->setPosition(origin.x,origin.y);
     this->addChild(tileMap);
     //Se obtiene la layer de objetos 'palpables' por el juego
-    TMXObjectGroup *objects = tileMap->getObjectGroup("Objects");	
+    TMXObjectGroup *objects = tileMap->getObjectGroup("Objects");
     CCASSERT(NULL!=objects, "'Object Layer 1' object group not found");
 
     //Se inician los estados de los players
     initPlayer1Status();
     initPlayer2Status();
-    
+
     //Coordenadas de los jugadores
     auto Player = objects->getObject("Player1");
     CCASSERT(!Player.empty(),"Player object not found");
@@ -1351,9 +1351,9 @@ bool CTF::init()
     ban2->setPosition(ccp(xC2+75,yC2+233));
     ban2->setScale(1.235);
     tileMap->addChild(ban2,2);
-    
+
     //Se crea sprite health bar de player 1
-    HB1 = Sprite::create("healthBar.png");	
+    HB1 = Sprite::create("healthBar.png");
     HB1->setPosition(ccp(xC1,yC1+40));
     HB1->setScaleX(0.225);
     HB1->setScaleY(0.1);
@@ -1384,16 +1384,16 @@ bool CTF::init()
     defenceUp->setPosition(ccp(xC1,yC1+200));
     defenceUp->setScale(0.3);
     defenceUp->setTag(3);
-    addChild(defenceUp); 
+    addChild(defenceUp);
 
     //Tag = 4
     attackUp = Sprite::create("attackUp.png");
     attackUp->setPosition(ccp(xC1,yC1+100));
     attackUp->setScale(0.3);
     attackUp->setTag(4);
-    addChild(attackUp);    
+    addChild(attackUp);
 
-	
+
    //seccion de movimiento
    auto eventListener = EventListenerKeyboard::create();
    eventListener->onKeyPressed = CC_CALLBACK_2(CTF::onKeyPressed, this);
@@ -1427,9 +1427,9 @@ bool CTF::init()
 	    pause = !pause;
 	}
     };
-  
 
-    this->_eventDispatcher->addEventListenerWithSceneGraphPriority(pausa,this); 
+
+    this->_eventDispatcher->addEventListenerWithSceneGraphPriority(pausa,this);
 
 
 
@@ -1477,5 +1477,3 @@ void CTF::VolverCallBack(Ref* pSender)
     CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic(true);
     Director::sharedDirector()->replaceScene(PanzerWars::createScene());
 }
-
-
