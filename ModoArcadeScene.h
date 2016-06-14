@@ -68,6 +68,7 @@ private:
     Vec2 origin;
     bool pause = false, exp = false, firstSpeed = false, firstHP = false, firstAttack = false,
     firstDefence = false, hitP1= false, hitP2 = false,hitE2 = false,hitE1 = false, hpup1 = false, hpup2 = false, game_Over = false;
+    bool e1Collision = false, e2Collision=false;
     Sprite *_player1, *_player2,*_enemy1,*_enemy2, *sprite, *minaP1[3], *minaP2[3],*minaE1[3],*minaE2[3], *misil1, *misil2,*misil3,*misil4, *HB1, *HB2,*HB3, *explode,
     *attackUp, *speedUp, *defenceUp, *HpUp;
     CCTMXTiledMap *tileMap;

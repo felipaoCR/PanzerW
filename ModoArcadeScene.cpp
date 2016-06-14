@@ -68,8 +68,39 @@ void ModoArcade::gameUpdate(float interval)
 	getUpgrade(defenceUp);
 	if(!firstHP)
 	getUpgrade(HpUp);
+
+	///////////////////////////////////////////
+	//Bloqueos
+	if ((bbP1.intersectsRect(bbE1) && e1.getHealth())  || (bbP1.intersectsRect(bbE2) && e2.getHealth())) {
+	    switch(dirAnt1) {
+		case 0:
+		    up1 = false;
+		    break;
+		case 1:
+		    down1 = false;
+		    break;
+		case 2:
+		    left1 = false;
+		    break;
+		case 3:
+		    right1 = false;
+		    break;
+	    }
+	}
+	if (bbP1.intersectsRect(bbE1)) {
+	    e1Collision = true;
+	} else {
+	    e1Collision = false;
+	}
+	if (bbP1.intersectsRect(bbE2)) {
+	    e2Collision = true;
+	} else {
+	    e2Collision = false;
+	}
+
     ////////////////////////////////////////////////////////////
     // Movimiento Jugadores y se establece la posicion de health bars
+    if(e1.getHealth()) {//Solo se mueve si esta vivo
     if(up1) {
 	    switch(dirAnt1) {
 		case 0:
@@ -138,6 +169,8 @@ void ModoArcade::gameUpdate(float interval)
 	    dirAnt1 = 2;
 	    setPlayer1Position(ccp(--loc1.x-p1.getSpeed(),loc1.y)); // player 1 going left
 	}
+    }
+    if(e2.getHealth()) {//Solo se mueve si esta vivo
 	if(up2) {
 	    switch(dirAnt2) {
 		case 0:
@@ -206,8 +239,11 @@ void ModoArcade::gameUpdate(float interval)
 	    dirAnt2 = 2;
 	    setPlayer2Position(ccp(--loc2.x-p2.getSpeed(),loc2.y)); // player 2 going left
 	}
+    }
 
 //MOVIMIENTO DE ENEMIGOS
+if(e1.getHealth()) { //Si esta muerto no hace nada
+if (!e1Collision) { //Si hay colision no se mueve
   if((abs(loc1.x-loc3.x)<20) &&((loc1.y-loc3.y)>20 )){//0
     switch (dirAntE1) {
       case 0:
@@ -468,6 +504,7 @@ void ModoArcade::gameUpdate(float interval)
     setEnemy1Position(ccp((--loc3.x),(++loc3.y)));//enemy1 going left and up
     //dispararMisilENemigo();
   }
+}
   srand (time(NULL));
   int ramdom;
   ramdom= rand() % 10;
@@ -475,6 +512,7 @@ void ModoArcade::gameUpdate(float interval)
   if (ramdom<3){
     dispararMisilENemigo1();
   }
+}
 
 /*  log("ramdom=%d",ramdom);
 
@@ -485,6 +523,8 @@ void ModoArcade::gameUpdate(float interval)
 */
 //---------------------------------------------------------
 //MOVIMIENTO ENEMIGO  2
+if(e2.getHealth()){ //Si esta muerto no hace nada
+if(!e2Collision) { //Solo se mueve si no hay colision
   switch (tramo) {
     case 1:
       if( loc4.y>80){
@@ -665,7 +705,7 @@ void ModoArcade::gameUpdate(float interval)
       dispararMisilENemigo2();
 
   }
-
+}
 
   r2=rand() % 10;
   if (r2<3&& r2!=r2ant){
@@ -674,6 +714,7 @@ void ModoArcade::gameUpdate(float interval)
   }
   log("r2=%d",r2);
   log("minas restantes=%d",cantM4);
+}
   /*log("loc4.x=%f",loc4.x);
   log("loc4.y=%f",loc4.y);
   log("tramo=%d",tramo);
@@ -784,7 +825,7 @@ void ModoArcade::gameUpdate(float interval)
 		    end = 0;
 		}
 		actm1 = false;
-		e2.setHealth(e1.getHealth()-50);
+		e2.setHealth(e2.getHealth()-50);
 		hitP1 = true;
 		if(e2.getHealth()<0)
 		e2.setHealth(0);
@@ -1001,21 +1042,6 @@ void ModoArcade::gameUpdate(float interval)
       }
 
 
-      ///////////////////////////////////////
-      //Spawneo
-    if(!e2.getHealth())
-    {
-      setEnemy2Position(ccp(580,590));
-      e2.setHealth(200);
-
-    }
-
-    if(!e1.getHealth())
-    {
-      setEnemy1Position(ccp(530,100));
-      e1.setHealth(200);
-
-    }
 
 //------------------------------------------------------------
     ////////////////////////////////////
@@ -1038,7 +1064,7 @@ void ModoArcade::gameUpdate(float interval)
   hitE2 = false;
   hitE1 = false;
     }
-    if(hitP1)
+    if(false)
     {
 	if(p2.getHealth()==100)
 	 {
@@ -1065,40 +1091,42 @@ void ModoArcade::gameUpdate(float interval)
 	hpup2 = false;
     }
 
+    ////////////////////////////////////////////////
+    // Enemy is dead
+    if(!e1.getHealth())
+	explosion2(_enemy1);
 
+    if(!e2.getHealth())
+	explosion2(_enemy2);
 
     ///////////////////////////////////////
     //Game Over
     if(!p1.getHealth()) {
 	explosion2(_player1);
-
-	auto gameOver = Label::createWithTTF("  Game Over\nPlayer 2 Won", "fonts/Marker Felt.ttf", 26);
+	auto gameOver = Label::createWithTTF("Game Over", "fonts/Marker Felt.ttf", 26);
     	gameOver->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2));
     	this->addChild(gameOver, 1);
 	deltaGO = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-startGO).count();
 	endGO += deltaGO;
 	if (endGO > 5) {
-    removeChild(HB1);
+            removeChild(HB1);
 	    pause = true;
-      audioAA->stopAllEffects();
-      audioMCC->stopBackgroundMusic();
-      Director::sharedDirector()->pause();
+	    audioAA->stopAllEffects();
+	    audioMCC->stopBackgroundMusic();
+	    Director::sharedDirector()->pause();
 	}
     }
-    if(!p2.getHealth()) {
-	explosion2(_player2);
-
-	auto gameOver = Label::createWithTTF("  Game Over\nPlayer 1 Won", "fonts/Marker Felt.ttf", 26);
+    if(!e2.getHealth() && !e1.getHealth()) {
+	auto gameOver = Label::createWithTTF("Level 1 clear", "fonts/Marker Felt.ttf", 26);
     	gameOver->setPosition(Vec2(origin.x + visibleSize.width/2, origin.y + visibleSize.height/2));
     	this->addChild(gameOver, 1);
 	deltaGO = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-startGO).count();
 	endGO += deltaGO;
 	if (endGO > 5) {
-      removeChild(HB2);
 	    pause = true;
-      audioAA->stopAllEffects();
-      audioMCC->stopBackgroundMusic();
-      Director::sharedDirector()->pause();
+	    audioAA->stopAllEffects();
+	    audioMCC->stopBackgroundMusic();
+	    Director::sharedDirector()->pause();
 	}
     }
 
@@ -1157,7 +1185,7 @@ void ModoArcade::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    down1 = true;
 	    break;
 	case EventKeyboard::KeyCode::KEY_Q:
-	    if(cantM1>0 && !pause){
+	    if(cantM1>0 && !pause && p1.getHealth()){
 		for(i=0; i<3; i++) {
 		    if(actM1[i]==false) {
 			cantM1--;
@@ -1173,7 +1201,7 @@ void ModoArcade::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    }
 	    break;
 	case EventKeyboard::KeyCode::KEY_E:
-	    if(actm1==false && !pause) {
+	    if(actm1==false && !pause && p1.getHealth()) {
    	 	audioAA->playEffect("Audio/explosion3.mp3");
     		audioAA->setEffectsVolume(0.3);
 		misil1 = Sprite::create("c1.png");
@@ -1210,7 +1238,7 @@ void ModoArcade::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    down2 = true;
 	    break;
 	case EventKeyboard::KeyCode::KEY_U:
-	    if(cantM2>0 && !pause){
+	    if(cantM2>0 && !pause && p2.getHealth()){
 		for(i=0; i<3; i++) {
 		    if(actM2[i]==false) {
 			cantM2--;
@@ -1226,7 +1254,7 @@ void ModoArcade::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    }
 	    break;
 	case EventKeyboard::KeyCode::KEY_O:
-	    if(actm2==false && !pause) {
+	    if(actm2==false && !pause && p2.getHealth()) {
    	 	audioAA->playEffect("Audio/explosion3.mp3");
     		audioAA->setEffectsVolume(0.3);
 		misil2 = Sprite::create("c1.png");

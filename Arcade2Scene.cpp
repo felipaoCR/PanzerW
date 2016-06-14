@@ -69,7 +69,7 @@ void Arcade2::gameUpdate(float interval)
 
 	///////////////////////////////////////////
 	//Bloqueos
-	if (bbP1.intersectsRect(bbE1) || bbP1.intersectsRect(bbE2)) {
+	if ((bbP1.intersectsRect(bbE1) && e1.getHealth())  || (bbP1.intersectsRect(bbE2) && e2.getHealth())) {
 	    switch(dirAnt1) {
 		case 0:
 		    up1 = false;
@@ -823,7 +823,7 @@ if (end > 5) {
     end = 0;
 }
 actm1 = false;
-e2.setHealth(e1.getHealth()-50);
+e2.setHealth(e2.getHealth()-50);
 //hitP1 = true;
 if(e2.getHealth()<0)
 e2.setHealth(0);
@@ -1116,6 +1116,9 @@ if(bbmE2.intersectsRect(bbP1))
 	if (endGO > 5) {
             removeChild(HB1);
 	    pause = true;
+	    audioA2->stopAllEffects();
+	    audioA2->stopBackgroundMusic();
+	    Director::sharedDirector()->pause();
 	}
     }
     if(!e2.getHealth() && !e1.getHealth()) {
@@ -1125,8 +1128,10 @@ if(bbmE2.intersectsRect(bbP1))
 	deltaGO = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-startGO).count();
 	endGO += deltaGO;
 	if (endGO > 5) {
-            removeChild(HB2);
 	    pause = true;
+	    audioA2->stopAllEffects();
+	    audioA2->stopBackgroundMusic();
+	    Director::sharedDirector()->pause();
 	}
     }
   }
@@ -1680,6 +1685,7 @@ bool Arcade2::init()
 	actM2[i] = false;
     }
 
+    Director::sharedDirector()->resume();
 
     visibleSize = Director::getInstance()->getVisibleSize();
     origin = Director::getInstance()->getVisibleOrigin();
@@ -1772,32 +1778,6 @@ bool Arcade2::init()
     HB2->setScaleY(0.1);
 	addChild(HB2);
     HB2->runAction(FadeOut::create(0.001));
-   //Se crean los sprites de upgrade
-    //Tag = 1
- /*   HpUp = Sprite::create("HpUp.png");
-    HpUp->setPosition(ccp(x2,y2-300));
-    HpUp->setScale(0.3);
-    HpUp->setTag(1);
-    addChild(HpUp);
-    //Tag = 2
-    speedUp = Sprite::create("speedUp.png");
-    speedUp->setPosition(ccp(x,y+300));
-    speedUp->setScale(0.3);
-    speedUp->setTag(2);
-    addChild(speedUp);
-    //Tag = 3
-    defenceUp = Sprite::create("defenceUp.png");
-    defenceUp->setPosition(ccp(x,y+200));
-    defenceUp->setScale(0.3);
-    defenceUp->setTag(3);
-    addChild(defenceUp);
-    //Tag = 4
-    attackUp = Sprite::create("attackUp.png");
-    attackUp->setPosition(ccp(x,y+100));
-    attackUp->setScale(0.3);
-    attackUp->setTag(4);
-    addChild(attackUp);
-*/
 
    //seccion de movimiento
    auto eventListener = EventListenerKeyboard::create();
