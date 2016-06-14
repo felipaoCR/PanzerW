@@ -28,17 +28,17 @@
  </layer>
  <layer name="Tile Layer 2" width="32" height="24">
   <data encoding="base64" compression="zlib">
-   eJxjYKAecGZkYHBhRKXRxWgNDIHYCA0b095aOLAEYis0bD2C7B8Fo2AoAAE6lEWjYBSMglGAD9wAYlBR9HaA7H8BxMGMEDwQbkC2fyDcgG4/vd2AzX4VOroBANo1E+E=
+   eJxjYKAecGZkYHBhRKXRxfCBpxRiEDAEYiM0bExFPxIClkBshYatkeTR3YsOCmls/3AClIbVSAV9QNxPgnpNINYCYm0q2T8NiKdTySxygQCBsohcgC1f48rro2AUjIKRDW4AMagoektAnSIQKyFhZSrZ/wKIgxkhmJAbiAXFONiE7KemG4gF6PbT2w3Y7FehoxsAvOkr5A==
   </data>
  </layer>
  <layer name="Tile Layer 3" width="32" height="24" opacity="0.81">
   <data encoding="base64" compression="zlib">
-   eJzdlrtOAkEUhs9WNprYaaeiFngptPSNLCm8NCqaeGlQG5RXURIUTBQU1MbQSWV8Df8TdsJhMrMzs7Ix8U++MGFO5tsLnJkaEd2Be9ACzyl5Ib9IRxs8gifQBHNgJSXzmmcKTBv8XUFd83M2Pe/DlRkwa/i+JzD5C2AyGtFFOKL72Wty12jwG5HjNNkC22DH4LdF1shxIYV/D+yDgwD/K3gD7x71N+BWoyrmj8EJOA3wr+GdLOJzPXLX1+N5yYOYL4FzcBHgz4MlsOxRz//vtnB3aLg3lMEVuA7wy7jqP2j4GfC9dy21Wfi/DP7vDP0ly7qmd5+FvyzmKn/gt6373/zcd1U/GaVf9rak8HU2BK51ff0L1O9tG1F/T9i11PJ1+p43VA/Se4/Jz2eOXOznPaFoqeW61biW0c8bMtxv+Hk1yd57lH8CjNNgTzhL8OfIz/8p/D2HnyP3hEtL7SE4SlhLj/InRfn5zKH2hEpCfUh8/C0xVueescCzF+/3jZRUDeuF5rdn9h/SJuIf
+   eJzdlrlOw0AQhscVDUh0pOMuKaDkjXgAjoZTItAk0HC8CkQKJEiQQDgalA5ehX8UrzyxZr27PkBipE+24j/7bWxndttEdAfuQR885+SF/Eo6BuARPIGe5/d9awbUlM+Hgo7i3yjJPwvmHBnNzzUdlTSJQD97NXebkndEnuepTbAFthW/rWSm6PuyC/bAfoD/DbyDD4/8DbhN0RLXj0EdnAT4V/FMlnFci9z5Tnxd8iCuN1LZ0PvpyvP/eyDcrzTeGy4q9n/S+D3g3z60ZKvwm3G1e1+Fv6FkftMvn+f1H/ht4/43P/dd00/K9MvellU8z67ANa6vf4lGvW09Gq0JO5Ysz9N3v2F6ULr3aP55sBD7eU04sGQ5txJnmcWMcbnf8P3qkb33GP8UmKRkTTjNyPvWl/B/O/xc3EOa4AycW7KH4ChgDsafVcbPe45LHK8o6SFFy8ffF+dm3zMRuPfi9b6bk5YyXmgV3bP/ABhz1rY=
   </data>
  </layer>
  <layer name="Tile Layer 4" width="32" height="24">
   <data encoding="base64" compression="zlib">
-   eJxjYECAj0D8CYg/MwwM+AnEv4D4Nw3t0GVkYNAD4jlY5BiB4kxAzMxIO/tNgWabAfESCs35AsRfgfgbmfphcU0u+APEf4H4Hxl2gtIXLK7JBSzAMGQlIp4WILGR0xcsrmkNViCx6ZG+RsEoGAW0AwsG2P4VhJUMKYBcJ1Bap5EDkOsEYuu0NQTkk3GwsQHkOgFWp7ERqB+2ALEoHvlsHGxqAlk8csU42KNg8AEAKHApug==
+   eJxjYECAj0D8CYg/MwwM+AnEv4D4Nw3t0GVkYNAD4jlY5BiB4kxAzMxIO/tNgWabAfESCs35AsRfgfgbmfphcU0u+APEf4H4Hxl2gtIXLK7JBSzAMGQlIp4WILGR0xcsrmkNViCx6ZG+RsEoGAW0AwsG2P4VhJUMKYBcJ1Bap5EDkOsEYuu0NQTkk3GwsQHkOgFWp7ERqB+2ALEoHvlsHGxqAlkamTsK6AsArS4o1A==
   </data>
  </layer>
  <layer name="onTop" width="32" height="24">
@@ -47,12 +47,12 @@
   </data>
  </layer>
  <objectgroup name="Objects">
-  <object id="1" name="Player1" x="567" y="94" width="66" height="99"/>
+  <object id="1" name="Player1" x="150" y="312" width="66" height="99"/>
   <object id="3" name="Player2" x="894" y="418" width="66" height="105"/>
  </objectgroup>
  <layer name="Collision" width="32" height="24">
   <data encoding="base64" compression="zlib">
-   eJztk8EKwCAMQ2Vf7P+fhIGXQWyypbI5Az0obV4LbT1KqTvO6EL/kSJvhq/wlB6uOcqcjKejV5WP6u76OtiohvHMmD3a7b/xR7lIDr5zT2fzR75MLuvp4LM9bv67+JEy75/R6nz1pjPun/Xsb9Y3ynsiNMNXogEC+r/v
+   eJztkzEKQCEMQ8UTe//pwwcXITbRZigY6KDEvFZ09NbGq7+m0H6kKJvhKzylh9WjzMlkZvSq8tG509wMNjrDZKp8xZ+dV5W/8yK5+q3CR7ms99an8B19Pr6fH8n5/xmd/qkqfMe9qu+PzZxrNjfy3QjNUKU+w0W7CQ==
   </data>
  </layer>
 </map>

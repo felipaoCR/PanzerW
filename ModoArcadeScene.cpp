@@ -739,7 +739,7 @@ if(!e2Collision) { //Solo se mueve si no hay colision
 	    delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
 	    end += delta;
 	    if (end > 5) {
-		this->removeChild(minaP2[i]);
+		tileMap->removeChild(minaP2[i]);
 		end = 0;
 	    }
 	    actM2[i] = false;
@@ -756,7 +756,7 @@ if(!e2Collision) { //Solo se mueve si no hay colision
 	    delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
 	    end += delta;
 	    if (end > 5) {
-		this->removeChild(minaP1[i]);
+		tileMap->removeChild(minaP1[i]);
 		end = 0;
 	    }
 	    actM1[i] = false;
@@ -774,7 +774,7 @@ if(!e2Collision) { //Solo se mueve si no hay colision
       delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
       end += delta;
       if (end > 5) {
-    this->removeChild(minaE2[i]);
+    tileMap->removeChild(minaE2[i]);
     end = 0;
       }
       actM4[i] = false;
@@ -806,7 +806,7 @@ if(!e2Collision) { //Solo se mueve si no hay colision
 		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
 		end += delta;
 		if (end > 5) {
-		    this->removeChild(misil1);
+		    tileMap->removeChild(misil1);
 		    end = 0;
 		}
 		actm1 = false;
@@ -821,7 +821,7 @@ if(!e2Collision) { //Solo se mueve si no hay colision
 		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
 		end += delta;
 		if (end > 5) {
-		    this->removeChild(misil1);
+		    tileMap->removeChild(misil1);
 		    end = 0;
 		}
 		actm1 = false;
@@ -837,8 +837,8 @@ if(!e2Collision) { //Solo se mueve si no hay colision
 		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
 		end += delta;
 		if (end > 5) {
-		    this->removeChild(misil1);
-		    this->removeChild(minaP2[i]);
+		    tileMap->removeChild(misil1);
+		    tileMap->removeChild(minaP2[i]);
 		    end = 0;
 		}
 		actm1 = false;
@@ -852,8 +852,8 @@ if(!e2Collision) { //Solo se mueve si no hay colision
 		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
 		end += delta;
 		if (end > 5) {
-		    this->removeChild(misil1);
-		    this->removeChild(minaE2[i]);
+		    tileMap->removeChild(misil1);
+		    tileMap->removeChild(minaE2[i]);
 		    end = 0;
 		}
 		actm1 = false;
@@ -886,7 +886,7 @@ if(!e2Collision) { //Solo se mueve si no hay colision
 		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
 		end += delta;
 		if (end > 5) {
-		    this->removeChild(misil2);
+		    tileMap->removeChild(misil2);
 		    end = 0;
 		}
 		actm2 = false;
@@ -902,8 +902,8 @@ if(!e2Collision) { //Solo se mueve si no hay colision
 		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
 		end += delta;
 		if (end > 5) {
-		    this->removeChild(misil2);
-		    this->removeChild(minaP1[i]);
+		    tileMap->removeChild(misil2);
+		    tileMap->removeChild(minaP1[i]);
 		    end = 0;
 		}
 		actm2 = false;
@@ -917,8 +917,8 @@ if(!e2Collision) { //Solo se mueve si no hay colision
 		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
 		end += delta;
 		if (end > 5) {
-		    this->removeChild(misil2);
-		    this->removeChild(misil1);
+		    tileMap->removeChild(misil2);
+		    tileMap->removeChild(misil1);
 		    end = 0;
 		}
 		actm2 = false;
@@ -932,8 +932,8 @@ if(!e2Collision) { //Solo se mueve si no hay colision
 		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
 		end += delta;
 		if (end > 5) {
-		    this->removeChild(misil3);
-		    this->removeChild(misil1);
+		    tileMap->removeChild(misil3);
+		    tileMap->removeChild(misil1);
 		    end = 0;
 		}
 		actmE1 = false;
@@ -947,8 +947,8 @@ if(!e2Collision) { //Solo se mueve si no hay colision
 		delta = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-start).count();
 		end += delta;
 		if (end > 5) {
-		    this->removeChild(misil4);
-		    this->removeChild(misil1);
+		    tileMap->removeChild(misil4);
+		    tileMap->removeChild(misil1);
 		    end = 0;
 		}
 		actmE2 = false;
@@ -991,8 +991,9 @@ if(!e2Collision) { //Solo se mueve si no hay colision
       }
   if(bbmE1.intersectsRect(bbP1))
   {
-    this->removeChild(misil3);
+    tileMap->removeChild(misil3);
     actmE1 = false;
+    hitP2 = true;
     p1.setHealth(p1.getHealth()-20);
     if(p1.getHealth()<0)
     p1.setHealth(0);
@@ -1033,7 +1034,7 @@ if(!e2Collision) { //Solo se mueve si no hay colision
         }
     if(bbmE2.intersectsRect(bbP1))
     {
-      this->removeChild(misil4);
+      tileMap->removeChild(misil4);
       actmE2 = false;
       p1.setHealth(p1.getHealth()-20);
       if(p1.getHealth()<0)
@@ -1050,15 +1051,16 @@ if(!e2Collision) { //Solo se mueve si no hay colision
     {
 	if(p1.getHealth()==100)
 	{
-      	  removeChild(HB1);
+      	  tileMap->removeChild(HB1);
       	  HB1 = Sprite::create("healthBar.png");
       	  HB1->setPosition(ccp(loc1.x,loc1.y+40));
       	  HB1->setScaleX(0.225);
       	  HB1->setScaleY(0.1);
-      	  addChild(HB1);
+      	  tileMap->addChild(HB1,1);
 	}else if(p1.getHealth()!=100 && p1.getHealth()>0)
 	{
 	  HB1->setScaleX(0.225*((float)p1.getHealth()/100));
+	  log("GUIDO PLAYO");
 	}
 	hitP2 = false;
   hitE2 = false;
@@ -1068,12 +1070,12 @@ if(!e2Collision) { //Solo se mueve si no hay colision
     {
 	if(p2.getHealth()==100)
 	 {
-      	  removeChild(HB2);
+      	  tileMap->removeChild(HB2);
       	  HB2 = Sprite::create("healthBar.png");
    	  HB2->setPosition(ccp(loc2.x,loc2.y+40));
           HB2->setScaleX(0.225);
       	  HB2->setScaleY(0.1);
-      	  addChild(HB2);
+      	  tileMap->addChild(HB2,1);
 	}else if(p2.getHealth()!=100 && p2.getHealth()>0)
 	{
 	  HB2->setScaleX(0.225*((float)p2.getHealth()/100));
@@ -1109,7 +1111,7 @@ if(!e2Collision) { //Solo se mueve si no hay colision
 	deltaGO = std::chrono::duration<double, std::milli>(high_resolution_clock::now()-startGO).count();
 	endGO += deltaGO;
 	if (endGO > 5) {
-            removeChild(HB1);
+            tileMap->removeChild(HB1);
 	    pause = true;
 	    audioAA->stopAllEffects();
 	    audioMCC->stopBackgroundMusic();
@@ -1192,7 +1194,7 @@ void ModoArcade::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 			minaP1[i] = Sprite::create("mina.png");
 			minaP1[i]->setPosition(_player1->getPosition());
 			minaP1[i]->setScale(0.4);
-			this->addChild(minaP1[i]);
+			tileMap->addChild(minaP1[i],1);
 			bbM1[i] = minaP1[i]->getBoundingBox();
 			actM1[i] = true;
 			break;
@@ -1207,7 +1209,7 @@ void ModoArcade::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 		misil1 = Sprite::create("c1.png");
 		misil1->setPosition(_player1->getPosition());
 		misil1->setScale(0.4);
-		this->addChild(misil1);
+		tileMap->addChild(misil1,1);
 		actm1 = true;
 		dirm1 = dirAnt1;
 		switch (dirm1) {
@@ -1245,7 +1247,7 @@ void ModoArcade::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 			minaP2[i] = Sprite::create("mina.png");
 			minaP2[i]->setPosition(_player2->getPosition());
 			minaP2[i]->setScale(0.4);
-			this->addChild(minaP2[i]);
+			tileMap->addChild(minaP2[i],1);
 			bbM2[i] = minaP2[i]->getBoundingBox();
 			actM2[i] = true;
 			break;
@@ -1260,7 +1262,7 @@ void ModoArcade::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 		misil2 = Sprite::create("c1.png");
 		misil2->setPosition(_player2->getPosition());
 		misil2->setScale(0.4);
-		this->addChild(misil2);
+		tileMap->addChild(misil2,1);
 		actm2 = true;
 		dirm2 = dirAnt2;
 		switch (dirm2) {
@@ -1399,7 +1401,7 @@ void ModoArcade::setMisil1Position(Point position)
         if (!properties.empty()) {
             auto collision = properties["Collision"].asString();
             if ("True" == collision) {
-	    	this->removeChild(misil1);
+	    	tileMap->removeChild(misil1);
 	    	actm1 = false;
 	    	log("COLISION");
             	return;
@@ -1418,7 +1420,7 @@ void ModoArcade::setMisil2Position(Point position)
         if (!properties.empty()) {
             auto collision = properties["Collision"].asString();
             if ("True" == collision) {
-		this->removeChild(misil2);
+		tileMap->removeChild(misil2);
 		actm2 = false;
 		log("COLISION");
                 return;
@@ -1436,7 +1438,7 @@ void ModoArcade::dispararMisilENemigo1(){
     misil3 = Sprite::create("c1.png");
 misil3->setPosition(_enemy1->getPosition());
 misil3->setScale(0.4);
-this->addChild(misil3);
+tileMap->addChild(misil3,1);
 actmE1 = true;
 dirmE1 = dirAntE1;
 switch (dirmE1) {
@@ -1479,7 +1481,7 @@ void ModoArcade::setMisil3Position(Point position)
         if (!properties.empty()) {
             auto collision = properties["Collision"].asString();
             if ("True" == collision) {
-		this->removeChild(misil3);
+		tileMap->removeChild(misil3);
 		actmE1 = false;
 		log("COLISION");
                 return;
@@ -1495,7 +1497,7 @@ void ModoArcade::dispararMisilENemigo2(){
     misil4 = Sprite::create("c1.png");
 misil4->setPosition(_enemy2->getPosition());
 misil4->setScale(0.4);
-this->addChild(misil4);
+tileMap->addChild(misil4,1);
 actmE2 = true;
 dirmE2 = dirAntE2;
 switch (dirmE2) {
@@ -1538,7 +1540,7 @@ void ModoArcade::setMisil4Position(Point position)
         if (!properties.empty()) {
             auto collision = properties["Collision"].asString();
             if ("True" == collision) {
-		this->removeChild(misil4);
+		tileMap->removeChild(misil4);
 		actmE2 = false;
 		log("COLISION");
                 return;
@@ -1557,7 +1559,7 @@ void ModoArcade::activarMinaE2(Point position){
         minaE2[i] = Sprite::create("mina.png");
         minaE2[i]->setPosition(_enemy2->getPosition());
         minaE2[i]->setScale(0.4);
-        this->addChild(minaE2[i]);
+        tileMap->addChild(minaE2[i],1);
         bbM4[i] = minaE2[i]->getBoundingBox();
         actM4[i] = true;
         log("Mina %d puesta",i);
@@ -1671,7 +1673,7 @@ bool ModoArcade::init()
     ///// Manejo de fondos
     //Se carga el mapa y se hacen los collisions tiles con los que el tanque tiene que chocar
     tileMap = new CCTMXTiledMap();
-    tileMap->initWithTMXFile("Batalla.tmx");
+    tileMap->initWithTMXFile("Arcade1.tmx");
     _blockage = tileMap->layerNamed("Collision");
     _blockage->setVisible(false);
 
@@ -1694,7 +1696,7 @@ bool ModoArcade::init()
     _player1 =Sprite::create("tank3.png");
     setPlayer1Position(ccp(x-50,y-50));
     _player1->setScale(0.3);
-    addChild(_player1);
+    tileMap->addChild(_player1,1);
 
     //Se crea el sprite de player 2
     auto Player2 = objects->getObject("Player2");
@@ -1704,7 +1706,7 @@ bool ModoArcade::init()
     _player2 = Sprite::create("tank3.png");
     _player2->setPosition(ccp(x2,y2));
     _player2->setScale(0.3);
-    addChild(_player2);
+    tileMap->addChild(_player2,1);
     _player2->runAction(RotateBy::create(0.01, 180));
     _player2->runAction(FadeOut::create(0.001));
 
@@ -1717,7 +1719,7 @@ bool ModoArcade::init()
     setEnemy1Position(ccp(530,100));
     //    _enemy1->setPosition(ccp(x-400,y+150));
     _enemy1->setScale(0.4);
-    addChild(_enemy1);
+    tileMap->addChild(_enemy1,1);
 
     //Se crea el sprite de enemigo 2
     auto Enemy2 = objects->getObject("Enemy2");
@@ -1728,7 +1730,7 @@ bool ModoArcade::init()
     setEnemy2Position(ccp(580,590));
     //    _enemy1->setPosition(ccp(x-400,y+150));
     _enemy2->setScale(0.4);
-    addChild(_enemy2);
+    tileMap->addChild(_enemy2,1);
 
 
 
@@ -1737,13 +1739,13 @@ bool ModoArcade::init()
     HB1->setPosition(ccp(x,y+40));
     HB1->setScaleX(0.225);
     HB1->setScaleY(0.1);
-	addChild(HB1);
+    tileMap->addChild(HB1,1);
    //Se crea sprite health bar de player 2
     HB2 = Sprite::create("healthBar.png");
     HB2->setPosition(ccp(x2,y2+40));
     HB2->setScaleX(0.225);
     HB2->setScaleY(0.1);
-	addChild(HB2);
+    tileMap->addChild(HB2,1);
   HB2->runAction(FadeOut::create(0.001));
    //Se crean los sprites de upgrade
     //Tag = 1
