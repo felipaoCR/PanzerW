@@ -83,7 +83,7 @@ void Arcade3::gameUpdate(float interval)
 
 	///////////////////////////////////////////
 	//Bloqueos
-	if (bbP1.intersectsRect(bbE1) || bbP1.intersectsRect(bbE2) || bbP1.intersectsRect(bbE3)) {
+	if ((bbP1.intersectsRect(bbE1) && e1.getHealth())  || (bbP1.intersectsRect(bbE2) && e2.getHealth()) || (bbP1.intersectsRect(bbE3) && e3.getHealth())) {
 	    switch(dirAnt1) {
 		case 0:
 		    up1 = false;
@@ -116,6 +116,7 @@ void Arcade3::gameUpdate(float interval)
 	}
     ////////////////////////////////////////////////////////////
     // Movimiento Jugadores y se establece la posicion de health bars
+    if(p1.getHealth()) {
     if(up1) {
 	    switch(dirAnt1) {
 		case 0:
@@ -184,6 +185,8 @@ void Arcade3::gameUpdate(float interval)
 	    dirAnt1 = 2;
 	    setPlayer1Position(ccp(--loc1.x-p1.getSpeed(),loc1.y)); // player 1 going left
 	}
+    }
+    if(p2.getHealth()) {
 	if(up2) {
 	    switch(dirAnt2) {
 		case 0:
@@ -254,6 +257,7 @@ void Arcade3::gameUpdate(float interval)
 	}
     }
 //MOVIMIENTO DE ENEMIGOS
+if (e1.getHealth()) {
   if((abs(loc1.x-loc3.x)<20) &&((loc1.y-loc3.y)>20 ) && !e1Collision){//0
     switch (dirAntE1) {
       case 0:
@@ -528,11 +532,12 @@ void Arcade3::gameUpdate(float interval)
   log("Loc1.x =%f",loc1.x);
   log("Loc3.y =%f",loc3.y);
   log("Loc1.y =%f",loc1.y);
+}
 
 //---------------------------------------------------------
 //MOVIMIENTO ENEMIGO  2
-//MOVIMIENTO ENEMIGO  2
 //this->_enemy2->runAction(RotateBy::create(0.01, 180));
+if(e2.getHealth()) {
 if(!e2Collision) {
 switch (tramo) {
   case 1:
@@ -694,37 +699,16 @@ switch (tramo) {
         tramo=8;
       }
       break;
-/*  case 18:
-    if(loc4.x>580){
-      setEnemy2Position(ccp(--loc4.x,loc4.y));
-      dirAntE2=2;
-    }else{
-      this->_enemy2->runAction(RotateBy::create(0.01, -90));
-      tramo=1;
-    }
-
-    break;*/
 }
 }
-/*  if((loc1.y-loc4.y)<300 &&(loc1.y-loc4.y)>0 && abs(loc1.x-loc4.x)<100 &&dirAntE2==0){
-  dispararMisilENemigo2();
-}
-if((loc4.y-loc1.y)<300 && (loc4.y-loc1.y)>0&& abs(loc1.x-loc4.x)<100&& dirAntE2==1){
-  dispararMisilENemigo2();
-}
-if((loc1.x-loc4.x)<300 && (loc1.x-loc4.x)>0 && abs(loc1.y-loc4.y)<100 && dirAntE2==3){
-    dispararMisilENemigo2();
-}
-if((loc4.x-loc1.x)<300 &&(loc4.x-loc1.x)>0 && abs(loc1.y-loc4.y)<100 && dirAntE2==2){
-    dispararMisilENemigo2();
-
-}*/
 
 log("loc4.x=%f",loc4.x);
 log("loc4.y=%f",loc4.y);
 log("tramo=%d",tramo);
+}
 
 //ENEMIGO3
+if(e3.getHealth()) {
 srand (time(NULL));
 int r1= rand()%10;
 if (!e3Collision) {
@@ -878,22 +862,26 @@ setEnemy3Position(ccp(loc1.x,90));
 }
 }
 
+if((r1!=0&&6)&&loc5.x!=500&&loc5.y!=500){
+
+  dispararMisilENemigo3();
+}
+//------------------------------------------------------------------------------
+log("r1=%d",r1);
+}
+
+if(e2.getHealth()){
 r2=rand() % 10;
 if (r2<3&& r2!=r2ant){
   activarMinaE2(ccp(loc4.x,loc4.y));
   r2ant=r2;
 }
-
-if((r1!=0&&6)&&loc5.x!=500&&loc5.y!=500){
-
-  dispararMisilENemigo3();
-}
-if(r1!=1&&3&&5&&7){
+if(r2!=1&&3&&5&&7){
 
   dispararMisilENemigo2();
 }
-//------------------------------------------------------------------------------
-log("r1=%d",r1);
+}
+
 
 /////////////////////////////////////////////
     // Para colisiones entre sprites
@@ -1283,30 +1271,6 @@ log("r1=%d",r1);
       }
         }
 
-
-      ///////////////////////////////////////
-      //Spawneo
-    if(!e2.getHealth())
-    {
-      setEnemy2Position(ccp(580,590));
-      e2.setHealth(200);
-
-    }
-
-    if(!e1.getHealth())
-    {
-      setEnemy1Position(ccp(530,100));
-      e1.setHealth(200);
-
-    }
-
-    if(!e3.getHealth())
-    {
-      setEnemy1Position(ccp(500,500));
-      e3.setHealth(200);
-
-    }
-
 //------------------------------------------------------------
     ////////////////////////////////////
     /// Barras de vida
@@ -1326,7 +1290,7 @@ log("r1=%d",r1);
 	}
 	hitP2 = false;
     }
-    if(hitP1)
+    if(false)
     {
 	if(p2.getHealth()==100)
 	 {
@@ -1352,6 +1316,17 @@ log("r1=%d",r1);
 	HB2->setScaleX(1.2*0.225);
 	hpup2 = false;
     }
+
+    ////////////////////////////////////////////////
+    // Enemy is dead
+    if(!e1.getHealth())
+	explosion2(_enemy1);
+
+    if(!e2.getHealth())
+	explosion2(_enemy2);
+
+    if(!e3.getHealth())
+	explosion2(_enemy3);
 
     ///////////////////////////////////////
     //Game Over
@@ -1379,13 +1354,12 @@ log("r1=%d",r1);
 	endGO += deltaGO;
 	if (endGO > 5) {
 	    pause = true;
-            removeChild(HB2);
 	    audioA3->stopAllEffects();
 	    audioA3_BM->stopBackgroundMusic();
 	    Director::sharedDirector()->pause();
 	}
     }
-
+}
 }
 
 void Arcade3::explosion(Sprite *player)
@@ -1441,7 +1415,7 @@ void Arcade3::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    down1 = true;
 	    break;
 	case EventKeyboard::KeyCode::KEY_Q:
-	    if(cantM1>0 && !pause){
+	    if(cantM1>0 && !pause && p1.getHealth()){
 		for(i=0; i<3; i++) {
 		    if(actM1[i]==false) {
 			cantM1--;
@@ -1457,7 +1431,7 @@ void Arcade3::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    }
 	    break;
 	case EventKeyboard::KeyCode::KEY_E:
-	    if(actm1==false && !pause) {
+	    if(actm1==false && !pause && p1.getHealth()) {
    	 	audioA3->playEffect("Audio/explosion3.mp3");
     		audioA3->setEffectsVolume(0.3);
 		misil1 = Sprite::create("c1.png");
@@ -1494,7 +1468,7 @@ void Arcade3::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    down2 = true;
 	    break;
 	case EventKeyboard::KeyCode::KEY_U:
-	    if(cantM2>0 && !pause){
+	    if(cantM2>0 && !pause && p2.getHealth()){
 		for(i=0; i<3; i++) {
 		    if(actM2[i]==false) {
 			cantM2--;
@@ -1510,7 +1484,7 @@ void Arcade3::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    }
 	    break;
 	case EventKeyboard::KeyCode::KEY_O:
-	    if(actm2==false && !pause) {
+	    if(actm2==false && !pause && p2.getHealth()) {
    	 	audioA3->playEffect("Audio/explosion3.mp3");
     		audioA3->setEffectsVolume(0.3);
 		misil2 = Sprite::create("c1.png");

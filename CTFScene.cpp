@@ -805,7 +805,7 @@ void CTF::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    down1 = true;
 	    break;
 	case EventKeyboard::KeyCode::KEY_Q:
-	    if(cantM1>0 && !pause){
+	    if(cantM1>0 && !pause && p1.getHealth()){
 		for(i=0; i<3; i++) {
 		    if(actM1[i]==false) {
 			cantM1--;
@@ -821,7 +821,7 @@ void CTF::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    }
 	    break;
 	case EventKeyboard::KeyCode::KEY_E:
-	    if(actm1==false && !pause) {
+	    if(actm1==false && !pause && p1.getHealth()) {
    	 	audioC->playEffect("Audio/explosion3.mp3");
     		audioC->setEffectsVolume(0.3);
 		misil1 = Sprite::create("c1.png");
@@ -859,7 +859,7 @@ void CTF::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    down2 = true;
 	    break;
 	case EventKeyboard::KeyCode::KEY_U:
-	    if(cantM2>0 && !pause){
+	    if(cantM2>0 && !pause && p2.getHealth()){
 		for(i=0; i<3; i++) {
 		    if(actM2[i]==false) {
 			cantM2--;
@@ -875,7 +875,7 @@ void CTF::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    }
 	    break;
 	case EventKeyboard::KeyCode::KEY_O:
-	    if(actm2==false && !pause) {
+	    if(actm2==false && !pause && p2.getHealth()) {
    	 	audioC->playEffect("Audio/explosion3.mp3");
     		audioC->setEffectsVolume(0.3);
 		misil2 = Sprite::create("c1.png");
