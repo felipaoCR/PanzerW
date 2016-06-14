@@ -98,6 +98,7 @@ void Arcade2::gameUpdate(float interval)
 
    ////////////////////////////////////////////////////////////
     // Movimiento Jugadores y se establece la posicion de health bars
+    if(p1.getHealth()) { //Solo se puede mover si esta vivo
     if(up1) {
 	    switch(dirAnt1) {
 		case 0:
@@ -166,6 +167,8 @@ void Arcade2::gameUpdate(float interval)
 	    dirAnt1 = 2;
 	    setPlayer1Position(ccp(--loc1.x-p1.getSpeed(),loc1.y)); // player 1 going left
 	}
+    }
+    if (p2.getHealth()) { //Solo se mueve si esta vivo
 	if(up2) {
 	    switch(dirAnt2) {
 		case 0:
@@ -234,9 +237,11 @@ void Arcade2::gameUpdate(float interval)
 	    dirAnt2 = 2;
 	    setPlayer2Position(ccp(--loc2.x-p2.getSpeed(),loc2.y)); // player 2 going left
 	}
+    }
 
 //MOVIMIENTO DE ENEMIGOS
-if (!e1Collision) {
+if(e1.getHealth()) { //Si esta muerto no hace nada
+if (!e1Collision) { //Si hay colision no se mueve
   if((abs(loc1.x-loc3.x)<20) &&((loc1.y-loc3.y)>20 )){//0
     switch (dirAntE1) {
       case 0:
@@ -512,11 +517,13 @@ if (!e1Collision) {
   log("Loc1.x =%f",loc1.x);
   log("Loc3.y =%f",loc3.y);
   log("Loc1.y =%f",loc1.y);
+}
 
 //---------------------------------------------------------
 //MOVIMIENTO ENEMIGO  2
   //this->_enemy2->runAction(RotateBy::create(0.01, 180));
-if(!e2Collision) {
+if(e2.getHealth()){ //Si esta muerto no hace nada
+if(!e2Collision) { //Solo se mueve si no hay colision
  switch (tramo) {
     case 1:
       /*if (tramoAnt==15) {
@@ -709,7 +716,7 @@ if(!e2Collision) {
     activarMinaE2(ccp(loc4.x,loc4.y));
     r2ant=r2;
   }
-
+}
 /////////////////////////////////////////////
 // Para colisiones entre sprites
 
@@ -802,7 +809,7 @@ if (end > 5) {
 }
 actm1 = false;
 e1.setHealth(e1.getHealth()-50);
-hitP1 = true;
+//hitP1 = true;
 if(e1.getHealth()<0)
 e1.setHealth(0);
 }
@@ -817,7 +824,7 @@ if (end > 5) {
 }
 actm1 = false;
 e2.setHealth(e1.getHealth()-50);
-hitP1 = true;
+//hitP1 = true;
 if(e2.getHealth()<0)
 e2.setHealth(0);
 }
@@ -1060,7 +1067,7 @@ if(bbmE2.intersectsRect(bbP1))
   hitE2 = false;
   hitE1 = false;
     }
-    if(hitP1)
+    if(false)
     {
   if(p2.getHealth()==100)
    {
@@ -1087,6 +1094,14 @@ if(bbmE2.intersectsRect(bbP1))
   hpup2 = false;
     }
 
+
+    ////////////////////////////////////////////////
+    // Enemy is dead
+    if(!e1.getHealth())
+	explosion2(_enemy1);
+
+    if(!e2.getHealth())
+	explosion2(_enemy2);
 
 
     ///////////////////////////////////////
@@ -1171,7 +1186,7 @@ void Arcade2::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    down1 = true;
 	    break;
 	case EventKeyboard::KeyCode::KEY_Q:
-	    if(cantM1>0 && !pause){
+	    if(cantM1>0 && !pause && p1.getHealth()){
 		for(i=0; i<3; i++) {
 		    if(actM1[i]==false) {
 			cantM1--;
@@ -1187,7 +1202,7 @@ void Arcade2::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    }
 	    break;
 	case EventKeyboard::KeyCode::KEY_E:
-	    if(actm1==false && !pause) {
+	    if(actm1==false && !pause && p1.getHealth()) {
    	 	audioA2->playEffect("Audio/explosion3.mp3");
     		audioA2->setEffectsVolume(0.3);
 		misil1 = Sprite::create("c1.png");
@@ -1224,7 +1239,7 @@ void Arcade2::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    down2 = true;
 	    break;
 	case EventKeyboard::KeyCode::KEY_U:
-	    if(cantM2>0 && !pause){
+	    if(cantM2>0 && !pause && p2.getHealth()){
 		for(i=0; i<3; i++) {
 		    if(actM2[i]==false) {
 			cantM2--;
@@ -1240,7 +1255,7 @@ void Arcade2::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	    }
 	    break;
 	case EventKeyboard::KeyCode::KEY_O:
-	    if(actm2==false && !pause) {
+	    if(actm2==false && !pause && p2.getHealth()) {
    	 	audioA2->playEffect("Audio/explosion3.mp3");
     		audioA2->setEffectsVolume(0.3);
 		misil2 = Sprite::create("c1.png");
